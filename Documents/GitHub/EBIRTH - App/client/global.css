@@ -1,0 +1,102 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 262 47% 15%;
+    --foreground: 0 0% 100%;
+
+    --card: 262 47% 20%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 262 47% 20%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 262 47% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 45 100% 50%;
+    --secondary-foreground: 262 47% 15%;
+
+    --muted: 262 47% 25%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 45 100% 50%;
+    --accent-foreground: 262 47% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 262 47% 30%;
+    --input: 262 47% 30%;
+    --ring: 262 47% 51%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 262 47% 15%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 262 47% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 262 47% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 262 47% 30%;
+    --sidebar-ring: 262 47% 51%;
+  }
+
+  .dark {
+    --background: 262 47% 15%;
+    --foreground: 0 0% 100%;
+
+    --card: 262 47% 20%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 262 47% 20%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 262 47% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 45 100% 50%;
+    --secondary-foreground: 262 47% 15%;
+
+    --muted: 262 47% 25%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 45 100% 50%;
+    --accent-foreground: 262 47% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 262 47% 30%;
+    --input: 262 47% 30%;
+    --ring: 262 47% 51%;
+    --sidebar-background: 262 47% 15%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 262 47% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 262 47% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 262 47% 30%;
+    --sidebar-ring: 262 47% 51%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
