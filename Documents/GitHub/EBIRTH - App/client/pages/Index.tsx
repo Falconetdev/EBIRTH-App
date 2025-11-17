@@ -2,96 +2,290 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MapPin, Clock, Phone } from "lucide-react";
+import {
+  MapPin,
+  Clock,
+  Phone,
+  ArrowRight,
+  CalendarDays,
+  Clock3,
+  Quote,
+} from "lucide-react";
 
 export default function Index() {
+  const images = [
+    "/students/s1.svg",
+    "/students/s2.svg",
+    "/students/s3.svg",
+    "/students/s4.svg",
+    "/students/s5.svg",
+  ];
+  const pillars = [
+    "Practical Learnings",
+    "Expert Instructors",
+    "Flexible Courses",
+    "Career Support",
+  ];
+  const lessons = [
+    {
+      id: 1,
+      title: "Business Startup Masterclass",
+      description:
+        "business එකක් scratch එකෙන් build කරන්න සහ scale කිරීමේ සරලම උපදෙස් ලබාගන්න.",
+      lessonTag: "Lesson 01",
+      platform: "Watch on YouTube",
+    },
+    {
+      id: 2,
+      title: "Business Startup Masterclass",
+      description:
+        "business growth road map එකක් සහ actionable trading frameworks එකටම ලබාගන්න.",
+      lessonTag: "Lesson 02",
+      platform: "Watch on YouTube",
+    },
+  ];
+  const memberships = [
+    {
+      id: "online",
+      title: "Foundations + Advanced Trading Membership - Online",
+      price: "රු. 38,000",
+      oldPrice: "රු. 48,000",
+      image:
+        "https://images.unsplash.com/photo-1605902711622-cfb43c44367f?auto=format&fit=crop&w=900&q=80",
+      description:
+        "Online membership package එක තුළින් trading fundamentals සිට pro level strategies දක්වා පියවරෙන් පියවර ඉගෙන ගන්න.",
+    },
+    {
+      id: "lifetime",
+      title: "Foundations + Advanced Trading Membership - Online",
+      price: "රු. 38,000",
+      oldPrice: "රු. 48,000",
+      image:
+        "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80",
+      description:
+        "Real-time coaching sessions, signal breakdowns සහ lifetime community access එකත් සමඟ consistency එක ගොඩන්න.",
+    },
+  ];
+  const events = [
+    {
+      id: "event-1",
+      title: "INNER RACERS YOUTUBE LIVE LESSONS & LIVE TRADING",
+      description:
+        "ඔබත් \"INNER RACERS\" YouTube එකට සම්බන්ධ වෙලා අපේ LIVE TRADING sessions වලින් real-time දැනුම ලබාගන්න.",
+      schedule: "Every Saturday",
+      time: "8.00 PM",
+      location: "YouTube Live",
+      image:
+        "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80",
+    },
+    {
+      id: "event-2",
+      title: "INNER RACERS YOUTUBE LIVE LESSONS & LIVE TRADING",
+      description:
+        "අපගේ LIVE TRADING sessions join වෙලා strategy breakdowns, Q&A සහ mentorship එකක් එක්වරටම ලබාගන්න.",
+      schedule: "Every Saturday",
+      time: "8.00 PM",
+      location: "Hybrid Studio",
+      image:
+        "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80",
+    },
+    {
+      id: "event-3",
+      title: "INNER RACERS YOUTUBE LIVE LESSONS & LIVE TRADING",
+      description:
+        "Trading community එකක් වෙලා එකට ඉගෙන ගන්න අපේ mentorship crew එකත් සමඟ hands-on market reviews එකට connect වෙන්න.",
+      schedule: "Every Saturday",
+      time: "8.00 PM",
+      location: "eBirth HQ",
+      image:
+        "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+    },
+  ];
+  const testimonials = [
+    {
+      id: "student-1",
+      sinhala:
+        "eBirth Academy එකේ practical approach එක සහ real-world examples හරහා මගේම business එකක් නිවැරදිව start කරන්න confident feel වුණා.",
+      english:
+        "The practical guidance and relatable case studies helped me launch my own business successfully.",
+      name: "Dinuka Herath Hulugalla",
+      role: "Business Student",
+      image:
+        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+      id: "student-2",
+      sinhala:
+        "Trading එකක් දැනට start කරනවානම් හෝ dream එකක් තියෙනවානම් eBirth Academy එකෙන් ලැබෙන mentorship එකෙන් real confidence එකක් හදාගන්න පුළුවන්.",
+      english:
+        "Practical sessions and knowledge-packed tools gave me the courage to take my business idea live.",
+      name: "Dinuka Herath Hulugalla",
+      role: "Business Student",
+      image:
+        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+      id: "student-3",
+      sinhala:
+        "eBirth ටෙ mentorship එකෙන් daily guide එකක් ලැබුවා. Advanced strategies explain කරලා trading journey එකත් power up වෙලා.",
+      english:
+        "Big thanks to the eBirth team for showing the roadmap to scale my journey with confidence.",
+      name: "Dinuka Herath Hulugalla",
+      role: "Business Student",
+      image:
+        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80",
+    },
+  ];
   return (
-    <div className="min-h-screen bg-[#1a0b2e]">
+    <div className="min-h-screen bg-[#1a0b2e] font-sora">
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-transparent"></div>
+        <div className="pointer-events-none absolute left-1/2 top-[45%] h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,215,0,0.55),_rgba(26,11,46,0))] blur-2xl sm:h-[420px] sm:w-[420px] sm:blur-3xl lg:h-[520px] lg:w-[520px]"></div>
 
         {/* Decorative Coins */}
-        <div className="absolute top-20 left-10 w-32 h-32 opacity-30">
+        <div className="absolute top-10 left-4 hidden w-24 h-24 opacity-30 sm:block lg:top-20 lg:left-10 lg:h-32 lg:w-32">
           <div className="w-full h-full rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 animate-pulse"></div>
         </div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 opacity-20">
+        <div className="absolute bottom-10 right-4 hidden w-24 h-24 opacity-20 sm:block lg:bottom-20 lg:right-10 lg:h-40 lg:w-40">
           <div className="w-full h-full rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 animate-pulse delay-150"></div>
         </div>
 
         {/* Static Bitcoin Images */}
-        <div className="absolute top-20 right-20 opacity-17" style={{ transform: 'rotate(-15deg)' }}>
+        <div className="absolute top-16 right-8 hidden opacity-20 sm:block lg:top-20 lg:right-20 lg:opacity-17" style={{ transform: 'rotate(-15deg)' }}>
           <img src="/Bitcoin-PNG-removebg-preview.png" alt="Bitcoin" className="w-16 h-22" />
         </div>
-        <div className="absolute top-40 left-20 opacity-18" style={{ transform: 'rotate(25deg)' }}>
+        <div className="absolute top-32 left-8 hidden opacity-20 sm:block lg:left-20 lg:opacity-18" style={{ transform: 'rotate(25deg)' }}>
           <img src="/Bitcoin-PNG-removebg-preview.png" alt="Bitcoin" className="w-16 h-16" />
         </div>
-        <div className="absolute bottom-20 left-1/4 opacity-50" style={{ transform: 'rotate(-45deg)' }}>
+        {/* <div className="absolute bottom-20 left-1/4 opacity-50" style={{ transform: 'rotate(-45deg)' }}>
           <img src="/Bitcoin-PNG-removebg-preview.png" alt="Bitcoin" className="w-15 h-15" />
-        </div>
+        </div> */}
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid gap-12 items-center lg:grid-cols-2">
             {/* Left Content */}
-            <div>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            <div className="mx-auto flex max-w-2xl flex-col items-center text-center lg:items-start lg:text-left">
+              <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl lg:text-7xl mb-6 leading-tight">
                 <span className="text-[#FFD700]">eBirth</span>
                 <br />
                 Business Academy
               </h1>
-              <p className="text-white/80 font-bold text-2xl mb-8 max-w-xl">
-                Where Dreams Take Flight <br />
+              <p className="text-white/80 font-bold text-xl sm:text-2xl mb-8 max-w-xl">
+                Where Dreams Take Flight
+                <br />
                 and Entrepreneurs Are Born
               </p>
-              <div className="flex flex-wrap gap-4">
+              <p className="text-[#FFD700] text-lg font-semibold mb-6">
+                Trading ගනා සාරථි සංඛලනයේ මුල ඉදන් ඉගෙනගමු
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                 <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 py-6 text-lg rounded-lg">
                   Get Started
                 </Button>
-                {/* <Button variant="outline" className="border-2 border-[#FFD700] text-[#FFD700] hover:bg-[#FFD700] hover:text-black font-semibold px-8 py-6 text-lg rounded-lg bg-transparent">
-                  Know More
-                </Button> */}
               </div>
-
-              {/* Stats Badges */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-                <div className="bg-purple-900/40 backdrop-blur-sm border border-purple-700/30 rounded-lg p-3 text-center">
-                  <p className="text-[#FFD700] font-bold text-xs uppercase">Practical</p>
-                  <p className="text-white text-xs">Resources</p>
+              <div className="flex flex-wrap items-center justify-center gap-4 py-6 lg:justify-start">
+                <div className="flex -space-x-3">
+                  {images.map((img, index) => (
+                    <img
+                      key={`${img}-${index}`}
+                      src={img}
+                      alt="Student profile"
+                      className="h-14 w-14 rounded-full border-2 border-purple-500/40 object-cover shadow-lg shadow-purple-900/30"
+                    />
+                  ))}
                 </div>
-                <div className="bg-purple-900/40 backdrop-blur-sm border border-purple-700/30 rounded-lg p-3 text-center">
-                  <p className="text-[#FFD700] font-bold text-xs uppercase">Expert</p>
-                  <p className="text-white text-xs">Instructors</p>
-                </div>
-                <div className="bg-purple-900/40 backdrop-blur-sm border border-purple-700/30 rounded-lg p-3 text-center">
-                  <p className="text-[#FFD700] font-bold text-xs uppercase">Flexible</p>
-                  <p className="text-white text-xs">Courses</p>
-                </div>
-                <div className="bg-purple-900/40 backdrop-blur-sm border border-purple-700/30 rounded-lg p-3 text-center">
-                  <p className="text-[#FFD700] font-bold text-xs uppercase">Career</p>
-                  <p className="text-white text-xs">Support</p>
+                <div className="flex flex-col items-center text-white/70 md:flex-row md:items-center md:gap-3">
+                  <span className="text-xs uppercase tracking-[0.35em]">Trusted by</span>
+                  <div className="flex items-baseline gap-2 text-[#FFD700]">
+                    <span className="text-2xl font-extrabold leading-none">3,600+</span>
+                    <span className="text-xs uppercase tracking-[0.35em] text-white/60">Learners</span>
+                  </div>
                 </div>
               </div>
             </div>
-
             {/* Right - Hero Image */}
-            <div className="relative hidden lg:block">
-              <div className="w-full h-[500px] relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-purple-900/40 rounded-3xl backdrop-blur-sm border border-purple-500/30 overflow-hidden">
+            <div className="relative flex justify-center lg:justify-end">
+              <div className="relative h-[360px] w-full max-w-sm sm:h-[420px] sm:max-w-md lg:h-[600px] lg:max-w-none">
+                <div className="absolute inset-0 rounded-3xl w-full h-full ">
                   <img
-                    src="/Home-removebg-preview.png"
+                    src="/Ebirth-hero.webp"
                     alt="eBirth Business Academy - Hero Image"
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
+                    onError={(e) => {
+                      if (e.currentTarget.src.includes("placeholder.svg")) return;
+                      e.currentTarget.src = "/placeholder.svg";
+                    }}
                   />
                 </div>
+              </div>
+              <div className="pointer-events-none absolute inset-0 -z-10 hidden rounded-[56px] bg-[radial-gradient(circle,_rgba(255,215,0,0.18),_rgba(26,11,46,0))] blur-3xl lg:block"></div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+     
+
+      
+
+      {/* Who We Are Section */}
+      <section id="who-we-are" className="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2c1150] via-[#1a0d33] to-[#0b0418] opacity-95"></div>
+        <div className="pointer-events-none absolute -top-20 -left-10 hidden md:block opacity-60">
+          <img
+            src="/Bitcoin-PNG-removebg-preview.png"
+            alt="Floating bitcoin"
+            className="h-40 w-40 -rotate-[15deg] object-contain"
+          />
+        </div>
+        <div className="pointer-events-none absolute bottom-[-10%] right-[-15%] h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,_rgba(128,78,235,0.25),_rgba(12,5,26,0))] blur-3xl sm:h-80 sm:w-80"></div>
+
+        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr,0.95fr]">
+          {/* Left - Text Content */}
+          <div className="order-1 text-center lg:order-2 lg:text-left">
+           
+            <h2 className="text-4xl font-bold text-[#FFD700] md:text-5xl opacity-70 ">Who We Are</h2>
+            <h3 className="mt-4 text-3xl font-extrabold text-white md:text-4xl opacity-70">
+              <span>Empowering Dreams, </span>
+              <span className="text-[#FFD700]">Building Futures</span>
+            </h3>
+            <p className="mt-6 text-md leading-relaxed text-white/80 ">
+              eBirth Business Academy is Sri Lanka's leading trading education hub. At eBirth Business Academy - Where Entrepreneurs Are Born - we connect ambition with the strategies, mentorship, and community needed to grow sustainable ventures.
+            </p>
+            <p className="mt-4 text-md leading-relaxed text-white/70">
+              eBirth Business Academy ඔබේ trading හීන සරු රටාවකට පත් කරන්න සත්‍ය අත්දැකීම්, industry expert प्रशिक्षकයන් සහ flexible learning journeys එකතු කරලා උචිත දැනුම ලබාදෙයි. Real-world skills සහ data-driven insights සමඟ ඔබේ trading journey එකට විශ්වාසය එකතු කරමු.
+            </p>
+            <p className="mt-4 text-md leading-relaxed text-white/70 ">
+              Innovative ideas හඳුනාගෙන thriving entrepreneur community එකක් සමඟ එකතුවී ඔබේ entrepreneurial dreams reality බවට පත්කරන්න අපි ඔබට අත්වැලක්. Let's design the future you imagine.
+            </p>
+            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+              <Button className="group flex items-center gap-3 rounded-full bg-[#FFD700] px-8 py-3 text-base font-semibold text-black shadow-lg shadow-yellow-400/30 transition hover:bg-[#FFC700]">
+                Learn More
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Right - Image */}
+          <div className="order-2 lg:order-1 flex items-start h-full ">
+            <div className="relative overflow-hidden  p-2  ">
+              <div className="absolute inset-0 -z-10  "></div>
+              <div className="relative aspect-[4/3] overflow-hidden ">
+                <img
+                  src="/who-we-are.webp"
+                  alt="Collaborative trading session at eBirth Business Academy"
+                  className="h-full w-full object-cover"
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
+         {/* Stats Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-900/30 to-transparent">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -115,557 +309,341 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Who We Are Section */}
-      <section id="who-we-are" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-purple-800/20"></div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Image */}
-            <div className="relative">
-              <div className="aspect-[4/3] bg-gradient-to-br from-purple-600/30 to-purple-900/50 rounded-3xl backdrop-blur-sm border border-purple-500/30 overflow-hidden">
-                <img
-                  src="/who we are.png"
-                  alt="Who We Are - eBirth Business Academy Team"
-                  className="w-full h-full object-cover opacity-90"
-                />
-              </div>
-            </div>
-
-            {/* Right - Content */}
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Who We Are
-              </h2>
-              <h3 className="text-2xl md:text-3xl text-[#FFD700] mb-6">
-                BUILDING BRIDGES, DISCOVERING SKILLS
-              </h3>
-              <p className="text-white/70 mb-8 leading-relaxed">
-                Register money mind. Expert level and any money. No worries, we can do anything. You can do and get anything. It's all done professionally, and your data secure with us. It is something you seek, and your journey starts here.
-              </p>
-              <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 py-6 text-lg rounded-lg">
-                Get Started
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Our New Lessons Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-900/30 to-transparent">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-900/30 to-transparent">
+        <div className="pointer-events-none absolute -top-6 left-4 hidden sm:block">
+          <img
+            src="/Bitcoin-PNG-removebg-preview.png"
+            alt="Floating coin"
+            className="h-24 w-24 rotate-[12deg] object-contain opacity-70"
+          />
+        </div>
+        <div className="pointer-events-none absolute -bottom-10 right-6 hidden lg:block">
+          <img
+            src="/Bitcoin-PNG-removebg-preview.png"
+            alt="Floating coin"
+            className="h-28 w-28 rotate-[-18deg] object-contain opacity-60"
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-6xl">
+          <div className="text-center">
+            <h2 className="text-4xl font-extrabold text-[#FFD700] drop-shadow md:text-5xl">
               Our New Lessons
             </h2>
-            <p className="text-white/70 max-w-3xl mx-auto">
-              Exclusively Crypto related trading for you. We prepared advanced techniques made possible
+            <p className="mt-4 text-sm font-medium leading-relaxed text-white/80 sm:text-base md:text-lg">
+              මූලිකයෙන් ඉගෙන | Crypto trading basics දැනගන්න | advanced techniques එකටම සපයන
+              <br className="hidden sm:block" />
+              actionable programmes සමඟ ඔබේ trading journey එක upgrade කරමු
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Course Card 1 */}
-            <Card className="bg-purple-900/40 border-purple-700/30 backdrop-blur-sm overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-red-600/30 via-red-500/20 to-red-700/40 overflow-hidden relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-full h-full bg-gradient-to-br from-red-400/20 to-red-600/30 relative">
-                    {/* Bullish Flag Pattern */}
-                    <svg className="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                      {/* Flag pole */}
-                      <line x1="50" y1="40" x2="50" y2="160" stroke="#DC2626" strokeWidth="3" />
-
-                      {/* Flag */}
-                      <rect x="50" y="40" width="60" height="30" fill="#EF4444" opacity="0.8" />
-                      <rect x="50" y="40" width="60" height="30" fill="#F87171" opacity="0.6" />
-
-                      {/* Flag pattern lines */}
-                      <line x1="60" y1="45" x2="100" y2="45" stroke="#FFFFFF" strokeWidth="1" opacity="0.8" />
-                      <line x1="60" y1="52" x2="95" y2="52" stroke="#FFFFFF" strokeWidth="1" opacity="0.8" />
-                      <line x1="60" y1="59" x2="105" y2="59" stroke="#FFFFFF" strokeWidth="1" opacity="0.8" />
-                      <line x1="60" y1="66" x2="90" y2="66" stroke="#FFFFFF" strokeWidth="1" opacity="0.8" />
-
-                      {/* Price movement leading to flag */}
-                      <polyline
-                        fill="none"
-                        stroke="#10B981"
-                        strokeWidth="3"
-                        points="20,160 30,140 40,130 50,120"
-                      />
-
-                      {/* Breakout */}
-                      <polyline
-                        fill="none"
-                        stroke="#059669"
-                        strokeWidth="3"
-                        points="110,60 130,50 150,45 170,40 190,35 210,30 230,25 250,20"
-                      />
-                    </svg>
+          <div className="mt-14 grid gap-8 md:grid-cols-2">
+            {lessons.map((lesson) => (
+              <div
+                key={lesson.id}
+                className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#2b0e4c]/70 p-6 shadow-[0_0_40px_rgba(123,97,255,0.25)]"
+              >
+                <div className="relative rounded-[26px] border border-[#ffd700]/30 bg-gradient-to-br from-[#3a1565] via-[#2b0f4e] to-[#1a082f] p-2">
+                  <div className="relative overflow-hidden rounded-[22px] bg-black/30">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#ff3636]/70 via-[#6004d9]/70 to-[#0b021a]/90 opacity-80"></div>
+                    <div className="relative flex h-[220px] flex-col justify-between p-6 text-white">
+                      <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+                        <span>{lesson.lessonTag}</span>
+                        <span className="flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="h-4 w-4 text-[#FF2D20]"
+                          >
+                            <path d="M10 15L15 12L10 9V15ZM22 12C22 6.48 17.52 2 12 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 12 22C17.52 22 22 17.52 22 12ZM4 12C4 7.59 7.58 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20C7.58 20 4 16.41 4 12Z" />
+                          </svg>
+                          {lesson.platform}
+                        </span>
+                      </div>
+                      <div className="space-y-2 text-center text-3xl font-black uppercase leading-tight sm:text-4xl">
+                        <p>Trade කෙසේද?</p>
+                        <p className="text-[#FFD700]">TradingView</p>
+                      </div>
+                      <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+                        <span>Lesson</span>
+                        <span>01</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                {/* Course Badge Overlay */}
-                <div className="absolute top-4 right-4 bg-red-600/90 px-4 py-2 rounded-lg text-white font-bold text-lg">
-                  ට්‍රේඩින්ග් 17
+
+                <div className="mt-6 space-y-4 text-center">
+                  <h3 className="text-2xl font-semibold text-white">{lesson.title}</h3>
+                  <p className="text-sm text-white/70">{lesson.description}</p>
+                  <Button className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#FFD700] px-6 py-3 text-base font-semibold text-black transition hover:bg-[#FFC700]">
+                    Watch Now
+                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Button>
                 </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-white font-semibold text-xl mb-4">Advanced Trading Strategies</h3>
-                <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold w-full rounded-lg">
-                  Get Started
-                </Button>
-              </div>
-            </Card>
+            ))}
+          </div>
 
-            {/* Course Card 2 */}
-            <Card className="bg-purple-900/40 border-purple-700/30 backdrop-blur-sm overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-indigo-600/30 via-indigo-500/20 to-indigo-700/40 overflow-hidden relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-full h-full bg-gradient-to-br from-indigo-400/20 to-indigo-600/30 relative">
-                    {/* Head & Shoulders Pattern */}
-                    <svg className="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                      {/* Left shoulder */}
-                      <path
-                        fill="none"
-                        stroke="#6366F1"
-                        strokeWidth="3"
-                        d="M20,140 Q40,120 60,140 Q80,160 100,140"
-                      />
-
-                      {/* Head */}
-                      <path
-                        fill="none"
-                        stroke="#4F46E5"
-                        strokeWidth="3"
-                        d="M100,140 Q130,100 160,140 Q190,160 220,140"
-                      />
-
-                      {/* Right shoulder */}
-                      <path
-                        fill="none"
-                        stroke="#6366F1"
-                        strokeWidth="3"
-                        d="M220,140 Q240,120 260,140 Q280,160 300,140"
-                      />
-
-                      {/* Neckline */}
-                      <line x1="60" y1="140" x2="260" y2="140" stroke="#DC2626" strokeWidth="2" strokeDasharray="5,5" />
-
-                      {/* Breakout line */}
-                      <line x1="260" y1="140" x2="320" y2="100" stroke="#059669" strokeWidth="3" />
-                      <line x1="320" y1="100" x2="380" y2="80" stroke="#059669" strokeWidth="3" />
-
-                      {/* Technical indicators */}
-                      <circle cx="160" cy="140" r="3" fill="#4F46E5" />
-                      <text x="165" y="155" fill="#4F46E5" fontSize="10">Head</text>
-
-                      <circle cx="100" cy="140" r="2" fill="#6366F1" />
-                      <text x="85" y="155" fill="#6366F1" fontSize="8">L.Shoulder</text>
-
-                      <circle cx="260" cy="140" r="2" fill="#6366F1" />
-                      <text x="270" y="155" fill="#6366F1" fontSize="8">R.Shoulder</text>
-                    </svg>
-                  </div>
-                </div>
-                {/* Course Badge Overlay */}
-                <div className="absolute top-4 right-4 bg-red-600/90 px-4 py-2 rounded-lg text-white font-bold text-lg">
-                  ට්‍රේඩින්ග් 28
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-white font-semibold text-xl mb-4">Master Crypto Analysis</h3>
-                <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold w-full rounded-lg">
-                  Get Started
-                </Button>
-              </div>
-            </Card>
+          <div className="mt-10 flex justify-center">
+            <Button
+              variant="outline"
+              className="group inline-flex items-center gap-3 rounded-full border-2 border-[#FFD700] bg-transparent px-8 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD700] transition hover:bg-[#FFD700] hover:text-black"
+            >
+              View All Courses
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Button>
           </div>
         </div>
       </section>
 
       {/* WhatsApp Banner */}
       <section className="py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-6 flex items-center justify-between flex-wrap gap-4">
+        <div className="max-w-4xl mx-auto ">
+          <div className="bg-black rounded-2xl p-6 flex items-center justify-center flex-wrap gap-8 w-full py-10">
             <div className="flex items-center gap-4 text-white">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                <svg className="w-7 h-7 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+              <div className="w-12 h-12  rounded-full flex items-center justify-center">
+                <svg className="w-[128px] h-[128px] text-white " fill="green" viewBox="0 0 24 24">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
               </div>
-              <span className="font-bold text-lg">WhatsApp us & Unlock Exclusive Discounts</span>
+              <span className="font-bold text-2xl">WhatsApp us & Unlock Exclusive Discounts   🚀</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-white/20 rounded animate-pulse"></div>
-              <div className="w-6 h-6 bg-white/30 rounded animate-pulse delay-75"></div>
-              <div className="w-6 h-6 bg-white/40 rounded animate-pulse delay-150"></div>
-            </div>
+           
           </div>
         </div>
       </section>
 
       {/* Explore Learning Opportunities Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-900/30 to-transparent">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-900/30 via-[#36126b]/50 to-transparent">
+        <div className="pointer-events-none absolute left-[-4%] top-[-6%] hidden md:block">
+          <img
+            src="/Bitcoin-PNG-removebg-preview.png"
+            alt="Gold coin"
+            className="h-28 w-28 rotate-[24deg] opacity-70"
+          />
+        </div>
+
+        <div className="pointer-events-none absolute right-[-6%] top-[-12%] hidden lg:block">
+          <img
+            src="/Home-removebg-preview.png"
+            alt="Parachute coin"
+            className="h-44 w-44 object-contain"
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-5xl">
+          <div className="text-center px-8 space-y-10">
+            <h2 className="text-4xl font-extrabold text-[#FFD700] drop-shadow md:text-5xl ">
               Explore Our Learning Opportunities
             </h2>
-            <p className="text-white/70 max-w-3xl mx-auto">
-              Register money mind. Expert level and any money. No worries, we can do anything. You can do and get anything. It's all done professionally.
+            <p className="mt-5 text-base font-semibold leading-relaxed text-white/80 sm:text-lg md:text-xl px-10">
+              Beginner කෙනෙක්ද? හොඳයි ✅ Expert levelවත් ඔබට අවශ්‍යද? No worries,
+              අපේ course catalog එක definitely ඔයාට match වෙන එකක් sure වෙලාම තියෙනවා!
+              Join වෙලා skills level up කරමු!!
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Online Webinars Card */}
-            <Card className="bg-gradient-to-br from-purple-800/50 to-purple-900/60 border-purple-600/40 backdrop-blur-sm p-8">
-              <div className="mb-6">
-                <div className="aspect-video bg-gradient-to-br from-orange-600/30 via-orange-500/20 to-orange-700/40 rounded-lg mb-4 overflow-hidden relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-full h-full bg-gradient-to-br from-orange-400/20 to-orange-600/30 relative">
-                      {/* Trend Analysis Chart */}
-                      <svg className="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                        {/* Area fill under curve */}
-                        <path
-                          fill="url(#orangeGradient)"
-                          d="M20,160 L60,140 L100,120 L140,100 L180,90 L220,85 L260,80 L300,75 L340,70 L380,65 L380,200 L20,200 Z"
-                        />
+          <div className="mt-10 flex justify-center">
+            <div className="rounded-full bg-white/10 p-1">
+              <div className="flex items-center gap-2 rounded-full bg-black/40 p-1">
+                <button className="rounded-full bg-[#8C52FF] px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)] sm:text-sm">
+                  Online Membership
+                </button>
+                <button className="rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/70 transition hover:text-white sm:text-sm">
+                  Physical Membership
+                </button>
+              </div>
+            </div>
+          </div>
 
-                        {/* Trend line */}
-                        <polyline
-                          fill="none"
-                          stroke="#F97316"
-                          strokeWidth="4"
-                          points="20,160 60,140 100,120 140,100 180,90 220,85 260,80 300,75 340,70 380,65"
-                        />
+          <p className="mt-10 text-center text-sm font-semibold uppercase tracking-[0.4em] text-white/60">
+            Online Mentorship & Life-Time Memberships
+          </p>
 
-                        {/* Data points */}
-                        <circle cx="60" cy="140" r="4" fill="#EA580C" />
-                        <circle cx="140" cy="100" r="4" fill="#EA580C" />
-                        <circle cx="220" cy="85" r="4" fill="#EA580C" />
-                        <circle cx="300" cy="75" r="4" fill="#EA580C" />
+          <div className="mt-12 grid gap-8 md:grid-cols-2">
+            {memberships.map((plan) => (
+              <div
+                key={plan.id}
+                className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#311063]/80 shadow-[0_0_35px_rgba(88,28,135,0.35)]"
+              >
+                <div className="relative h-52 w-full overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#000]/30 via-[#17043a]/40 to-[#4c1d95]/60"></div>
+                  <img
+                    src={plan.image}
+                    alt={plan.title}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
 
-                        <defs>
-                          <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stopColor="#F97316" stopOpacity="0.3" />
-                            <stop offset="100%" stopColor="#F97316" stopOpacity="0.05" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                    </div>
+                <div className="space-y-5 px-8 py-8 text-center">
+                  <h3 className="text-2xl font-semibold text-white">{plan.title}</h3>
+                  <p className="text-sm leading-relaxed text-white/70">{plan.description}</p>
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="text-4xl font-bold text-green-500">{plan.price}</span>
+                    <span className="text-base font-medium text-white/50 line-through">{plan.oldPrice}</span>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <Button className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#FFD700] px-6 py-3 text-base font-semibold text-black transition hover:bg-[#FFC700]">
+                      Enroll Now
+                      <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/20 bg-white/5 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
+                    >
+                      Learn More
+                      <ArrowRight className="h-5 w-5 text-[#FFD700] transition-transform group-hover:translate-x-1" />
+                    </Button>
                   </div>
                 </div>
               </div>
-              <h3 className="text-white font-bold text-2xl mb-2">Online Webinars</h3>
-              <p className="text-white/60 mb-6">Access our expert-led online training</p>
-              <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-[#FFD700] text-4xl font-bold">Rs.35,000</span>
-                <span className="text-white/50 line-through">Rs.50,000</span>
-              </div>
-              <div className="flex gap-3">
-                <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold flex-1 rounded-lg">
-                  Get Started
-                </Button>
-                <Button variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 rounded-lg">
-                  Learn More
-                </Button>
-              </div>
-            </Card>
-
-            {/* Online Resources Card */}
-            <Card className="bg-gradient-to-br from-purple-800/50 to-purple-900/60 border-purple-600/40 backdrop-blur-sm p-8">
-              <div className="mb-6">
-                <div className="aspect-video bg-gradient-to-br from-teal-600/30 via-teal-500/20 to-teal-700/40 rounded-lg mb-4 overflow-hidden relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-full h-full bg-gradient-to-br from-teal-400/20 to-teal-600/30 relative">
-                      {/* Portfolio Pie Chart */}
-                      <svg className="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                        {/* Pie chart slices */}
-                        <circle cx="150" cy="100" r="60" fill="#14B8A6" opacity="0.9" />
-                        <circle cx="150" cy="100" r="60" fill="#0F766E" opacity="0.8" />
-                        <circle cx="150" cy="100" r="60" fill="#0D9488" opacity="0.7" />
-                        <circle cx="150" cy="100" r="60" fill="#0F766E" opacity="0.9" />
-
-                        {/* Pie slice paths */}
-                        <path d="M150,100 L150,40 A60,60 0 0,1 200,100 Z" fill="#14B8A6" opacity="0.8" />
-                        <path d="M150,100 L200,100 A60,60 0 0,1 180,150 Z" fill="#0F766E" opacity="0.9" />
-                        <path d="M150,100 L180,150 A60,60 0 0,1 100,130 Z" fill="#0D9488" opacity="0.7" />
-                        <path d="M150,100 L100,130 A60,60 0 1,1 150,40 Z" fill="#0F766E" opacity="0.8" />
-
-                        {/* Center circle */}
-                        <circle cx="150" cy="100" r="20" fill="#0F766E" opacity="0.9" />
-
-                        {/* Portfolio labels */}
-                        <text x="250" y="60" fill="#14B8A6" fontSize="12" fontWeight="bold">BTC 45%</text>
-                        <text x="280" y="90" fill="#0F766E" fontSize="12" fontWeight="bold">ETH 30%</text>
-                        <text x="260" y="120" fill="#0D9488" fontSize="12" fontWeight="bold">ADA 15%</text>
-                        <text x="220" y="140" fill="#0F766E" fontSize="12" fontWeight="bold">DOT 10%</text>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 className="text-white font-bold text-2xl mb-2">Online Resources</h3>
-              <p className="text-white/60 mb-6">Comprehensive learning materials</p>
-              <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-[#FFD700] text-4xl font-bold">Rs.5,000</span>
-                <span className="text-white/50 line-through">Rs.8,000</span>
-              </div>
-              <div className="flex gap-3">
-                <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold flex-1 rounded-lg">
-                  Get Started
-                </Button>
-                <Button variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 rounded-lg">
-                  Learn More
-                </Button>
-              </div>
-            </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Upcoming Events & Competitions */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="text-[#FFD700]">UPCOMING EVENTS &</span>
-              <br />
-              <span className="text-white">COMPETITIONS</span>
+      <section className="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#220943] via-[#341067] to-[#1b0635]">
+        <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,215,0,0.14),_rgba(34,9,67,0))]"></div>
+        <div className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(140,82,255,0.28),_rgba(27,6,53,0))] blur-3xl"></div>
+
+        <div className="relative mx-auto max-w-6xl">
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl font-extrabold uppercase text-[#FFD700] md:text-5xl">
+              Upcoming Events & Competitions
             </h2>
+            <p className="text-white/70 text-base md:text-lg">
+              අපේ trading community එක සමඟ real-time lessons, competitions සහ live trading experience එකක් ලැබෙයි.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Event Card 1 */}
-            <Card className="bg-purple-900/40 border-purple-700/30 backdrop-blur-sm overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-green-600/30 via-green-500/20 to-green-700/40 overflow-hidden relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-full h-full bg-gradient-to-br from-green-400/20 to-green-600/30 relative">
-                    {/* Trading Chart Pattern */}
-                    <svg className="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                      <polyline
-                        fill="none"
-                        stroke="#10B981"
-                        strokeWidth="3"
-                        points="20,150 60,120 100,140 140,100 180,110 220,80 260,90 300,70 340,60 380,80"
-                      />
-                      <polyline
-                        fill="none"
-                        stroke="#059669"
-                        strokeWidth="2"
-                        points="20,160 60,140 100,150 140,120 180,130 220,100 260,110 300,90 340,80 380,100"
-                      />
-                    </svg>
+          <div className="mt-16 grid gap-8 md:grid-cols-3">
+            {events.map((event) => (
+              <Card
+                key={event.id}
+                className="group relative overflow-hidden rounded-[36px] border border-white/10 bg-[#2b0f4e]/70 shadow-[0_0_45px_rgba(110,63,190,0.35)]"
+              >
+                <div className="relative h-60 overflow-hidden">
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    onError={(e) => {
+                      if (e.currentTarget.src.includes("placeholder.svg")) return;
+                      e.currentTarget.src = "/placeholder.svg";
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#2b0f4e]/30 to-[#2b0f4e]"></div>
+                </div>
+
+                <div className="space-y-6 px-8 py-10 text-center">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/50">
+                    Featured Community Event
+                  </p>
+                  <h3 className="text-xl font-bold leading-8 text-[#FFD700]">
+                    {event.title}
+                  </h3>
+                  <p className="text-sm text-white/75 leading-relaxed">
+                    {event.description}
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-center gap-3 text-sm font-medium text-white">
+                      <CalendarDays className="h-5 w-5 text-[#FFD700]" />
+                      <span>{event.schedule}</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-3 text-sm font-medium text-white">
+                      <Clock3 className="h-5 w-5 text-[#FFD700]" />
+                      <span>{event.time}</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-white/60">
+                      <MapPin className="h-4 w-4 text-[#FFD700]" />
+                      <span>{event.location}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-2 h-2 bg-[#FFD700] rounded-full"></div>
-                  <span className="text-white/70 text-sm">2024/10/19 at 9:00 am</span>
-                </div>
-                <h3 className="text-white font-semibold text-lg mb-3">BEST CRYPTO TRADER 2024 1st STAGE</h3>
-                <p className="text-white/60 text-sm mb-4">Join our premier trading competition</p>
-                <Button variant="outline" className="border-[#FFD700] text-[#FFD700] hover:bg-[#FFD700] hover:text-black w-full rounded-lg">
-                  Register Now
-                </Button>
-              </div>
-            </Card>
+              </Card>
+            ))}
+          </div>
 
-            {/* Event Card 2 */}
-            <Card className="bg-purple-900/40 border-purple-700/30 backdrop-blur-sm overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-blue-600/30 via-blue-500/20 to-blue-700/40 overflow-hidden relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-full h-full bg-gradient-to-br from-blue-400/20 to-blue-600/30 relative">
-                    {/* Candlestick Chart Pattern */}
-                    <svg className="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                      {/* Candlestick bodies */}
-                      <rect x="30" y="80" width="8" height="40" fill="#3B82F6" opacity="0.8" />
-                      <rect x="50" y="60" width="8" height="60" fill="#1D4ED8" opacity="0.9" />
-                      <rect x="70" y="90" width="8" height="30" fill="#3B82F6" opacity="0.8" />
-                      <rect x="90" y="70" width="8" height="50" fill="#1D4ED8" opacity="0.9" />
-                      <rect x="110" y="100" width="8" height="20" fill="#3B82F6" opacity="0.8" />
-                      <rect x="130" y="85" width="8" height="35" fill="#1D4ED8" opacity="0.9" />
-                      <rect x="150" y="75" width="8" height="45" fill="#3B82F6" opacity="0.8" />
-                      <rect x="170" y="95" width="8" height="25" fill="#1D4ED8" opacity="0.9" />
-                      <rect x="190" y="110" width="8" height="10" fill="#3B82F6" opacity="0.8" />
-                      <rect x="210" y="105" width="8" height="15" fill="#1D4ED8" opacity="0.9" />
-                      <rect x="230" y="115" width="8" height="5" fill="#3B82F6" opacity="0.8" />
-                      <rect x="250" y="120" width="8" height="10" fill="#1D4ED8" opacity="0.9" />
-                      <rect x="270" y="125" width="8" height="15" fill="#3B82F6" opacity="0.8" />
-                      <rect x="290" y="130" width="8" height="20" fill="#1D4ED8" opacity="0.9" />
-                      <rect x="310" y="135" width="8" height="25" fill="#3B82F6" opacity="0.8" />
-                      <rect x="330" y="140" width="8" height="30" fill="#1D4ED8" opacity="0.9" />
-                      <rect x="350" y="145" width="8" height="35" fill="#3B82F6" opacity="0.8" />
-
-                      {/* Wicks */}
-                      <line x1="34" y1="60" x2="34" y2="80" stroke="#3B82F6" strokeWidth="1" />
-                      <line x1="54" y1="40" x2="54" y2="60" stroke="#1D4ED8" strokeWidth="1" />
-                      <line x1="74" y1="70" x2="74" y2="90" stroke="#3B82F6" strokeWidth="1" />
-                      <line x1="94" y1="50" x2="94" y2="70" stroke="#1D4ED8" strokeWidth="1" />
-                      <line x1="114" y1="90" x2="114" y2="100" stroke="#3B82F6" strokeWidth="1" />
-                      <line x1="134" y1="65" x2="134" y2="85" stroke="#1D4ED8" strokeWidth="1" />
-                      <line x1="154" y1="55" x2="154" y2="75" stroke="#3B82F6" strokeWidth="1" />
-                      <line x1="174" y1="85" x2="174" y2="95" stroke="#1D4ED8" strokeWidth="1" />
-                      <line x1="194" y1="100" x2="194" y2="110" stroke="#3B82F6" strokeWidth="1" />
-                      <line x1="214" y1="95" x2="214" y2="105" stroke="#1D4ED8" strokeWidth="1" />
-                      <line x1="234" y1="110" x2="234" y2="115" stroke="#3B82F6" strokeWidth="1" />
-                      <line x1="254" y1="110" x2="254" y2="120" stroke="#1D4ED8" strokeWidth="1" />
-                      <line x1="274" y1="115" x2="274" y2="125" stroke="#3B82F6" strokeWidth="1" />
-                      <line x1="294" y1="120" x2="294" y2="130" stroke="#1D4ED8" strokeWidth="1" />
-                      <line x1="314" y1="125" x2="314" y2="135" stroke="#3B82F6" strokeWidth="1" />
-                      <line x1="334" y1="130" x2="334" y2="140" stroke="#1D4ED8" strokeWidth="1" />
-                      <line x1="354" y1="135" x2="354" y2="145" stroke="#3B82F6" strokeWidth="1" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-2 h-2 bg-[#FFD700] rounded-full"></div>
-                  <span className="text-white/70 text-sm">2024/10/25 at 2:00 pm</span>
-                </div>
-                <h3 className="text-white font-semibold text-lg mb-3">WEBINAR CRYPTO MARKET ANALYSIS</h3>
-                <p className="text-white/60 text-sm mb-4">Expert insights on market trends</p>
-                <Button variant="outline" className="border-[#FFD700] text-[#FFD700] hover:bg-[#FFD700] hover:text-black w-full rounded-lg">
-                  Register Now
-                </Button>
-              </div>
-            </Card>
-
-            {/* Event Card 3 */}
-            <Card className="bg-purple-900/40 border-purple-700/30 backdrop-blur-sm overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-purple-600/30 via-purple-500/20 to-purple-700/40 overflow-hidden relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-full h-full bg-gradient-to-br from-purple-400/20 to-purple-600/30 relative">
-                    {/* Volume Bars Chart Pattern */}
-                    <svg className="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                      {/* Volume bars */}
-                      <rect x="20" y="120" width="12" height="60" fill="#8B5CF6" opacity="0.8" />
-                      <rect x="40" y="80" width="12" height="100" fill="#7C3AED" opacity="0.9" />
-                      <rect x="60" y="100" width="12" height="80" fill="#8B5CF6" opacity="0.8" />
-                      <rect x="80" y="60" width="12" height="120" fill="#7C3AED" opacity="0.9" />
-                      <rect x="100" y="90" width="12" height="90" fill="#8B5CF6" opacity="0.8" />
-                      <rect x="120" y="70" width="12" height="110" fill="#7C3AED" opacity="0.9" />
-                      <rect x="140" y="110" width="12" height="70" fill="#8B5CF6" opacity="0.8" />
-                      <rect x="160" y="50" width="12" height="130" fill="#7C3AED" opacity="0.9" />
-                      <rect x="180" y="85" width="12" height="95" fill="#8B5CF6" opacity="0.8" />
-                      <rect x="200" y="75" width="12" height="105" fill="#7C3AED" opacity="0.9" />
-                      <rect x="220" y="95" width="12" height="85" fill="#8B5CF6" opacity="0.8" />
-                      <rect x="240" y="65" width="12" height="115" fill="#7C3AED" opacity="0.9" />
-                      <rect x="260" y="105" width="12" height="75" fill="#8B5CF6" opacity="0.8" />
-                      <rect x="280" y="55" width="12" height="125" fill="#7C3AED" opacity="0.9" />
-                      <rect x="300" y="115" width="12" height="65" fill="#8B5CF6" opacity="0.8" />
-                      <rect x="320" y="45" width="12" height="135" fill="#7C3AED" opacity="0.9" />
-                      <rect x="340" y="125" width="12" height="55" fill="#8B5CF6" opacity="0.8" />
-                      <rect x="360" y="135" width="12" height="45" fill="#7C3AED" opacity="0.9" />
-
-                      {/* Volume line overlay */}
-                      <polyline
-                        fill="none"
-                        stroke="#A855F7"
-                        strokeWidth="2"
-                        points="26,120 46,80 66,100 86,60 106,90 126,70 146,110 166,50 186,85 206,75 226,95 246,65 266,105 286,55 306,115 326,45 346,125 366,135"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-2 h-2 bg-[#FFD700] rounded-full"></div>
-                  <span className="text-white/70 text-sm">2024/11/05 at 10:00 am</span>
-                </div>
-                <h3 className="text-white font-semibold text-lg mb-3">MEET EXPERT ONLINE AT 10AM</h3>
-                <p className="text-white/60 text-sm mb-4">Q&A session with industry experts</p>
-                <Button variant="outline" className="border-[#FFD700] text-[#FFD700] hover:bg-[#FFD700] hover:text-black w-full rounded-lg">
-                  Register Now
-                </Button>
-              </div>
-            </Card>
+          <div className="mt-16 flex justify-center">
+            <Button
+              variant="outline"
+              className="group inline-flex items-center gap-3 rounded-full border-2 border-[#FFD700] bg-transparent px-10 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD700] transition hover:bg-[#FFD700] hover:text-black"
+            >
+              See All Events
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Button>
           </div>
         </div>
       </section>
 
       {/* Student's Feedback Section */}
-      <section id="feedback" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-900/30 to-transparent">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Student's Feedback
-            </h2>
-            <p className="text-white/70 max-w-3xl mx-auto">
-              What are our customers say about their learning experience with us. Here some feedback.
+      <section
+        id="feedback"
+        className="relative w-full overflow-hidden py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#f1e7ff] via-[#d8c6ff] to-[#bb9bff]"
+      >
+        <div className="pointer-events-none absolute left-1/2 top-6 h-64 w-64 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.45),_rgba(217,193,255,0))]"></div>
+        <div className="relative mx-auto max-w-6xl">
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl font-extrabold text-black md:text-5xl">Student's Feedback</h2>
+            <p className="text-base font-medium text-black/70 md:text-lg">
+              eBirth Academy එකේ විශිෂ්ට journey එක start කරන අපේ students ලගේ learning experience එක ගැන කියන feedbacks ?
+            </p>
+            <p className="text-xs font-semibold uppercase tracking-[0.45em] text-black/50">
+              Based on 1000+ Feedbacks
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Testimonial 1 */}
-            <Card className="bg-gradient-to-br from-purple-800/60 to-purple-900/70 border-purple-600/40 backdrop-blur-sm p-6">
-              <div className="flex mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-[#FFD700]" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-white/80 mb-6 italic">
-                "Amazing experience! The instructors are knowledgeable and the course content is very practical. I've learned so much about crypto trading."
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-purple-600 overflow-hidden">
-                  <img src="/placeholder.svg" alt="Student" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <p className="text-white font-semibold">Kasun Perera</p>
-                  <p className="text-white/60 text-sm">Crypto Trader</p>
-                </div>
-              </div>
-            </Card>
+          <div className="mt-14 grid w-full gap-8 md:grid-cols-3">
+            {testimonials.map((testimonial) => (
+              <div
+                key={testimonial.id}
+                className="overflow-hidden rounded-[32px] text-white"
+              >
+                <div className="flex h-full flex-col">
+                  <div className="relative rounded-t-[32px] bg-[#5c1fca] px-8 pt-10 pb-24 text-left text-white">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15">
+                      <Quote className="h-6 w-6" />
+                    </div>
+                    <p className="mt-6 text-lg leading-relaxed font-medium text-white">
+                      {testimonial.sinhala}
+                    </p>
+                   
+                  </div>
 
-            {/* Testimonial 2 */}
-            <Card className="bg-gradient-to-br from-purple-800/60 to-purple-900/70 border-purple-600/40 backdrop-blur-sm p-6">
-              <div className="flex mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-[#FFD700]" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-white/80 mb-6 italic">
-                "The best investment I made was in this course. The strategies taught here have helped me become a successful trader."
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-purple-600 overflow-hidden">
-                  <img src="/placeholder.svg" alt="Student" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <p className="text-white font-semibold">Nimali Silva</p>
-                  <p className="text-white/60 text-sm">Business Owner</p>
+                  <div className="relative flex   rounded-b-[32px] bg-black px-8 pb-10 pt-16 ">
+                    <div className=" border border-4 border-white absolute left-1/4 top-0  h-24 w-24 -translate-y-1/2 -translate-x-1/2 overflow-hidden rounded-full shadow-[0_16px_30px_rgba(0,0,0,0.35)]">
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="h-full w-full object-cover "
+                        onError={(e) => {
+                          if (e.currentTarget.src.includes("placeholder.svg")) return;
+                          e.currentTarget.src = "/placeholder.svg";
+                        }}
+                      />
+                    </div>
+                    <div className="mt-5">
+                      <p className="text-lg font-semibold text-white">{testimonial.name}</p>
+                      <p className="text-sm text-white/60">{testimonial.role}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </Card>
+            ))}
+          </div>
 
-            {/* Testimonial 3 */}
-            <Card className="bg-gradient-to-br from-purple-800/60 to-purple-900/70 border-purple-600/40 backdrop-blur-sm p-6">
-              <div className="flex mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-[#FFD700]" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-white/80 mb-6 italic">
-                "Excellent platform with great support. The community is very helpful and the resources are top-notch."
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-purple-600 overflow-hidden">
-                  <img src="/placeholder.svg" alt="Student" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <p className="text-white font-semibold">Ravindu Fernando</p>
-                  <p className="text-white/60 text-sm">Investor</p>
-                </div>
-              </div>
-            </Card>
+          <div className="mt-12 flex items-center justify-center gap-3">
+            {testimonials.map((testimonial, index) => (
+              <span
+                key={`${testimonial.id}-dot`}
+                className={`h-2.5 rounded-full transition-all ${
+                  index === 1 ? "w-9 bg-[#FFD700]" : "w-2.5 bg-black/20"
+                }`}
+              ></span>
+            ))}
           </div>
         </div>
       </section>
@@ -684,9 +662,9 @@ export default function Index() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {/* Hours */}
-            <Card className="bg-purple-900/40 border-purple-700/30 backdrop-blur-sm p-6 text-center">
-              <div className="w-16 h-16 bg-[#FFD700] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="w-8 h-8 text-black" />
+            <Card className=" bg-transparentp-6 text-center">
+              <div className="w-16 h-16 ] rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-white font-bold text-xl mb-2">OUR HOURS</h3>
               <p className="text-white/70">Monday - Friday</p>
@@ -694,9 +672,9 @@ export default function Index() {
             </Card>
 
             {/* Location */}
-            <Card className="bg-purple-900/40 border-purple-700/30 backdrop-blur-sm p-6 text-center">
-              <div className="w-16 h-16 bg-[#FFD700] rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-8 h-8 text-black" />
+            <Card className=" bg-transparent p-6 text-center">
+              <div className="w-16 h-16  rounded-full flex items-center justify-center mx-auto mb-4">
+                <MapPin className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-white font-bold text-xl mb-2">LOCATION</h3>
               <p className="text-white/70">No 315, Main Street Kegalle, Sri Lanka</p>
@@ -704,9 +682,9 @@ export default function Index() {
             </Card>
 
             {/* Contact */}
-            <Card className="bg-purple-900/40 border-purple-700/30 backdrop-blur-sm p-6 text-center">
-              <div className="w-16 h-16 bg-[#FFD700] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Phone className="w-8 h-8 text-black" />
+            <Card className=" bg-transparent p-6 text-center">
+              <div className="w-16 h-16  rounded-full flex items-center justify-center mx-auto mb-4">
+                <Phone className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-white font-bold text-xl mb-2">CONTACT US</h3>
               <p className="text-white/70">0357 286 586</p>
