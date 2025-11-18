@@ -1,0 +1,108 @@
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+
+type Lesson = {
+  id: number;
+  title: string;
+  description: string;
+  lessonTag: string;
+  platform: string;
+};
+
+type NewLessonsSectionProps = {
+  lessons: Lesson[];
+};
+
+const NewLessonsSection = ({ lessons }: NewLessonsSectionProps) => {
+  return (
+    <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-900/30 to-transparent">
+      <div className="pointer-events-none absolute -top-6 left-4 hidden sm:block">
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Floating coin"
+          className="h-24 w-24 rotate-[12deg] object-contain opacity-70"
+        />
+      </div>
+      <div className="pointer-events-none absolute -bottom-10 right-6 hidden lg:block">
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Floating coin"
+          className="h-28 w-28 rotate-[-18deg] object-contain opacity-60"
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-6xl">
+        <div className="text-center">
+          <h2 className="text-4xl font-extrabold text-[#FFD700] drop-shadow md:text-5xl">
+            Our New Lessons
+          </h2>
+          <p className="mt-4 text-sm font-medium leading-relaxed text-white/80 sm:text-base md:text-lg">
+            මූලිකයෙන් ඉගෙන | Crypto trading basics දැනගන්න | advanced techniques එකටම සපයන
+            <br className="hidden sm:block" />
+            actionable programmes සමඟ ඔබේ trading journey එක upgrade කරමු
+          </p>
+        </div>
+
+        <div className="mt-14 grid gap-8 md:grid-cols-2">
+          {lessons.map((lesson) => (
+            <div
+              key={lesson.id}
+              className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#2b0e4c]/70 p-6 shadow-[0_0_40px_rgba(123,97,255,0.25)]"
+            >
+              <div className="relative rounded-[26px] border border-[#ffd700]/30 bg-gradient-to-br from-[#3a1565] via-[#2b0f4e] to-[#1a082f] p-2">
+                <div className="relative overflow-hidden rounded-[22px] bg-black/30">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#ff3636]/70 via-[#6004d9]/70 to-[#0b021a]/90 opacity-80"></div>
+                  <div className="relative flex h-[220px] flex-col justify-between p-6 text-white">
+                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+                      <span>{lesson.lessonTag}</span>
+                      <span className="flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="h-4 w-4 text-[#FF2D20]"
+                        >
+                          <path d="M10 15L15 12L10 9V15ZM22 12C22 6.48 17.52 2 12 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 12 22C17.52 22 22 17.52 22 12ZM4 12C4 7.59 7.58 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20C7.58 20 4 16.41 4 12Z" />
+                        </svg>
+                        {lesson.platform}
+                      </span>
+                    </div>
+                    <div className="space-y-2 text-center text-3xl font-black uppercase leading-tight sm:text-4xl">
+                      <p>Trade කෙසේද?</p>
+                      <p className="text-[#FFD700]">TradingView</p>
+                    </div>
+                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+                      <span>Lesson</span>
+                      <span>01</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-4 text-center">
+                <h3 className="text-2xl font-semibold text-white">{lesson.title}</h3>
+                <p className="text-sm text-white/70">{lesson.description}</p>
+                <Button className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#FFD700] px-6 py-3 text-base font-semibold text-black transition hover:bg-[#FFC700]">
+                  Watch Now
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <Button
+            variant="outline"
+            className="group inline-flex items-center gap-3 rounded-full border-2 border-[#FFD700] bg-transparent px-8 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD700] transition hover:bg-[#FFD700] hover:text-black"
+          >
+            View All Courses
+            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default NewLessonsSection;
