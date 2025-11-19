@@ -16,6 +16,7 @@ import RefundPolicy from "./pages/RefundPolicy";
 import Membership from "./pages/Membership";
 import Course from "./pages/Course";
 import InstitutionalMembership from "./pages/InstitutionalMembership";
+import TradingMentorship from "./pages/TradingMentorship";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/membership" element={<Membership />} />
           <Route path="/course" element={<Course />} />
+          <Route path="/trading-mentorship" element={<TradingMentorship />} />
           <Route path="/institutional-membership" element={<InstitutionalMembership />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
