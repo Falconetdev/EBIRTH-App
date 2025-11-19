@@ -14,6 +14,8 @@ import Community from "./pages/Community";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundPolicy from "./pages/RefundPolicy";
 import Membership from "./pages/Membership";
+import Course from "./pages/Course";
+import InstitutionalMembership from "./pages/InstitutionalMembership";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +33,8 @@ const App = () => (
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/membership" element={<Membership />} />
+          <Route path="/course" element={<Course />} />
+          <Route path="/institutional-membership" element={<InstitutionalMembership />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

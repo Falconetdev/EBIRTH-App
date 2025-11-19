@@ -1,8 +1,20 @@
+import JoinCommunitySection from '@/components/course-details/JoinCommunitySection'
+import Explore from '@/components/course/Explore'
+import FeedbackSection from '@/components/home/FeedbackSection'
+import PageLayout from '@/components/layout/PageLayout'
+import Faq from '@/components/membership/Faq'
 import React from 'react'
 
 const Course = () => {
   return (
-    <div>Course</div>
+    <div>
+        <PageLayout mainClassName="pt-12">
+          <Explore />
+          <Faq />
+          <FeedbackSection />
+          <JoinCommunitySection   />
+        </PageLayout>
+    </div>
   )
 }
 
