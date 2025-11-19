@@ -43,7 +43,7 @@ export default function Index() {
       price: "රු. 38,000",
       oldPrice: "රු. 48,000",
       image:
-        "https://images.unsplash.com/photo-1605902711622-cfb43c44367f?auto=format&fit=crop&w=900&q=80",
+        "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80",
       description:
         "Online membership package එක තුළින් trading fundamentals සිට pro level strategies දක්වා පියවරෙන් පියවර ඉගෙන ගන්න.",
     },

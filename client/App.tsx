@@ -11,6 +11,10 @@ import CourseDeatils from "./pages/CourseDeatils";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
 import Community from "./pages/Community";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import RefundPolicy from "./pages/RefundPolicy";
+import Membership from "./pages/Membership";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -24,6 +28,9 @@ const App = () => (
           <Route path="/course-details" element={<CourseDeatils />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/membership" element={<Membership />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

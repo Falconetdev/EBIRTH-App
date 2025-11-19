@@ -76,7 +76,7 @@ const HeroSection = ({ images }: HeroSectionProps) => {
             <div className="relative h-[360px] w-full max-w-sm sm:h-[420px] sm:max-w-md lg:h-[600px] lg:max-w-none">
               <div className="absolute inset-0 rounded-3xl w-full h-full ">
                 <img
-                  src="/Ebirth-hero.webp"
+                  src="/hero-new.webp"
                   alt="eBirth Business Academy - Hero Image"
                   className="h-full w-full object-cover"
                   onError={(e) => {

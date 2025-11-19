@@ -27,7 +27,7 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
 
       <div className="pointer-events-none absolute right-[-6%] top-[-12%] hidden lg:block">
         <img
-          src="/Home-removebg-preview.png"
+          src="/Bitcoin-PNG-removebg-preview.png"
           alt="Parachute coin"
           className="h-44 w-44 object-contain"
         />
