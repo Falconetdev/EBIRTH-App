@@ -17,6 +17,15 @@ export default defineConfig(({ mode }) => ({
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
     },
   },
+  preview: {
+    host: '0.0.0.0',
+    port: 8080,
+    strictPort: true,
+    allowedHosts: [
+      'seal-app-wan5l.ondigitalocean.app',
+      '.ondigitalocean.app' // This allows all Digital Ocean app URLs
+    ]
+  },
   build: {
     outDir: "dist/spa",
   },
