@@ -178,10 +178,71 @@ const PrivacyPolicy = () => {
 			className="bg-[#0C0224] text-white"
 			mainClassName="relative isolate overflow-hidden px-4 pb-24 pt-28 sm:px-6 lg:px-8"
 		>
-			<div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-[#1F055C] via-[#2E0E7A] to-[#6B23FF]" />
+			<div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-[#2f0c54] via-[#190636] to-[#0a021c]" />
 			<div className="pointer-events-none absolute left-[-12%] top-[-10%] -z-10 h-80 w-80 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.25),_transparent_65%)] blur-3xl" />
 			<div className="pointer-events-none absolute right-[-8%] bottom-[-12%] -z-10 h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(123,76,255,0.35),_transparent_70%)] blur-3xl" />
+			 {/* Decorative background coins */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        {/* Left large peeking coin */}
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Decorative coin"
+          className="coin-float absolute left-[-90px] top-[38%] hidden md:block h-64 w-64 -rotate-[14deg] opacity-35"
+          style={{ animationDelay: '0.6s' }}
+        />
+        {/* Mid-right floating coin */}
+        
+        {/* Small accent above tabs */}
+        <img
+          src="/coin2.webp"
+          alt="Decorative coin"
+          className="coin-float absolute left-[54%] top-[22%] h-16 w-16 -translate-x-1/2 rotate-[22deg] opacity-25"
+          style={{ animationDelay: '1.8s' }}
+        />
+        {/* Bottom subtle coin near parachute */}
+        <img
+          src="/coin2.webp"
+          alt="Decorative coin"
+          className="coin-float absolute left-[52%] bottom-[18%] h-14 w-14 -translate-x-1/2 rotate-[12deg] opacity-20"
+          style={{ animationDelay: '2.2s' }}
+        />
+        {/* Lower-left faint coin */}
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Decorative coin"
+          className="coin-float absolute left-[6%] bottom-[30%] h-24 w-24 rotate-[26deg] opacity-18"
+          style={{ animationDelay: '1.4s' }}
+        />
+        {/* Top-right corner large coin */}
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Decorative coin"
+          className="coin-float absolute right-[-70px] top-[80px] hidden lg:block h-40 w-40 rotate-[-12deg] opacity-40"
+          style={{ animationDelay: '0.9s' }}
+        />
+       
+        {/* Top-left medium coin */}
+        <img
+          src="/coin2.webp"
+          alt="Decorative coin"
+          className="coin-float absolute left-[0%] top-[15%] h-[180px] w-[180px]  "
+          style={{ animationDelay: '1.3s' }}
+        />
+        {/* Top center subtle small coin */}
+        <img
+          src="/coin4.webp"
+          alt="Decorative coin"
+          className="coin-float absolute left-1/2 top-[40%] h-25 w-25 -translate-x-1/2 rotate-[8deg] opacity-22"
+          style={{ animationDelay: '1.9s' }}
+        />
 
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Decorative coin"
+          className="coin-float absolute right-[-70px] bottom-[70%] hidden lg:block h-60 w-60 rotate-[-12deg] opacity-40"
+          style={{ animationDelay: '0.9s' }}
+        />
+      </div>
 			<div className="mx-auto flex max-w-5xl flex-col gap-16">
 				<header className="space-y-5 text-center">
 					<p className="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">
@@ -214,7 +275,7 @@ const PrivacyPolicy = () => {
 							please contact us:
 						</p>
 						<a
-							href="/contact"
+							href="/contact-us"
 							className="mt-6 inline-flex items-center justify-center rounded-full bg-[#FFE500] px-8 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_30px_rgba(158,124,255,0.35)] transition hover:bg-[#ffdd38]"
 						>
 							Contact eBirth Academy

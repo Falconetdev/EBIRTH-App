@@ -9,6 +9,7 @@ import FeedbackSection from "@/components/home/FeedbackSection";
 const AboutUs = () => {
   return (
     <PageLayout mainClassName="pt-24">
+      
       <WhoWeAreSection />
       <StatsSection />
       <MissionComponent />

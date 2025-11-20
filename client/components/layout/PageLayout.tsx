@@ -18,7 +18,7 @@ const PageLayout = ({
   showFooter = true,
 }: PageLayoutProps) => {
   return (
-    <div className={cn("flex min-h-screen flex-col font-sora", className)}>
+    <div className={cn("relative flex min-h-screen flex-col font-sora overflow-hidden", className)}>
       <Header />
       <main className={cn("flex-1", mainClassName)}>{children}</main>
       {showFooter ? <Footer /> : null}

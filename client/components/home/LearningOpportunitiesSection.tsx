@@ -16,22 +16,48 @@ type LearningOpportunitiesSectionProps = {
 
 const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSectionProps) => {
   return (
-    <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-900/30 via-[#36126b]/50 to-transparent">
-      <div className="pointer-events-none absolute left-[-4%] top-[-6%] hidden md:block">
+    <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-inherit overflow-hidden">
+      {/* Anchored decorative coins top-left */}
+      <div className="pointer-events-none absolute left-3 top-3 sm:left-8 sm:top-6">
+        {/* <img
+          src="/coin4.webp"
+          alt="Decorative coin"
+          className="coin-float h-16 w-16 rotate-[25deg] opacity-30 sm:h-20 sm:w-20"
+        /> */}
         <img
           src="/Bitcoin-PNG-removebg-preview.png"
-          alt="Gold coin"
-          className="h-28 w-28 rotate-[24deg] opacity-70"
+          alt="Decorative coin"
+          className="coin-float absolute left-14 top-10 h-12 w-12 rotate-[-8deg] opacity-25 sm:h-14 sm:w-14"
+          style={{ animationDelay: '0.9s' }}
         />
       </div>
+      {/* Bottom-left large coin peeking in */}
+      <div className="pointer-events-none absolute -left-20 bottom-[-56px] hidden md:block opacity-40">
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Decorative coin"
+          className="coin-float h-52 w-52 -rotate-[18deg]"
+          style={{ animationDelay: '1.2s' }}
+        />
+      </div>
+      {/* Subtle center background coin */}
+      <div className="pointer-events-none absolute left-1/2 top-[72%] -translate-x-1/2 opacity-15">
+        <img
+          src="/coin2.webp"
+          alt="Decorative coin"
+          className="coin-float h-16 w-16 rotate-[18deg]"
+          style={{ animationDelay: '2s' }}
+        />
+      </div>
+     
 
-      <div className="pointer-events-none absolute right-[-6%] top-[-12%] hidden lg:block">
+      {/* <div className="pointer-events-none absolute right-[-6%] top-[-12%] hidden lg:block">
         <img
           src="/Bitcoin-PNG-removebg-preview.png"
           alt="Parachute coin"
           className="h-44 w-44 object-contain"
         />
-      </div>
+      </div> */}
 
       <div className="relative mx-auto max-w-5xl">
         <div className="text-center px-8 space-y-10">

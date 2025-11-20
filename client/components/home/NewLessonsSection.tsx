@@ -15,21 +15,47 @@ type NewLessonsSectionProps = {
 
 const NewLessonsSection = ({ lessons }: NewLessonsSectionProps) => {
   return (
-    <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-900/30 to-transparent">
-      <div className="pointer-events-none absolute -top-6 left-4 hidden sm:block">
+    <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-inherit overflow-hidden">
+      {/* Anchored decorative coins top-left */}
+      <div className="pointer-events-none absolute left-2 top-2 sm:left-6 sm:top-4">
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Decorative coin"
+          className="coin-float h-20 w-20 rotate-[18deg] opacity-30 sm:h-24 sm:w-24"
+        />
+        <img
+          src="/coin2.webp"
+          alt="Decorative coin"
+          className="coin-float absolute -left-6 top-14 h-14 w-14 rotate-[-12deg] opacity-25 sm:h-16 sm:w-16"
+          style={{ animationDelay: '1.2s' }}
+        />
+      </div>
+      {/* Bottom-left large coin peeking in */}
+      <div className="pointer-events-none absolute -left-16 bottom-[-48px] hidden md:block opacity-35">
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Decorative coin"
+          className="coin-float h-44 w-44 -rotate-[16deg]"
+          style={{ animationDelay: '0.9s' }}
+        />
+      </div>
+      {/* Subtle center background coin behind cards */}
+      <div className="pointer-events-none absolute left-1/2 top-[65%] -translate-x-1/2 opacity-20">
+        <img
+          src="/coin4.webp"
+          alt="Decorative coin"
+          className="coin-float h-16 w-16 rotate-[20deg]"
+          style={{ animationDelay: '1.6s' }}
+        />
+      </div>
+      {/* <div className="pointer-events-none absolute -top-6 left-4 hidden sm:block">
         <img
           src="/Bitcoin-PNG-removebg-preview.png"
           alt="Floating coin"
           className="h-24 w-24 rotate-[12deg] object-contain opacity-70"
         />
-      </div>
-      <div className="pointer-events-none absolute -bottom-10 right-6 hidden lg:block">
-        <img
-          src="/Bitcoin-PNG-removebg-preview.png"
-          alt="Floating coin"
-          className="h-28 w-28 rotate-[-18deg] object-contain opacity-60"
-        />
-      </div>
+      </div> */}
+     
 
       <div className="relative mx-auto max-w-6xl">
         <div className="text-center">

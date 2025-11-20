@@ -53,7 +53,7 @@ const Faq = () => {
   };
 
   return (
-    <section className="relative isolate overflow-hidden bg-gradient-to-br from-[#18023A] via-[#2A0970] to-[#6B23FF] px-4 py-20 sm:px-6 lg:px-8">
+    <section className="relative isolate overflow-hidden  px-4 py-20 sm:px-6 lg:px-8">
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-70">
         <div className="absolute left-[-10%] top-[-8%] h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.2),_transparent_60%)] blur-2xl" />
         <div className="absolute right-[-12%] bottom-[-18%] h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(116,64,255,0.4),_transparent_70%)] blur-3xl" />

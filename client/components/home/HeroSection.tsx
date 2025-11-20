@@ -6,28 +6,47 @@ type HeroSectionProps = {
 
 const HeroSection = ({ images }: HeroSectionProps) => {
   return (
-    <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-transparent"></div>
+    <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-visible">
+      <div className="absolute inset-0 bg-inherit"></div>
       <div className="pointer-events-none absolute left-1/2 top-[45%] h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,215,0,0.55),_rgba(26,11,46,0))] blur-2xl sm:h-[420px] sm:w-[420px] sm:blur-3xl lg:h-[520px] lg:w-[520px]"></div>
 
-      <div className="absolute top-10 left-4 hidden w-24 h-24 opacity-30 sm:block lg:top-20 lg:left-10 lg:h-32 lg:w-32">
-        <div className="w-full h-full rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 animate-pulse"></div>
-      </div>
-      <div className="absolute bottom-10 right-4 hidden w-24 h-24 opacity-20 sm:block lg:bottom-20 lg:right-10 lg:h-40 lg:w-40">
-        <div className="w-full h-full rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 animate-pulse delay-150"></div>
-      </div>
-
-      <div
-        className="absolute top-16 right-8 hidden opacity-20 sm:block lg:top-20 lg:right-20 lg:opacity-17"
-        style={{ transform: "rotate(-15deg)" }}
-      >
-        <img src="/Bitcoin-PNG-removebg-preview.png" alt="Bitcoin" className="w-16 h-22" />
-      </div>
-      <div
-        className="absolute top-32 left-8 hidden opacity-20 sm:block lg:left-20 lg:opacity-18"
-        style={{ transform: "rotate(25deg)" }}
-      >
-        <img src="/Bitcoin-PNG-removebg-preview.png" alt="Bitcoin" className="w-16 h-16" />
+      {/* Decorative Coins Layout */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        {/* Coin 3 (Top Left) - Enlarged
+        <img
+          src="/coin4.webp"
+          alt="Decorative coin top left"
+          className="coin-float absolute left-[-40px] top-[-30px] h-56 w-56 rotate-[18deg] opacity-40 hidden sm:block"
+          style={{ animationDelay: '0.8s' }}
+        /> */}
+        {/* Supporting small coin near top-left */}
+        <img
+          src="/coin3.webp"
+          alt="Decorative coin"
+          className="coin-float absolute  top-24 h-[260px] w-[200px] rotate-[-12deg]  hidden md:block"
+          style={{ animationDelay: '1.6s' }}
+        />
+        {/* Mid background subtle coin */}
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Decorative coin mid"
+          className="coin-float absolute left-[52%] top-[15%] h-[100px] w-[100px] -translate-x-1/2 rotate-[22deg] opacity-70"
+          style={{ animationDelay: '2.2s' }}
+        />
+        {/* Coin 1 (Right Corner) - Enlarged */}
+        <img
+          src="/coin1.webp"
+          alt="Decorative coin right"
+          className="coin-float absolute right-[2px] top-[220px] h-[260px] w-[200px] rotate-[-15deg]  hidden lg:block"
+          style={{ animationDelay: '1.1s' }}
+        />
+        {/* Bottom left accent coin
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Decorative coin bottom left"
+          className="coin-float absolute left-8 bottom-6 h-24 w-24 rotate-[30deg] opacity-30 hidden md:block"
+          style={{ animationDelay: '1.9s' }}
+        /> */}
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">

@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 
 const WhoWeAreSection = () => {
   return (
-    <section id="who-we-are" className=" mt-12 px-4 sm:px-6 lg:px-8">
-      <div className="absolute inset-0 bg-inherit opacity-95"></div>
+    <section id="who-we-are" className="relative mt-12 px-4 sm:px-6 lg:px-8">
+      <div className="absolute inset-0 bg-inherit"></div>
       <h2 className="text-6xl font-bold text-[#FFD700]   text-center mb-8">Who We Are</h2>
       <div className="pointer-events-none absolute -top-20 -left-10 hidden md:block opacity-60">
         <img
@@ -13,6 +13,14 @@ const WhoWeAreSection = () => {
         />
       </div>
       <div className="pointer-events-none absolute bottom-[-10%] right-[-15%] h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,_rgba(128,78,235,0.25),_rgba(12,5,26,0))] blur-3xl sm:h-80 sm:w-80"></div>
+      {/* Right edge large coin peek */}
+      <div className="pointer-events-none absolute -right-16 top-1/3 hidden lg:block opacity-40">
+        <img
+          src="/Bitcoin-PNG-removebg-preview.png"
+          alt="Floating bitcoin"
+          className="h-48 w-48 -rotate-[10deg] object-contain"
+        />
+      </div>
 
       <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr,0.95fr]">
         

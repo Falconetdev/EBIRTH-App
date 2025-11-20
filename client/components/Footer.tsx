@@ -15,7 +15,7 @@ export default function Footer() {
             <div className="flex space-x-4">
               {/* Facebook */}
               <a
-                href="#"
+                href="https://www.facebook.com/InnerRacers?_rdc=1&_rdr#"
                 className="w-8 h-8 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
@@ -26,7 +26,7 @@ export default function Footer() {
 
               {/* Telegram */}
               <a
-                href="#"
+                href="https://t.me/innerracers"
                 className="w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Telegram"
               >
@@ -48,7 +48,7 @@ export default function Footer() {
 
               {/* YouTube */}
               <a
-                href="#"
+                href="https://www.youtube.com/channel/UCpRgfr4_Eax0HHa2rwkRQ2w"
                 className="w-8 h-8 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-colors"
                 aria-label="YouTube"
               >

@@ -18,9 +18,9 @@ type EventsSectionProps = {
 
 const EventsSection = ({ events }: EventsSectionProps) => {
   return (
-    <section className="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#220943] via-[#341067] to-[#1b0635]">
-      <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,215,0,0.14),_rgba(34,9,67,0))]"></div>
-      <div className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(140,82,255,0.28),_rgba(27,6,53,0))] blur-3xl"></div>
+    <section className="relative  py-20 px-4 sm:px-6 lg:px-8 bg-inherit overflow-hidden">
+      {/* <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,215,0,0.14),_rgba(34,9,67,0))]"></div> */}
+      {/* <div className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(140,82,255,0.28),_rgba(27,6,53,0))] blur-3xl"></div> */}
 
       <div className="relative mx-auto max-w-6xl">
         <div className="text-center space-y-4">

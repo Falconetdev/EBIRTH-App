@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const closeTimeoutRef = useRef<number | null>(null);
 
   const membershipItems = [
-    { name: "Free Trading Membership", href: "#" },
-    { name: "Institutional Membership", href: "#" },
+    { name: "Free Trading Membership", href: "/trading-mentorship" },
+    { name: "Institutional Membership", href: "/institutional-membership" },
     {
       name: "Elliott Wave Membership",
       href: "#",
@@ -33,11 +34,11 @@ export default function Header() {
   ];
 
   const navLinks = [
-    { name: "Home", href: "#" },
-    { name: "About", href: "#who-we-are" },
-    { name: "Membership", href: "#", hasDropdown: true, items: membershipItems },
-    { name: "Courses", href: "#", hasDropdown: true, items: coursesItems },
-    { name: "Community", href: "#community" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about-us" },
+    { name: "Membership", href: "/membership", hasDropdown: true, items: membershipItems },
+    { name: "Courses", href: "/course", hasDropdown: true, items: coursesItems },
+    { name: "Community", href: "/community" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -75,15 +76,32 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8 relative">
             {navLinks.map((link) => (
-              <div key={link.name} className="relative">
+              <div
+                key={link.name}
+                className="relative group"
+                onMouseEnter={() => {
+                  if (link.hasDropdown) {
+                    if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
+                    setOpenDropdown(link.name);
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (link.hasDropdown) {
+                    if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
+                    closeTimeoutRef.current = window.setTimeout(() => {
+                      setOpenDropdown((current) => (current === link.name ? null : current));
+                    }, 150); // small delay to allow moving into panel
+                  }
+                }}
+              >
                 {link.hasDropdown ? (
-                  <button
-                    onClick={() => toggleDropdown(link.name)}
+                  <a
+                    href={link.href}
                     className="flex items-center gap-1 text-white/80 hover:text-white transition-colors text-sm font-medium"
                   >
                     {link.name}
                     <ChevronDown size={16} className={`transition-transform ${openDropdown === link.name ? 'rotate-180' : ''}`} />
-                  </button>
+                  </a>
                 ) : (
                   <a
                     href={link.href}
@@ -93,20 +111,30 @@ export default function Header() {
                   </a>
                 )}
 
-                {/* Dropdown Menu */}
                 {link.hasDropdown && openDropdown === link.name && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-[#1a0b2e] border border-purple-800/30 rounded-lg shadow-lg backdrop-blur-sm z-50">
+                  <div
+                    className="absolute top-full left-0 mt-2 w-64 bg-[#1a0b2e] border border-purple-800/30 rounded-lg shadow-lg backdrop-blur-sm z-50"
+                    onMouseEnter={() => {
+                      if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
+                      setOpenDropdown(link.name);
+                    }}
+                    onMouseLeave={() => {
+                      if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
+                      closeTimeoutRef.current = window.setTimeout(() => {
+                        setOpenDropdown((current) => (current === link.name ? null : current));
+                      }, 150);
+                    }}
+                  >
                     <div className="py-2">
                       {link.items.map((item) => (
                         <div key={item.name}>
                           {item.hasSubmenu ? (
-                            <div className="relative group">
+                            <div className="relative group/sub">
                               <button className="flex items-center justify-between w-full px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-purple-800/20 transition-colors">
                                 {item.name}
                                 <ChevronDown size={12} className="rotate-[-90deg]" />
                               </button>
-                              {/* Submenu */}
-                              <div className="absolute top-0 left-full ml-1 w-48 bg-[#1a0b2e] border border-purple-800/30 rounded-lg shadow-lg backdrop-blur-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                              <div className="absolute top-0 left-full ml-1 w-48 bg-[#1a0b2e] border border-purple-800/30 rounded-lg shadow-lg backdrop-blur-sm opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200">
                                 <div className="py-2">
                                   {item.subItems?.map((subItem) => (
                                     <a

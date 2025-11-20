@@ -9,6 +9,7 @@ import FeedbackSection from "@/components/home/FeedbackSection";
 import ContactSection from "@/components/home/ContactSection";
 import WhatsAppButton from "@/components/home/WhatsAppButton";
 import PageLayout from "@/components/layout/PageLayout";
+import DecorativeCoins from "@/components/layout/DecorativeCoins";
 
 export default function Index() {
   const images = [
@@ -94,11 +95,12 @@ export default function Index() {
     },
   ];
   return (
-    <PageLayout className="bg-[#1a0b2e]">
+    <PageLayout className="bg-[#1a0b2e] bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-transparent">
+      {/* <DecorativeCoins /> */}
       <HeroSection images={images} />
 
       <WhoWeAreSection />
-
+ 
       <StatsSection />
 
       <NewLessonsSection lessons={lessons} />
@@ -109,7 +111,9 @@ export default function Index() {
 
       <EventsSection events={events} />
 
-      <FeedbackSection />
+      <div className="bg-[#1a0b2e]">
+        <FeedbackSection />
+      </div>
 
       <ContactSection />
 

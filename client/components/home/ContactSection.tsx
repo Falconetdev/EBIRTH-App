@@ -56,8 +56,10 @@ const ContactSection = () => {
               <Phone className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-white font-bold text-xl mb-2">CONTACT US</h3>
-            <p className="text-white/70">0357 286 586</p>
-            <p className="text-white/70">0114 492 444</p>
+            <div className="flex flex-col">
+              <a className="text-white/70" href="tel:0357286586">0357 286 586</a>
+            <a className="text-white/70" href="tel:0114492444">0114 492 444</a>
+            </div>
           </Card>
         </div>
 
