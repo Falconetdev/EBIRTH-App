@@ -7,8 +7,9 @@ import { createServer } from "./server";
 export default defineConfig(({ mode }) => ({
   server: {
     host: '0.0.0.0',
-    port: 8080,
-    strictPort: true,
+    // Allow overriding via PORT env; fallback to 5173 if 8080 is busy
+    port: Number(process.env.PORT) || 5173,
+    strictPort: false,
     fs: {
       allow: [
         path.resolve(__dirname),
@@ -20,8 +21,8 @@ export default defineConfig(({ mode }) => ({
   },
   preview: {
     host: '0.0.0.0',
-    port: 8080,
-    strictPort: true,
+    port: Number(process.env.PORT) || 5173,
+    strictPort: false,
     allowedHosts: [
       'seal-app-wan5l.ondigitalocean.app',
       '.ondigitalocean.app' // This allows all Digital Ocean app URLs

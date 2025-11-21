@@ -2,7 +2,7 @@ const WhatsAppBanner = () => {
   return (
     <section className="py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto ">
-        <div className="bg-black rounded-2xl p-6 flex items-center justify-center flex-wrap gap-8 w-full py-10">
+        <a href="https://api.whatsapp.com/send/?phone=94742388188&text=Membership+Discount&type=phone_number&app_absent=0" className="bg-black rounded-2xl p-6 flex items-center justify-center flex-wrap gap-8 w-full py-10">
           <div className="flex items-center gap-4 text-white">
             <div className="w-12 h-12  rounded-full flex items-center justify-center">
               <svg className="w-[128px] h-[128px] text-white " fill="green" viewBox="0 0 24 24">
@@ -11,7 +11,7 @@ const WhatsAppBanner = () => {
             </div>
             <span className="font-bold text-2xl">WhatsApp us & Unlock Exclusive Discounts   🚀</span>
           </div>
-        </div>
+        </a>
       </div>
     </section>
   );

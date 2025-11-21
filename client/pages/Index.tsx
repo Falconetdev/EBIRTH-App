@@ -27,6 +27,8 @@ export default function Index() {
         "business එකක් scratch එකෙන් build කරන්න සහ scale කිරීමේ සරලම උපදෙස් ලබාගන්න.",
       lessonTag: "Lesson 01",
       platform: "Watch on YouTube",
+      image:
+        "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1000&q=80",
     },
     {
       id: 2,
@@ -35,6 +37,8 @@ export default function Index() {
         "business growth road map එකක් සහ actionable trading frameworks එකටම ලබාගන්න.",
       lessonTag: "Lesson 02",
       platform: "Watch on YouTube",
+      image:
+        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=80",
     },
   ];
   const memberships = [
@@ -49,6 +53,16 @@ export default function Index() {
         "Online membership package එක තුළින් trading fundamentals සිට pro level strategies දක්වා පියවරෙන් පියවර ඉගෙන ගන්න.",
     },
     {
+      id: "online-elite",
+      title: "Elite Live Trading Room Access - Online",
+      price: "රු. 48,000",
+      oldPrice: "රු. 60,000",
+      image:
+        "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=80",
+      description:
+        "Daily live trading room updates, Q&A replays, සහ exclusive indicator packs එක්ක advanced momentum trading දැක්මක් ගන්න.",
+    },
+    {
       id: "lifetime",
       title: "Foundations + Advanced Trading Membership - Online",
       price: "රු. 38,000",
@@ -58,6 +72,17 @@ export default function Index() {
       description:
         "Real-time coaching sessions, signal breakdowns සහ lifetime community access එකත් සමඟ consistency එක ගොඩන්න.",
     },
+    {
+      id: "physical-masterclass",
+      title: "Hybrid FX & Equity Bootcamp - Physical",
+      price: "රු. 58,000",
+      oldPrice: "රු. 70,000",
+      image:
+        "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=80",
+      description:
+        "Colombo training hub එකේ weekend lab sessions, strategy clinics සහ on-the-spot mentor feedback එකක් එක්ක hands-on guidance එකක් ලබාගන්න.",
+    },
+    
   ];
   const events = [
     {

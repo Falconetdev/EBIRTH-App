@@ -59,7 +59,7 @@ const JoinCommunitySection = () => {
           </div>
 
           <a
-            href="https://t.me/"
+            href="https://t.me/innerracers"
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center gap-2 rounded-full bg-[#4f46e5] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#4338ca]"

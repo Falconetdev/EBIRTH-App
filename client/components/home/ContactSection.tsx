@@ -5,17 +5,17 @@ const ContactSection = () => {
   const locations = [
   {
     id: "kegalle",
-    title: "Kegalle Campus",
-    mapLink: "https://www.google.com/maps/place/Kegalle,+Sri+Lanka/@7.2523,80.3436,15z",  
+    title: "Kegalle Branch",
+    mapLink: "https://www.google.com/maps/place/eBirth+Business+Academy+-+Kegalle+Branch/@7.2535918,80.3455975,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae3175a5a86912d:0x6d864de0ec469045!8m2!3d7.2535918!4d80.3481724!16s%2Fg%2F11s7cjvvy7",
     embedSrc:
-      "https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Kegalle,+Sri+Lanka&center=7.2523,80.3436&zoom=14",
+      "https://www.google.com/maps?q=eBirth+Business+Academy+-+Kegalle+Branch&output=embed",
   },
   {
     id: "nugegoda",
-    title: "Nugegoda Studio",
-    mapLink: "https://www.google.com/maps/place/Nugegoda,+Sri+Lanka/@6.8739,79.9020,15z",  
+    title: "Nugegoda Branch",
+    mapLink: "https://www.google.com/maps/place/eBirth+Business+Academy+(+Nugegoda+)/@6.8578321,79.9086415,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae25bd8efe36a59:0xeddd58bee299181a!8m2!3d6.8578321!4d79.9086415!16s%2Fg%2F11kqvx4ctp",
     embedSrc:
-      "https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Nugegoda,+Sri+Lanka&center=6.8739,79.9020&zoom=14",
+      "https://www.google.com/maps?q=eBirth+Business+Academy+(+Nugegoda+)&output=embed",
   },
 ];
 

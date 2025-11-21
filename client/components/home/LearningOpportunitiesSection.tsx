@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Membership = {
   id: string;
@@ -15,6 +17,18 @@ type LearningOpportunitiesSectionProps = {
 };
 
 const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSectionProps) => {
+  const [activeType, setActiveType] = useState<'online' | 'physical'>('online');
+  const navigate = useNavigate();
+
+  const visibleMemberships = useMemo(() => {
+    return memberships
+      .filter(m => {
+        const isOnline = m.id.toLowerCase().includes('online');
+        return activeType === 'online' ? isOnline : !isOnline;
+      })
+      .slice(0, 2); // Ensure exactly two cards per tab
+  }, [memberships, activeType]);
+
   return (
     <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-inherit overflow-hidden">
       {/* Anchored decorative coins top-left */}
@@ -74,10 +88,18 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
         <div className="mt-10 flex justify-center">
           <div className="rounded-full bg-white/10 p-1">
             <div className="flex items-center gap-2 rounded-full bg-black/40 p-1">
-              <button className="rounded-full bg-[#8C52FF] px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)] sm:text-sm">
+              <button
+                type="button"
+                onClick={() => setActiveType('online')}
+                className={`rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] sm:text-sm transition ${activeType === 'online' ? 'bg-[#8C52FF] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)]' : 'text-white/70 hover:text-white'}`}
+              >
                 Online Membership
               </button>
-              <button className="rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/70 transition hover:text-white sm:text-sm">
+              <button
+                type="button"
+                onClick={() => setActiveType('physical')}
+                className={`rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] sm:text-sm transition ${activeType === 'physical' ? 'bg-[#8C52FF] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)]' : 'text-white/70 hover:text-white'}`}
+              >
                 Physical Membership
               </button>
             </div>
@@ -88,13 +110,13 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
           Online Mentorship & Life-Time Memberships
         </p>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          {memberships.map((plan) => (
+        <div className="mt-12 grid gap-8 md:grid-cols-2 auto-rows-fr">
+          {visibleMemberships.map((plan) => (
             <div
               key={plan.id}
-              className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#311063]/80 shadow-[0_0_35px_rgba(88,28,135,0.35)]"
+              className="relative flex h-full flex-col overflow-hidden rounded-[32px] border border-white/10 bg-[#311063]/80 shadow-[0_0_35px_rgba(88,28,135,0.35)]"
             >
-              <div className="relative h-52 w-full overflow-hidden">
+              <div className="relative h-52 w-full shrink-0 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#000]/30 via-[#17043a]/40 to-[#4c1d95]/60"></div>
                 <img
                   src={plan.image}
@@ -102,19 +124,25 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
                   className="h-full w-full object-cover"
                 />
               </div>
-
-              <div className="space-y-5 px-8 py-8 text-center">
+              <div className="flex flex-1 flex-col space-y-5 px-8 py-8 text-center">
                 <h3 className="text-2xl font-semibold text-white">{plan.title}</h3>
-                <p className="text-sm leading-relaxed text-white/70">{plan.description}</p>
+                <p className="flex-1 text-sm leading-relaxed text-white/70 line-clamp-4">{plan.description}</p>
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-4xl font-bold text-green-500">{plan.price}</span>
                   <span className="text-base font-medium text-white/50 line-through">{plan.oldPrice}</span>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <Button className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#FFD700] px-6 py-3 text-base font-semibold text-black transition hover:bg-[#FFC700]">
-                    Enroll Now
-                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </Button>
+                <div className="grid gap-3 sm:grid-cols-2 mt-auto">
+                 <Button
+  onClick={() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate('/course-details');
+  }}
+  className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#FFD700] px-6 py-3 text-base font-semibold text-black transition hover:bg-[#FFC700]"
+>
+  Enroll Now
+  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+</Button>
+
                   <Button
                     variant="outline"
                     className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/20 bg-white/5 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"

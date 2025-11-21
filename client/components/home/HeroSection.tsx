@@ -77,15 +77,15 @@ const HeroSection = ({ images }: HeroSectionProps) => {
                     key={`${img}-${index}`}
                     src={img}
                     alt="Student profile"
-                    className="h-14 w-14 rounded-full border-2 border-purple-500/40 object-cover shadow-lg shadow-purple-900/30"
+                    className="h-[48px] w-[48px] rounded-full border-2 border-purple-500/40 object-cover shadow-lg shadow-purple-900/30"
                   />
                 ))}
               </div>
               <div className="flex flex-col items-center text-white/70 md:flex-row md:items-center md:gap-3">
-                <span className="text-xs uppercase tracking-[0.35em]">Trusted by</span>
+               
                 <div className="flex items-baseline gap-2 text-[#FFD700]">
-                  <span className="text-2xl font-extrabold leading-none">3,600+</span>
-                  <span className="text-xs uppercase tracking-[0.35em] text-white/60">Learners</span>
+                  <span className="text-2xl font-extrabold leading-none">10K+ සිසුන් පිරිසක් සමගින්</span>
+                  
                 </div>
               </div>
             </div>

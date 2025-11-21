@@ -7,6 +7,7 @@ type Lesson = {
   description: string;
   lessonTag: string;
   platform: string;
+  image: string;
 };
 
 type NewLessonsSectionProps = {
@@ -75,13 +76,22 @@ const NewLessonsSection = ({ lessons }: NewLessonsSectionProps) => {
               key={lesson.id}
               className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#2b0e4c]/70 p-6 shadow-[0_0_40px_rgba(123,97,255,0.25)]"
             >
-              <div className="relative rounded-[26px] border border-[#ffd700]/30 bg-gradient-to-br from-[#3a1565] via-[#2b0f4e] to-[#1a082f] p-2">
-                <div className="relative overflow-hidden rounded-[22px] bg-black/30">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#ff3636]/70 via-[#6004d9]/70 to-[#0b021a]/90 opacity-80"></div>
-                  <div className="relative flex h-[220px] flex-col justify-between p-6 text-white">
-                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+              <div className="relative rounded-[26px] border border-[#ffd700]/30 bg-black/40">
+                <div className="relative h-[280px] overflow-hidden rounded-[26px]">
+                  <img
+                    src={lesson.image}
+                    alt={lesson.title}
+                    className="h-full w-full object-cover"
+                    onError={(e) => {
+                      if (e.currentTarget.src.includes("placeholder.svg")) return;
+                      e.currentTarget.src = "/placeholder.svg";
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                  <div className="absolute inset-0 flex flex-col justify-between p-6 text-white">
+                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
                       <span>{lesson.lessonTag}</span>
-                      <span className="flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold">
+                      <span className="flex items-center gap-1 rounded-full bg-black/40 px-3 py-1 text-[10px] font-semibold">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -93,13 +103,14 @@ const NewLessonsSection = ({ lessons }: NewLessonsSectionProps) => {
                         {lesson.platform}
                       </span>
                     </div>
-                    <div className="space-y-2 text-center text-3xl font-black uppercase leading-tight sm:text-4xl">
-                      <p>Trade කෙසේද?</p>
-                      <p className="text-[#FFD700]">TradingView</p>
+                    <div className="space-y-1 text-left">
+                      <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/70">Focus</p>
+                      <p className="text-2xl font-bold text-white">Trade කෙසේද?</p>
+                      <p className="text-sm font-semibold text-[#FFD700]">TradingView</p>
                     </div>
-                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
                       <span>Lesson</span>
-                      <span>01</span>
+                      <span>{lesson.lessonTag.split(" ").pop()}</span>
                     </div>
                   </div>
                 </div>
