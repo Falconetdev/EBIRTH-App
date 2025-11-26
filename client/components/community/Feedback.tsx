@@ -1,82 +1,29 @@
+import { useState } from "react";
 import { ChevronDown, Quote } from "lucide-react";
+import reviews from "@/lib/review.json";
 
 type Testimonial = {
   id: string;
-  sinhala: string;
-  english: string;
   name: string;
-  role: string;
+  review: string;
   image: string;
 };
 
-const testimonials: Testimonial[] = [
-  {
-    id: "student-1",
-    sinhala:
-      "eBirth Academy එකේ practical approach එක සහ real-world examples හරහා මගේම business එකක් නිවැරදිව start කරන්න confident feel වුණා.",
-    english:
-      "The practical guidance and relatable case studies helped me launch my own business successfully.",
-    name: "Dinuka Herath Hulugalla",
-    role: "Business Student",
-    image:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "student-2",
-    sinhala:
-      "Trading එකක් දැනට start කරනවානම් හෝ dream එකක් තියෙනවානම් eBirth Academy එකෙන් ලැබෙන mentorship එකෙන් real confidence එකක් හදාගන්න පුළුවන්.",
-    english:
-      "Practical sessions and knowledge-packed tools gave me the courage to take my business idea live.",
-    name: "Sachini Abeywardena",
-    role: "Student Entrepreneur",
-    image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "student-3",
-    sinhala:
-      "eBirth ටෙ mentorship එකෙන් daily guide එකක් ලැබුවා. Advanced strategies explain කරලා trading journey එකත් power up වෙලා.",
-    english:
-      "Big thanks to the eBirth team for showing the roadmap to scale my journey with confidence.",
-    name: "Kasun Jayasinghe",
-    role: "FX Trader",
-    image:
-      "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "student-4",
-    sinhala:
-      "Community එකේ support එක නිසා මට trading discipline එක strongly build කරගන්නත් consistency එක develop කරන්නත් හැකි වුණා.",
-    english:
-      "The community support helped me stay disciplined and build consistency in my daily trading routine.",
-    name: "Nethmi Perera",
-    role: "Equity Trader",
-    image:
-      "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "student-5",
-    sinhala:
-      "Live sessions වල real-time breakdown වලින් complex market moves புரிந்துகொள்ள easy වුණා.",
-    english:
-      "Real-time breakdowns during live sessions made complex market moves easy to understand.",
-    name: "Ishara Wickramasinghe",
-    role: "Entrepreneur",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: "student-6",
-    sinhala:
-      "Mentor feedback එකට සරිලන practical homework එකක් එක්කම progress track කරන්න පුළුවන් වුණා.",
-    english:
-      "Structured mentor feedback with practical homework helped me track progress without stress.",
-    name: "Rashan Silva",
-    role: "Crypto Analyst",
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=80",
-  },
-];
+const toDirectImageUrl = (url: string) => {
+  const match = url.match(/\/file\/d\/([^/]+)/);
+  if (match) {
+    const fileId = match[1];
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+  }
+  return url;
+};
+
+const testimonials: Testimonial[] = reviews.map((review, index) => ({
+  id: `testimonial-${index}`,
+  name: review.reviewer_name,
+  review: review.review,
+  image: toDirectImageUrl(review.image_url),
+}));
 
 type FeedbackCardProps = {
   testimonial: Testimonial;
@@ -90,10 +37,7 @@ const FeedbackCard = ({ testimonial }: FeedbackCardProps) => {
           <Quote className="h-7 w-7" />
         </div>
         <p className="mt-6 text-base leading-relaxed text-white/90">
-          {testimonial.sinhala}
-        </p>
-        <p className="mt-4 text-sm leading-relaxed text-white/75">
-          {testimonial.english}
+          {testimonial.review}
         </p>
       </div>
 
@@ -102,16 +46,18 @@ const FeedbackCard = ({ testimonial }: FeedbackCardProps) => {
           <img
             src={testimonial.image}
             alt={testimonial.name}
+            loading="lazy"
             className="h-20 w-20 rounded-full border-4 border-white object-cover shadow-[0_16px_30px_rgba(0,0,0,0.4)]"
             onError={(e) => {
-              if (e.currentTarget.src.includes("placeholder.svg")) return;
-              e.currentTarget.src = "/placeholder.svg";
+              if (!e.currentTarget.src.includes("placeholder.svg")) {
+                e.currentTarget.src = "/placeholder.svg";
+              }
             }}
           />
         </div>
         <div className="mt-4">
           <p className="text-lg font-semibold">{testimonial.name}</p>
-          <p className="text-sm text-white/60">{testimonial.role}</p>
+          <p className="text-sm text-white/60">Inner Racers Student</p>
         </div>
       </div>
     </article>
@@ -119,6 +65,10 @@ const FeedbackCard = ({ testimonial }: FeedbackCardProps) => {
 };
 
 const FeedbackSection = () => {
+  const [showAll, setShowAll] = useState(false);
+  const displayedTestimonials = showAll ? testimonials : testimonials.slice(0, 6);
+  const canToggle = testimonials.length > 6;
+
   return (
     <section
       id="feedback"
@@ -137,17 +87,30 @@ const FeedbackSection = () => {
         </div>
 
         <div className="mt-16 grid w-full gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {testimonials.map((testimonial) => (
+          {displayedTestimonials.map((testimonial) => (
             <FeedbackCard key={testimonial.id} testimonial={testimonial} />
           ))}
         </div>
 
-        <div className="mt-12 flex items-center justify-center">
-          <button className="group inline-flex items-center gap-2 rounded-full bg-[#FFE500] px-8 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_30px_rgba(158,124,255,0.35)] transition hover:bg-[#ffdd38]">
-            See All Feedbacks
-            <ChevronDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-          </button>
-        </div>
+        {canToggle && (
+          <div className="mt-12 flex items-center justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAll((prev) => !prev)}
+              aria-expanded={showAll}
+              className="group inline-flex items-center gap-2 rounded-full bg-[#FFE500] px-8 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_30px_rgba(158,124,255,0.35)] transition hover:bg-[#ffdd38]"
+            >
+              {showAll ? "Show Less" : "See All Feedbacks"}
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${
+                  showAll
+                    ? "rotate-180"
+                    : "group-hover:translate-y-0.5"
+                }`}
+              />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
