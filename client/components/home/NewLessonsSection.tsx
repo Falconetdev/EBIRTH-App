@@ -129,13 +129,13 @@ const NewLessonsSection = ({ lessons }: NewLessonsSectionProps) => {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Button
-            variant="outline"
+          <a
+            href="/course"
             className="group inline-flex items-center gap-3 rounded-full border-2 border-[#FFD700] bg-transparent px-8 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD700] transition hover:bg-[#FFD700] hover:text-black"
           >
             View All Courses
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Button>
+          </a>
         </div>
       </div>
     </section>
