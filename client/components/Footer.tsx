@@ -64,27 +64,32 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-white/60 hover:text-white text-sm transition-colors">
+                <a href="/" className="text-white/60 hover:text-white text-sm transition-colors">
                   Home
                 </a>
               </li>
               <li>
-                <a href="#who-we-are" className="text-white/60 hover:text-white text-sm transition-colors">
+                <a href="/about-us" className="text-white/60 hover:text-white text-sm transition-colors">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white text-sm transition-colors">
+                <a href="/membership" className="text-white/60 hover:text-white text-sm transition-colors">
                   Membership
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white text-sm transition-colors">
+                <a href="/course" className="text-white/60 hover:text-white text-sm transition-colors">
                   Courses
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white text-sm transition-colors">
+                <a href="/resources" className="text-white/60 hover:text-white text-sm transition-colors">
+                  Resources
+                </a>
+              </li>
+              <li>
+                <a href="/community" className="text-white/60 hover:text-white text-sm transition-colors">
                   Community
                 </a>
               </li>
@@ -101,8 +106,8 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">Resources</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-white/60 hover:text-white text-sm transition-colors">
-                  Free Trading Mentorship
+                <a href="/resources" className="text-white/60 hover:text-white text-sm transition-colors">
+                  Resource Library
                 </a>
               </li>
               <li>

@@ -1,0 +1,211 @@
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
+import type { BlogPost } from "@/types/blog";
+
+export type BlogFormValues = {
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  tags: string;
+  coverFile: File | null;
+};
+
+type BlogFormProps = {
+  initialValues?: Partial<BlogPost>;
+  onSubmit: (values: BlogFormValues) => Promise<void> | void;
+  submitLabel?: string;
+  disableSlug?: boolean;
+  isSubmitting?: boolean;
+};
+
+const defaultValues: BlogFormValues = {
+  title: "",
+  slug: "",
+  excerpt: "",
+  content: "",
+  tags: "",
+  coverFile: null,
+};
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+
+const BlogForm = ({
+  initialValues,
+  onSubmit,
+  submitLabel = "Save",
+  disableSlug = false,
+  isSubmitting = false,
+}: BlogFormProps) => {
+  const [values, setValues] = useState<BlogFormValues>(defaultValues);
+  const [coverPreview, setCoverPreview] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialValues) {
+      setValues((prev) => ({
+        ...prev,
+        ...initialValues,
+        tags: initialValues.tags?.join(", ") ?? "",
+        slug: initialValues.slug ?? prev.slug,
+        coverFile: null,
+      }));
+      setCoverPreview(initialValues.coverUrl ?? null);
+    } else {
+      setValues(defaultValues);
+      setCoverPreview(null);
+    }
+  }, [initialValues]);
+
+  const handleChange = (field: keyof BlogFormValues) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = event.target.value;
+    setValues((prev) => {
+      if (field === "title" && !disableSlug) {
+        return {
+          ...prev,
+          title: value,
+          slug: slugify(value),
+        };
+      }
+
+      return {
+        ...prev,
+        [field]: value,
+      } as BlogFormValues;
+    });
+  };
+
+  const handleSlugBlur = () => {
+    if (disableSlug) return;
+    setValues((prev) => ({
+      ...prev,
+      slug: slugify(prev.slug),
+    }));
+  };
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null;
+    setValues((prev) => ({
+      ...prev,
+      coverFile: file,
+    }));
+
+    if (file) {
+      setCoverPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    await onSubmit(values);
+  };
+
+  const coverLabel = useMemo(() => (coverPreview ? "Change cover" : "Upload cover"), [coverPreview]);
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-white/85">Title</label>
+          <input
+            value={values.title}
+            onChange={handleChange("title")}
+            required
+            className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/50 focus:border-[#FFE500] focus:outline-none focus:ring-2 focus:ring-[#FFE500]/30"
+            placeholder="Enter blog title"
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-white/85">Slug</label>
+          <input
+            value={values.slug}
+            onChange={handleChange("slug")}
+            onBlur={handleSlugBlur}
+            required
+            disabled={disableSlug}
+            className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/50 disabled:bg-white/5 disabled:text-white/40 focus:border-[#FFE500] focus:outline-none focus:ring-2 focus:ring-[#FFE500]/30"
+            placeholder="unique-post-slug"
+          />
+        </div>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-white/85">Excerpt</label>
+          <textarea
+            value={values.excerpt}
+            onChange={handleChange("excerpt")}
+            required
+            rows={4}
+            className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/50 focus:border-[#FFE500] focus:outline-none focus:ring-2 focus:ring-[#FFE500]/30"
+            placeholder="Short teaser for listings"
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-white/85">Tags (comma separated)</label>
+          <textarea
+            value={values.tags}
+            onChange={handleChange("tags")}
+            rows={4}
+            className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/50 focus:border-[#FFE500] focus:outline-none focus:ring-2 focus:ring-[#FFE500]/30"
+            placeholder="trading, strategy, crypto"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-white/85">Content</label>
+        <div className="overflow-hidden rounded-2xl border border-white/15 bg-transparent text-black">
+          <CKEditor
+            editor={ClassicEditor}
+            data={values.content}
+            onChange={(_, editor) => {
+              const data = editor.getData();
+              setValues((prev) => ({
+                ...prev,
+                content: data,
+              }));
+            }}
+            config={{
+              placeholder: "Write or paste the full article body",
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-white/85">Cover image</label>
+        <div className="flex flex-col items-start gap-3 rounded-2xl border border-dashed border-white/25 bg-white/5 p-4">
+          {coverPreview ? (
+            <img src={coverPreview} alt="Cover preview" className="h-32 w-full rounded-xl object-cover" />
+          ) : (
+            <p className="text-sm text-white/60">No image selected</p>
+          )}
+          <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#6E21FF] px-4 py-2 text-sm font-semibold text-white hover:bg-[#5820DA]">
+            {coverLabel}
+            <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+          </label>
+        </div>
+      </div>
+
+      <div className="flex justify-end gap-3">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="inline-flex items-center rounded-xl bg-[#FFE500] px-6 py-2 text-sm font-semibold text-[#1B0B2E] transition hover:bg-[#ffd700] disabled:opacity-60"
+        >
+          {isSubmitting ? "Saving…" : submitLabel}
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default BlogForm;

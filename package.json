@@ -7,7 +7,6 @@
       "dist/spa/*"
     ],
     "scripts": [
-      
       "dist/server/**/*.js"
     ]
   },
@@ -22,8 +21,11 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.4.2",
+    "@ckeditor/ckeditor5-react": "^11.0.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "firebase": "^12.6.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {

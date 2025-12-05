@@ -112,3 +112,45 @@
 .coin-float {
   animation: coin-float 8s ease-in-out infinite;
 }
+
+/* CKEditor theming */
+.ck.ck-editor {
+  width: 100%;
+  color: #0a0015;
+}
+
+.ck.ck-editor .ck-editor__top {
+  border: none;
+  border-radius: 1rem 1rem 0 0;
+  background: rgba(110, 33, 255, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.ck.ck-editor .ck-toolbar {
+  border: none;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.ck.ck-editor__main {
+  border-radius: 0 0 1rem 1rem;
+  overflow: hidden;
+}
+
+.ck.ck-editor__editable_inline {
+  min-height: 320px;
+  padding: 1.25rem;
+  background: rgba(250, 250, 252, 0.98);
+  color: #0a0a0f;
+  border: none !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  font-family: "Sora", "Inter", sans-serif;
+  line-height: 1.6;
+}
+
+.ck.ck-editor__editable_inline p {
+  margin: 0 0 1rem;
+}
+
+.ck.ck-editor__editable_inline a {
+  color: #ffe500;
+}
