@@ -28,6 +28,7 @@ import Register from "./pages/Register";
 import CourseDetails from "./pages/CourseDetails";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
+import PaymentPending from "./pages/PaymentPending";
 import AdminLogin from "./pages/admin/AdminLogin";
 import BlogAdmin from "./pages/admin/BlogAdmin";
 import BlogEditor from "./pages/admin/BlogEditor";
@@ -58,6 +59,7 @@ const App = () => (
               <Route path="/course/:courseId" element={<CourseDetails />} />
               <Route path="/payment-success" element={<PaymentSuccess />} />
               <Route path="/payment-cancel" element={<PaymentCancel />} />
+              <Route path="/payment-pending" element={<PaymentPending />} />
               <Route path="/trading-mentorship" element={<TradingMentorship />} />
               <Route path="/institutional-membership" element={<InstitutionalMembership />} />
               <Route path="/blog" element={<Blog />} />

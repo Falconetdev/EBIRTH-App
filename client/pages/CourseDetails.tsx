@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Users, Clock, BookOpen, CheckCircle2, Loader2, CreditCard } from "lucide-react";
+import { ArrowLeft, Users, Clock, BookOpen, CheckCircle2, Loader2, CreditCard, Building2 } from "lucide-react";
 import type { PublicCourse } from "@shared/api";
 import { useAuth } from "@/context/AuthContext";
 import directPaymentService from "../services/directPaymentService";
+import BankTransferModal from "../components/payment/BankTransferModal";
 import { useToast } from "@/hooks/use-toast";
 
 export default function CourseDetails() {
@@ -18,6 +19,8 @@ export default function CourseDetails() {
   const [error, setError] = useState("");
   const [enrolling, setEnrolling] = useState(false);
   const [existingEnrollment, setExistingEnrollment] = useState<any>(null);
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+  const [showBankTransferModal, setShowBankTransferModal] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -61,7 +64,7 @@ export default function CourseDetails() {
     checkExistingEnrollment();
   }, [isAuthenticated, courseId]);
 
-  const handleEnrollClick = async () => {
+  const handleEnrollClick = () => {
     if (!isAuthenticated) {
       // User not logged in, redirect to login
       navigate("/login", { state: { from: `/course/${courseId}` } });
@@ -86,10 +89,17 @@ export default function CourseDetails() {
       return;
     }
 
+    // Show payment options
+    setShowPaymentOptions(true);
+  };
+
+  const handlePayHerePayment = async () => {
+    if (!course) return;
+    
     setEnrolling(true);
+    setShowPaymentOptions(false);
 
     try {
-      // Simplified flow: Direct to payment, webhook creates enrollment
       toast({
         title: "Initiating Payment...",
         description: "You will be redirected to PayHere payment gateway.",
@@ -112,7 +122,6 @@ export default function CourseDetails() {
           description: "Redirecting to confirmation page...",
         });
 
-        // Redirect to success page
         navigate(`/payment-success?order_id=${result.orderId}`);
       }
 
@@ -135,6 +144,15 @@ export default function CourseDetails() {
     } finally {
       setEnrolling(false);
     }
+  };
+
+  const handleBankTransferSuccess = () => {
+    toast({
+      title: "Payment Submitted!",
+      description: "Redirecting to confirmation page...",
+    });
+    
+    navigate('/payment-pending');
   };
 
   if (loading) {
@@ -165,7 +183,78 @@ export default function CourseDetails() {
   }
 
   return (
-    <PageLayout className="bg-[#1a0b2e] bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-transparent">
+    <>
+      {/* Bank Transfer Modal */}
+      {course && (
+        <BankTransferModal
+          isOpen={showBankTransferModal}
+          onClose={() => setShowBankTransferModal(false)}
+          courseId={course.id}
+          courseTitle={course.title}
+          coursePrice={course.price}
+          currency={course.currency}
+          onSuccess={handleBankTransferSuccess}
+        />
+      )}
+
+      {/* Payment Options Modal */}
+      {showPaymentOptions && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[9998] p-4">
+          <div className="bg-[#1a0b2e] border border-purple-500/30 rounded-2xl shadow-2xl max-w-md w-full p-8">
+            <h3 className="text-2xl font-bold text-[#FFD700] mb-2">Choose Payment Method</h3>
+            <p className="text-white/70 mb-6">Select how you'd like to pay for this course</p>
+            
+            <div className="space-y-4">
+              {/* PayHere Option */}
+              <button
+                onClick={handlePayHerePayment}
+                disabled={enrolling}
+                className="w-full bg-gradient-to-r from-purple-600/80 to-purple-800/80 hover:from-purple-600 hover:to-purple-800 border border-purple-500/30 text-white rounded-xl p-6 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#FFD700]/20 rounded-full flex items-center justify-center group-hover:bg-[#FFD700]/30 transition-colors">
+                    <CreditCard className="h-6 w-6 text-[#FFD700]" />
+                  </div>
+                  <div className="text-left flex-1">
+                    <div className="font-bold text-lg">PayHere - Online Payment</div>
+                    <div className="text-sm text-white/60">Credit/Debit Card, Bank Transfer</div>
+                  </div>
+                  <div className="text-2xl text-[#FFD700]">→</div>
+                </div>
+              </button>
+
+              {/* Bank Transfer Option */}
+              <button
+                onClick={() => {
+                  setShowPaymentOptions(false);
+                  setShowBankTransferModal(true);
+                }}
+                className="w-full bg-gradient-to-r from-blue-600/80 to-blue-800/80 hover:from-blue-600 hover:to-blue-800 border border-blue-500/30 text-white rounded-xl p-6 transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#FFD700]/20 rounded-full flex items-center justify-center group-hover:bg-[#FFD700]/30 transition-colors">
+                    <Building2 className="h-6 w-6 text-[#FFD700]" />
+                  </div>
+                  <div className="text-left flex-1">
+                    <div className="font-bold text-lg">Bank Transfer</div>
+                    <div className="text-sm text-white/60">Direct bank deposit with receipt</div>
+                  </div>
+                  <div className="text-2xl text-[#FFD700]">→</div>
+                </div>
+              </button>
+            </div>
+
+            <button
+              onClick={() => setShowPaymentOptions(false)}
+              className="w-full mt-6 px-6 py-3 border border-purple-500/30 text-white/80 rounded-xl hover:bg-purple-600/10 font-medium transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      <PageLayout className="bg-[#1a0b2e] bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-transparent">
       <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
         {/* Background glow */}
         <div className="pointer-events-none absolute left-1/2 top-1/3 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,215,0,0.15),_rgba(26,11,46,0))] blur-3xl"></div>
@@ -369,5 +458,6 @@ export default function CourseDetails() {
         </div>
       </section>
     </PageLayout>
+    </>
   );
 }

@@ -154,3 +154,36 @@
 .ck.ck-editor__editable_inline a {
   color: #ffe500;
 }
+
+/* Custom Scrollbar for Modal */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(110, 33, 255, 0.1);
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FFD700 0%, #FFC700 50%, #FFB700 100%);
+  border-radius: 10px;
+  border: 2px solid rgba(26, 11, 46, 0.8);
+  transition: all 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #FFC700 0%, #FFB700 50%, #FFA700 100%);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #FFB700 0%, #FFA700 50%, #FF9700 100%);
+}
+
+/* Firefox scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #FFD700 rgba(110, 33, 255, 0.1);
+}
