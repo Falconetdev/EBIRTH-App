@@ -26,6 +26,8 @@ import Resources from "./pages/Resources";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CourseDetails from "./pages/CourseDetails";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 import AdminLogin from "./pages/admin/AdminLogin";
 import BlogAdmin from "./pages/admin/BlogAdmin";
 import BlogEditor from "./pages/admin/BlogEditor";
@@ -54,6 +56,8 @@ const App = () => (
               <Route path="/membership" element={<Membership />} />
               <Route path="/course" element={<Course />} />
               <Route path="/course/:courseId" element={<CourseDetails />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/payment-cancel" element={<PaymentCancel />} />
               <Route path="/trading-mentorship" element={<TradingMentorship />} />
               <Route path="/institutional-membership" element={<InstitutionalMembership />} />
               <Route path="/blog" element={<Blog />} />

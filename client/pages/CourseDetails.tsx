@@ -2,17 +2,23 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Users, Clock, BookOpen, CheckCircle2, Loader2 } from "lucide-react";
+import { ArrowLeft, Users, Clock, BookOpen, CheckCircle2, Loader2, CreditCard } from "lucide-react";
 import type { PublicCourse } from "@shared/api";
 import { useAuth } from "@/context/AuthContext";
+import enrollmentService from "../services/enrollmentService";
+import payHereService from "../services/payHereService";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CourseDetails() {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
+  const { toast } = useToast();
   const [course, setCourse] = useState<PublicCourse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [enrolling, setEnrolling] = useState(false);
+  const [existingEnrollment, setExistingEnrollment] = useState<any>(null);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -40,14 +46,126 @@ export default function CourseDetails() {
     fetchCourse();
   }, [courseId]);
 
-  const handleEnrollClick = () => {
-    if (isAuthenticated) {
-      // User is logged in, show enrollment success or redirect to payment
-      alert(`Great! You're about to enroll in ${course?.title}. Payment integration coming soon!`);
-      // TODO: Integrate with payment system or enrollment endpoint
-    } else {
+  // Check if user is already enrolled
+  useEffect(() => {
+    const checkExistingEnrollment = async () => {
+      if (!isAuthenticated || !courseId) return;
+      
+      try {
+        const enrollment = await enrollmentService.checkEnrollment(Number(courseId));
+        setExistingEnrollment(enrollment);
+      } catch (err) {
+        console.error('Error checking enrollment:', err);
+      }
+    };
+
+    checkExistingEnrollment();
+  }, [isAuthenticated, courseId]);
+
+  const handleEnrollClick = async () => {
+    if (!isAuthenticated) {
       // User not logged in, redirect to login
       navigate("/login", { state: { from: `/course/${courseId}` } });
+      return;
+    }
+
+    if (!course) return;
+
+    // Check if already enrolled
+    if (existingEnrollment) {
+      toast({
+        title: "Already Enrolled",
+        description: "You are already enrolled in this course. Access it from your dashboard.",
+        variant: "default",
+      });
+      
+      // Redirect to main app
+      const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
+      setTimeout(() => {
+        window.location.href = `${mainAppUrl}/student/courses`;
+      }, 2000);
+      return;
+    }
+
+    setEnrolling(true);
+
+    try {
+      // Step 1: Create enrollment
+      toast({
+        title: "Creating enrollment...",
+        description: "Please wait while we process your enrollment.",
+      });
+
+      const enrollmentResponse = await enrollmentService.createEnrollment(course.id);
+      const enrollment = enrollmentResponse.enrollment;
+
+      console.log('Enrollment created:', enrollment);
+
+      // Step 2: Wait for PayHere to load
+      await payHereService.waitForPayHere();
+
+      // Step 3: Generate order ID
+      const orderId = payHereService.generateOrderId(course.id, enrollment.student_id);
+
+      // Step 4: Get student details from token
+      const token = localStorage.getItem('token');
+      const studentName = user?.name || user?.email?.split('@')[0] || 'Student';
+      const studentEmail = user?.email || '';
+
+      // Step 5: Initiate PayHere checkout
+      toast({
+        title: "Redirecting to payment...",
+        description: "You will be redirected to PayHere payment gateway.",
+      });
+
+      const paymentResult = await payHereService.initiateCheckout({
+        amount: course.price,
+        orderId: orderId,
+        items: course.title,
+        courseId: course.id,
+        enrollmentId: enrollment.id,
+        customerName: studentName,
+        customerEmail: studentEmail,
+        currency: course.currency || 'LKR'
+      });
+
+      // Step 6: Create payment record after PayHere completion
+      if (paymentResult.status === 'completed') {
+        await enrollmentService.createPayment({
+          enrollment_id: enrollment.id,
+          course_id: course.id,
+          amount: course.price,
+          payhere_payment_id: orderId,
+          payhere_order_id: orderId
+        });
+
+        toast({
+          title: "Payment Successful!",
+          description: "Redirecting to confirmation page...",
+        });
+
+        // Redirect to success page
+        navigate(`/payment-success?order_id=${orderId}`);
+      }
+
+    } catch (err: any) {
+      console.error('Enrollment/Payment error:', err);
+      
+      if (err.status === 'dismissed') {
+        toast({
+          title: "Payment Cancelled",
+          description: "You cancelled the payment. The enrollment is saved, you can complete payment later.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Payment Failed",
+          description: err.message || "Failed to process payment. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } finally {
+      setEnrolling(false);
     }
   };
 
@@ -156,9 +274,24 @@ export default function CourseDetails() {
                 </div>
                 <Button
                   onClick={handleEnrollClick}
-                  className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-8 py-6 text-lg rounded-xl"
+                  disabled={enrolling || !!existingEnrollment}
+                  className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-8 py-6 text-lg rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isAuthenticated ? "Enroll Now" : "Login to Enroll"}
+                  {enrolling ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Processing...
+                    </>
+                  ) : existingEnrollment ? (
+                    "Already Enrolled"
+                  ) : isAuthenticated ? (
+                    <>
+                      <CreditCard className="mr-2 h-5 w-5" />
+                      Enroll Now
+                    </>
+                  ) : (
+                    "Login to Enroll"
+                  )}
                 </Button>
               </div>
             </div>
@@ -229,9 +362,22 @@ export default function CourseDetails() {
               {isAuthenticated ? (
                 <Button
                   onClick={handleEnrollClick}
-                  className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-12 py-6 text-lg rounded-xl"
+                  disabled={enrolling || !!existingEnrollment}
+                  className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-12 py-6 text-lg rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Enroll Now - {course.currency} {course.price.toLocaleString()}
+                  {enrolling ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Processing Payment...
+                    </>
+                  ) : existingEnrollment ? (
+                    "Already Enrolled - Go to Dashboard"
+                  ) : (
+                    <>
+                      <CreditCard className="mr-2 h-5 w-5" />
+                      Enroll Now - {course.currency} {course.price.toLocaleString()}
+                    </>
+                  )}
                 </Button>
               ) : (
                 <>
