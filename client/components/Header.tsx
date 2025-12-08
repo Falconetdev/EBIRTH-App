@@ -1,6 +1,54 @@
 import { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogOut } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+
+// Auth Buttons Component
+function AuthButtons({ mobile = false }: { mobile?: boolean }) {
+  const { user, logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  if (isAuthenticated && user) {
+    return (
+      <div className={`flex ${mobile ? 'flex-col' : 'items-center'} gap-3`}>
+        <div className={`flex items-center gap-2 ${mobile ? 'px-4 py-2' : ''} text-white/80`}>
+          <User size={16} />
+          <span className="text-sm">{user.name}</span>
+        </div>
+        <Button
+          onClick={() => {
+            logout();
+            navigate("/");
+          }}
+          variant="outline"
+          className={`border-purple-500/50 text-white hover:bg-purple-800/20 ${mobile ? 'w-full' : ''}`}
+        >
+          <LogOut size={16} className="mr-2" />
+          Logout
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Link to="/login">
+        <Button
+          variant="outline"
+          className={`border-purple-500/50 text-white hover:bg-purple-800/20 ${mobile ? 'w-full' : ''}`}
+        >
+          Login
+        </Button>
+      </Link>
+      <Link to="/register">
+        <Button className={`bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold ${mobile ? 'w-full' : ''}`}>
+          Get Started
+        </Button>
+      </Link>
+    </>
+  );
+}
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -168,11 +216,9 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Get Started Button - Desktop */}
-          <div className="hidden md:block">
-            <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-6 py-2 rounded-lg">
-              Get Started
-            </Button>
+          {/* Auth Buttons - Desktop */}
+          <div className="hidden md:flex items-center gap-3">
+            <AuthButtons />
           </div>
 
           {/* Mobile Menu Button */}
@@ -198,9 +244,9 @@ export default function Header() {
                   {link.name}
                 </a>
               ))}
-              <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-6 py-2 rounded-lg w-full mt-2">
-                Get Started
-              </Button>
+              <div className="mt-4">
+                <AuthButtons mobile />
+              </div>
             </nav>
           </div>
         )}

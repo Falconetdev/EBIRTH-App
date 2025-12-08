@@ -2,6 +2,7 @@ import { usePublicCourses } from '@/hooks/usePublicCourses';
 import type { PublicCourse } from '@shared/api';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 function CourseCard({ course }: { course: PublicCourse }) {
   return (
@@ -37,9 +38,11 @@ function CourseCard({ course }: { course: PublicCourse }) {
             ))}
           </div>
         )}
-        <Button className="group mt-4 inline-flex items-center gap-2 rounded-full bg-[#FFD700] px-5 py-3 text-sm font-semibold text-black hover:bg-[#FFC700]">
-          View Details <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </Button>
+        <Link to={`/course/${course.id}`}>
+          <Button className="group mt-4 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#FFD700] px-5 py-3 text-sm font-semibold text-black hover:bg-[#FFC700]">
+            View Details <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Button>
+        </Link>
       </div>
     </article>
   );

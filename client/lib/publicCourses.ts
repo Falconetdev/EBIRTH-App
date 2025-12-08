@@ -1,6 +1,6 @@
 import type { PublicCourse } from '@shared/api';
 
-const PUBLIC_COURSES_ENDPOINT = 'https://ebirth-server-za5fc.ondigitalocean.app/api/courses/public';
+const PUBLIC_COURSES_ENDPOINT = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}/api/courses/public`;
 
 export async function fetchPublicCourses(signal?: AbortSignal): Promise<PublicCourse[]> {
   const res = await fetch(PUBLIC_COURSES_ENDPOINT, { signal });
