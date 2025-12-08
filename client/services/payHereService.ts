@@ -88,7 +88,7 @@ class PayHereService {
           // Order Details
           order_id: paymentData.orderId,
           items: paymentData.items,
-          amount: paymentData.amount.toFixed(2),
+          amount: Number(paymentData.amount).toFixed(2),
           currency: paymentData.currency || 'LKR',
           hash: hash, // Required hash from server
           

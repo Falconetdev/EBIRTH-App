@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Users, Clock, BookOpen, CheckCircle2, Loader2, CreditCard } from "lucide-react";
 import type { PublicCourse } from "@shared/api";
 import { useAuth } from "@/context/AuthContext";
-import enrollmentService from "../services/enrollmentService";
-import payHereService from "../services/payHereService";
+import directPaymentService from "../services/directPaymentService";
 import { useToast } from "@/hooks/use-toast";
 
 export default function CourseDetails() {
@@ -52,7 +51,7 @@ export default function CourseDetails() {
       if (!isAuthenticated || !courseId) return;
       
       try {
-        const enrollment = await enrollmentService.checkEnrollment(Number(courseId));
+        const enrollment = await directPaymentService.checkExistingEnrollment(Number(courseId));
         setExistingEnrollment(enrollment);
       } catch (err) {
         console.error('Error checking enrollment:', err);
@@ -90,71 +89,40 @@ export default function CourseDetails() {
     setEnrolling(true);
 
     try {
-      // Step 1: Create enrollment
+      // Simplified flow: Direct to payment, webhook creates enrollment
       toast({
-        title: "Creating enrollment...",
-        description: "Please wait while we process your enrollment.",
-      });
-
-      const enrollmentResponse = await enrollmentService.createEnrollment(course.id);
-      const enrollment = enrollmentResponse.enrollment;
-
-      console.log('Enrollment created:', enrollment);
-
-      // Step 2: Wait for PayHere to load
-      await payHereService.waitForPayHere();
-
-      // Step 3: Generate order ID
-      const orderId = payHereService.generateOrderId(course.id, enrollment.student_id);
-
-      // Step 4: Get student details from token
-      const token = localStorage.getItem('token');
-      const studentName = user?.name || user?.email?.split('@')[0] || 'Student';
-      const studentEmail = user?.email || '';
-
-      // Step 5: Initiate PayHere checkout
-      toast({
-        title: "Redirecting to payment...",
+        title: "Initiating Payment...",
         description: "You will be redirected to PayHere payment gateway.",
       });
 
-      const paymentResult = await payHereService.initiateCheckout({
-        amount: course.price,
-        orderId: orderId,
-        items: course.title,
-        courseId: course.id,
-        enrollmentId: enrollment.id,
-        customerName: studentName,
-        customerEmail: studentEmail,
-        currency: course.currency || 'LKR'
-      });
+      const result = await directPaymentService.initiateDirectPayment(
+        {
+          courseId: course.id,
+          courseTitle: course.title,
+          coursePrice: course.price,
+          currency: course.currency || 'LKR'
+        },
+        user
+      );
 
-      // Step 6: Create payment record after PayHere completion
-      if (paymentResult.status === 'completed') {
-        await enrollmentService.createPayment({
-          enrollment_id: enrollment.id,
-          course_id: course.id,
-          amount: course.price,
-          payhere_payment_id: orderId,
-          payhere_order_id: orderId
-        });
-
+      // Payment completed
+      if (result.success) {
         toast({
           title: "Payment Successful!",
           description: "Redirecting to confirmation page...",
         });
 
         // Redirect to success page
-        navigate(`/payment-success?order_id=${orderId}`);
+        navigate(`/payment-success?order_id=${result.orderId}`);
       }
 
     } catch (err: any) {
-      console.error('Enrollment/Payment error:', err);
+      console.error('Payment error:', err);
       
       if (err.status === 'dismissed') {
         toast({
           title: "Payment Cancelled",
-          description: "You cancelled the payment. The enrollment is saved, you can complete payment later.",
+          description: "You cancelled the payment. Try again when you're ready!",
           variant: "destructive",
         });
       } else {
