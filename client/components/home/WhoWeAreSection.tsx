@@ -4,7 +4,7 @@ const WhoWeAreSection = () => {
   return (
     <section id="who-we-are" className="relative mt-12 px-4 sm:px-6 lg:px-8">
       <div className="absolute inset-0 bg-inherit"></div>
-      <h2 className="text-6xl font-bold text-[#FFD700]   text-center mb-8">Who We Are</h2>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#FFD700] text-center mb-8">Who We Are</h2>
       <div className="pointer-events-none absolute -top-20 -left-10 hidden md:block opacity-60">
         <img
           src="/Bitcoin-PNG-removebg-preview.png"
@@ -26,17 +26,17 @@ const WhoWeAreSection = () => {
         
         <div className="order-1 text-center lg:order-2 lg:text-left">
           
-          <h3 className="mt-4 text-3xl font-extrabold text-white md:text-4xl opacity-70">
+          <h3 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-extrabold text-white opacity-70">
             <span>Empowering Dreams, </span>
             <span className="text-[#FFD700]">Building Futures</span>
           </h3>
-          <p className="mt-6 text-md leading-relaxed text-white/80 ">
+          <p className="mt-6 text-sm sm:text-base md:text-md leading-relaxed text-white/80">
             eBirth Business Academy is Sri Lanka's leading trading education hub. At eBirth Business Academy - Where Entrepreneurs Are Born - we connect ambition with the strategies, mentorship, and community needed to grow sustainable ventures.
           </p>
-          <p className="mt-4 text-md leading-relaxed text-white/70">
+          <p className="mt-4 text-sm sm:text-base md:text-md leading-relaxed text-white/70">
             eBirth Business Academy ඔබේ trading හීන සරු රටාවකට පත් කරන්න සත්‍ය අත්දැකීම්, industry expert प्रशिक्षकයන් සහ flexible learning journeys එකතු කරලා උචිත දැනුම ලබාදෙයි. Real-world skills සහ data-driven insights සමඟ ඔබේ trading journey එකට විශ්වාසය එකතු කරමු.
           </p>
-          <p className="mt-4 text-md leading-relaxed text-white/70 ">
+          <p className="mt-4 text-sm sm:text-base md:text-md leading-relaxed text-white/70">
             Innovative ideas හඳුනාගෙන thriving entrepreneur community එකක් සමඟ එකතුවී ඔබේ entrepreneurial dreams reality බවට පත්කරන්න අපි ඔබට අත්වැලක්. Let's design the future you imagine.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">

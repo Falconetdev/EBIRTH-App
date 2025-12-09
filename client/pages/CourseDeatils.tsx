@@ -281,10 +281,10 @@ const CourseDeatils = () => {
         />
       </div>
 
-      <div className="mx-auto max-w-6xl space-y-14">
+      <div className="mx-auto max-w-6xl space-y-8 sm:space-y-10 md:space-y-14">
         <CourseHero />
 
-        <div className="grid w-full gap-2 lg:grid-cols-[1.7fr_1fr]">
+        <div className="grid w-full gap-6 lg:gap-8 lg:grid-cols-[1.7fr_1fr]">
           <CourseTabs
             activeTab={activeTab}
             onTabChange={setActiveTab}
@@ -294,7 +294,7 @@ const CourseDeatils = () => {
             benefitGrid={benefitGrid}
           />
 
-          <aside className="space-y-8 lg:pl-4 lg:max-w-sm">
+          <aside className="space-y-6 sm:space-y-8 lg:pl-4 lg:max-w-sm">
             <CourseSidebar />
           </aside>
         </div>

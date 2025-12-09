@@ -51,8 +51,8 @@ const CourseTabs = ({
   benefitGrid,
 }: CourseTabsProps) => {
   return (
-    <div className="rounded-3xl border border-white/10 bg-[#1b0835]/80 p-8 shadow-[0_30px_80px_rgba(26,8,53,0.45)]">
-      <nav className="flex flex-wrap items-center gap-6 border-b border-white/10 pb-6 text-[10px] font-semibold uppercase tracking-[0.4em] text-white/50">
+    <div className="rounded-3xl border border-white/10 bg-[#1b0835]/80 p-4 sm:p-6 lg:p-8 shadow-[0_30px_80px_rgba(26,8,53,0.45)]">
+      <nav className="flex flex-wrap items-center gap-3 sm:gap-4 md:gap-6 border-b border-white/10 pb-4 sm:pb-6 text-[8px] sm:text-[10px] font-semibold uppercase tracking-[0.3em] sm:tracking-[0.4em] text-white/50">
         {tabConfig.map((tab) => {
           const isActive = tab.key === activeTab;
           return (
@@ -73,25 +73,25 @@ const CourseTabs = ({
         })}
       </nav>
 
-      <section className="space-y-6 pt-8">
+      <section className="space-y-4 sm:space-y-6 pt-6 sm:pt-8">
         {activeTab === "overview" && (
           <>
-            <div className="space-y-3">
-              <h2 className="text-2xl font-semibold">Course Overview</h2>
-              <p className="text-sm uppercase tracking-[0.4em] text-[#FFD700]/80">
+            <div className="space-y-2 sm:space-y-3">
+              <h2 className="text-xl sm:text-2xl font-semibold">Course Overview</h2>
+              <p className="text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#FFD700]/80">
                 Build Trading Career එකේ ඔබේ සවිමත් හඬ!
               </p>
-              <p className="text-base leading-relaxed text-white/75">
+              <p className="text-sm sm:text-base leading-relaxed text-white/75">
                 "Foundations + Advanced Trading Membership" eBirth Business Academy විසින් නිර්මාණය කරන ලද immersive learning experience එකකි. මෙය trading fundamentals, market mechanics, risk management frameworks සහ high-conviction strategies එකතු කරන සම්පූර්ණ ecosystem එකක්.
               </p>
-              <p className="text-base leading-relaxed text-white/70">
+              <p className="text-sm sm:text-base leading-relaxed text-white/70">
                 Live trading labs, real-time chart breakdowns, weekly case studies, සහ dedicated community mentorship එකක් සමඟ consistency build කරන්න සහ ඔබේ trading journey එක streamline කරන්න. Course එක තුළ video modules, practice decks, signal breakdowns, සහ bonus expert sessions 12ක් ද ඇතුළත්.
               </p>
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold">Key Highlights:</h3>
-              <ul className="space-y-3 text-base text-white/75">
+              <h3 className="text-lg sm:text-xl font-semibold">Key Highlights:</h3>
+              <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white/75">
                 {highlights.map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <span className="mt-1 h-2 w-2 rounded-full bg-[#FFD700]"></span>
@@ -105,9 +105,9 @@ const CourseTabs = ({
 
         {activeTab === "content" && (
           <div className="space-y-6">
-            <div className="space-y-3">
-              <h2 className="text-2xl font-semibold">Course Content</h2>
-              <p className="text-sm uppercase tracking-[0.4em] text-[#FFD700]/80">
+            <div className="space-y-2 sm:space-y-3">
+              <h2 className="text-xl sm:text-2xl font-semibold">Course Content</h2>
+              <p className="text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#FFD700]/80">
                 Basic + Advanced journey mapped day-by-day
               </p>
             </div>
@@ -116,8 +116,8 @@ const CourseTabs = ({
               {courseContent.map((course) => (
                 <section key={course.program} className="space-y-4">
                   <header className="space-y-1">
-                    <p className="text-xs uppercase tracking-[0.35em] text-[#FFD700]/80">Program Outline</p>
-                    <h3 className="text-xl font-semibold text-white">{course.program}</h3>
+                    <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] sm:tracking-[0.35em] text-[#FFD700]/80">Program Outline</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white">{course.program}</h3>
                   </header>
 
                   <Accordion type="multiple" className="space-y-3">
@@ -127,10 +127,10 @@ const CourseTabs = ({
                         value={`${course.program}-${day.title}`}
                         className="overflow-hidden rounded-2xl border border-white/10 bg-white/5"
                       >
-                        <AccordionTrigger className="px-4 py-3 text-left text-base font-semibold text-white">
+                        <AccordionTrigger className="px-3 sm:px-4 py-2 sm:py-3 text-left text-sm sm:text-base font-semibold text-white">
                           {day.title}
                         </AccordionTrigger>
-                        <AccordionContent className="space-y-3 px-4 pb-4 text-base leading-relaxed text-white/75">
+                        <AccordionContent className="space-y-2 sm:space-y-3 px-3 sm:px-4 pb-3 sm:pb-4 text-sm sm:text-base leading-relaxed text-white/75">
                           {day.points ? (
                             <ul className="space-y-2">
                               {day.points.map((point) => (
@@ -159,14 +159,14 @@ const CourseTabs = ({
 
         {activeTab === "benefits" && (
           <div className="space-y-6">
-            <div className="space-y-3">
-              <h2 className="text-2xl font-semibold">Membership Perks</h2>
-              <p className="text-sm uppercase tracking-[0.4em] text-[#FFD700]/80">
+            <div className="space-y-2 sm:space-y-3">
+              <h2 className="text-xl sm:text-2xl font-semibold">Membership Perks</h2>
+              <p className="text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#FFD700]/80">
                 Stay supported beyond the classroom
               </p>
             </div>
 
-            <div className="space-y-4 text-base text-white/75">
+            <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-white/75">
               <p>{additionalBenefits.lead}</p>
               <ul className="space-y-3">
                 {additionalBenefits.bullets.map((benefit) => (
@@ -187,15 +187,15 @@ const CourseTabs = ({
                   key={benefit.heading}
                   className="rounded-2xl border border-white/10 bg-white/5 p-5"
                 >
-                  <h3 className="text-lg font-semibold text-white">{benefit.heading}</h3>
-                  <p className="mt-2 text-base leading-relaxed text-white/75">{benefit.detail}</p>
+                  <h3 className="text-base sm:text-lg font-semibold text-white">{benefit.heading}</h3>
+                  <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/75">{benefit.detail}</p>
                 </article>
               ))}
             </div>
 
-            <div className="rounded-2xl border border-[#FFD700]/20 bg-[#FFD700]/10 p-5 text-white/80">
-              <p className="text-sm uppercase tracking-[0.35em] text-[#FFD700]">Bonus Drops</p>
-              <p className="mt-2 text-base leading-relaxed">
+            <div className="rounded-2xl border border-[#FFD700]/20 bg-[#FFD700]/10 p-4 sm:p-5 text-white/80">
+              <p className="text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.35em] text-[#FFD700]">Bonus Drops</p>
+              <p className="mt-2 text-sm sm:text-base leading-relaxed">
                 Monthly market outlook reports, invite-only meetups, සහ priority access to partner masterclasses keep you ahead of emerging opportunities.
               </p>
             </div>
