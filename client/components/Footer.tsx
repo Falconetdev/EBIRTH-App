@@ -94,7 +94,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-white/60 hover:text-white text-sm transition-colors">
+                <a href="/#contact" className="text-white/60 hover:text-white text-sm transition-colors">
                   Contact
                 </a>
               </li>
@@ -108,6 +108,11 @@ export default function Footer() {
               <li>
                 <a href="/resources" className="text-white/60 hover:text-white text-sm transition-colors">
                   Resource Library
+                </a>
+              </li>
+              <li>
+                <a href="/leverage-calculator" className="text-white/60 hover:text-white text-sm transition-colors">
+                  Leverage Calculator
                 </a>
               </li>
               <li>

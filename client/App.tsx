@@ -29,6 +29,7 @@ import CourseDetails from "./pages/CourseDetails";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import PaymentPending from "./pages/PaymentPending";
+import LeverageCalculator from "./pages/LeverageCalculator";
 import AdminLogin from "./pages/admin/AdminLogin";
 import BlogAdmin from "./pages/admin/BlogAdmin";
 import BlogEditor from "./pages/admin/BlogEditor";
@@ -65,6 +66,7 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/resources" element={<Resources />} />
+              <Route path="/leverage-calculator" element={<LeverageCalculator />} />
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/admin/blog" element={<BlogAdmin />} />

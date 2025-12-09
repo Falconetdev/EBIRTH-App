@@ -85,10 +85,10 @@ export default function Header() {
     { name: "Home", href: "/" },
     { name: "About", href: "/about-us" },
     { name: "Membership", href: "/membership", hasDropdown: true, items: membershipItems },
-    { name: "Courses", href: "/course", hasDropdown: true, items: coursesItems },
+    { name: "Courses", href: "/course" /*, hasDropdown: true, items: coursesItems */ },
     { name: "Community", href: "/community" },
     { name: "Resources", href: "/resources" },
-    { name: "Contact", href: "#contact" },
+    { name: "Contact", href: "/#contact" },
   ];
 
   const toggleDropdown = (linkName: string) => {

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 type TabKey = "all" | "trading" | "technology" | "language";
 
@@ -10,6 +11,7 @@ type CourseCard = {
   category: TabKey;
   duration: string;
   badge: "Online" | "Beginner Friendly" | "Physical Classes" | "Language-specific" | "Hands-On Projects";
+  image: string;
 };
 
 const tabs: { key: TabKey; label: string }[] = [
@@ -28,6 +30,7 @@ const courses: CourseCard[] = [
     category: "trading",
     duration: "6 Weeks",
     badge: "Beginner Friendly",
+    image: "/courses/KEG.jpg",
   },
   {
     id: "institutional",
@@ -37,6 +40,7 @@ const courses: CourseCard[] = [
     category: "trading",
     duration: "12 Weeks",
     badge: "Physical Classes",
+    image: "/courses/NUGEGODA.jpg",
   },
   {
     id: "elliott",
@@ -46,6 +50,7 @@ const courses: CourseCard[] = [
     category: "trading",
     duration: "10 Weeks",
     badge: "Hands-On Projects",
+    image: "/courses/EWC KEGALLE.jpg",
   },
   {
     id: "smc",
@@ -55,24 +60,27 @@ const courses: CourseCard[] = [
     category: "trading",
     duration: "8 Weeks",
     badge: "Online",
+    image: "/courses/SMC.jpg",
   },
   {
-    id: "webdev",
-    title: "Web Development Masterclass",
+    id: "msnr",
+    title: "MSnR Membership",
     description: "Full-stack fundamentals for future-focused creators and career switchers.",
     level: "Advanced",
     category: "technology",
     duration: "10 Weeks",
-    badge: "Hands-On Projects",
+    badge: "Online",
+    image: "/courses/MSNRONLINE.jpg",
   },
   {
-    id: "languages",
-    title: "Languages",
+    id: "institutionalonline",
+    title: "Institutional Membership Online",
     description: "Build global communication confidence with tailored language coaching tracks.",
-    level: "Free",
+    level: "Premium",
     category: "language",
     duration: "8 Weeks",
-    badge: "Language-specific",
+    badge: "Online",
+    image: "/courses/NUGEGODA.jpg",
   },
 ];
 
@@ -133,9 +141,15 @@ const Explore = () => {
                 key={course.id}
                 className="group relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/15 bg-white/10 backdrop-blur transition hover:-translate-y-2 hover:bg-white/15 hover:shadow-[0_28px_60px_rgba(8,0,40,0.45)]"
               >
-                <div className="relative h-28 bg-gradient-to-r from-[#F8F1FF] to-[#DED6FF]">
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#361088]/80 to-transparent" />
                   {course.level === "Free" ? (
-                    <span className="absolute right-4 top-4 inline-flex items-center rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#A10027] shadow">
+                    <span className="absolute right-4 top-4 inline-flex items-center rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#A10027] shadow-lg">
                       Free
                     </span>
                   ) : null}
@@ -159,9 +173,12 @@ const Explore = () => {
                     </span>
                   </div>
 
-                  <button className="mt-auto inline-flex items-center justify-center rounded-full bg-[#FFE178] px-5 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_32px_rgba(254,240,138,0.35)] transition hover:scale-[1.02]">
+                  <Link
+                    to="/course-details"
+                    className="mt-auto inline-flex items-center justify-center rounded-full bg-[#FFE178] px-5 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_32px_rgba(254,240,138,0.35)] transition hover:scale-[1.02]"
+                  >
                     Learn More
-                  </button>
+                  </Link>
                 </div>
               </article>
             );

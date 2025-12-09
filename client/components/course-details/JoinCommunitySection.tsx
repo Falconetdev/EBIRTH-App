@@ -36,7 +36,7 @@ const JoinCommunitySection = () => {
 
           <div className="flex flex-1 justify-center lg:justify-end">
             <img
-              src="/hero-new.webp"
+              src="/hero-new.png"
               alt="Community mentor speaking"
               className="h-auto w-full object-contain rounded-3xl"
             />
