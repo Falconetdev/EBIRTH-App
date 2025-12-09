@@ -128,7 +128,7 @@ export default function Index() {
  
       <StatsSection />
 
-      <NewLessonsSection lessons={lessons} />
+      {/* <NewLessonsSection lessons={lessons} /> */}
 
       <WhatsAppBanner />
 

@@ -74,13 +74,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/membership" className="text-white/60 hover:text-white text-sm transition-colors">
-                  Membership
-                </a>
-              </li>
-              <li>
                 <a href="/course" className="text-white/60 hover:text-white text-sm transition-colors">
-                  Courses
+                  Membership
                 </a>
               </li>
               <li>

@@ -39,11 +39,6 @@ const WhoWeAreSection = () => {
           <p className="mt-4 text-sm sm:text-base md:text-md leading-relaxed text-white/70">
             Innovative ideas හඳුනාගෙන thriving entrepreneur community එකක් සමඟ එකතුවී ඔබේ entrepreneurial dreams reality බවට පත්කරන්න අපි ඔබට අත්වැලක්. Let's design the future you imagine.
           </p>
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
-            <Button className="group flex items-center gap-3 rounded-full bg-[#FFD700] px-8 py-3 text-base font-semibold text-black shadow-lg shadow-yellow-400/30 transition hover:bg-[#FFC700]">
-              Learn More
-            </Button>
-          </div>
         </div>
 
         <div className="order-2 lg:order-1 flex items-start h-full ">
