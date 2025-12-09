@@ -10,14 +10,14 @@ import { AuthProvider } from "@/context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import CourseDeatils from "./pages/CourseDeatils";
+import MembershipDetails from "./pages/MembershipDetails";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
 import Community from "./pages/Community";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundPolicy from "./pages/RefundPolicy";
+import MembershipOLD from "./pages/Membership-OLD";
 import Membership from "./pages/Membership";
-import Course from "./pages/Course";
 import InstitutionalMembership from "./pages/InstitutionalMembership";
 import TradingMentorship from "./pages/TradingMentorship";
 import Blog from "./pages/Blog";
@@ -25,7 +25,7 @@ import BlogPost from "./pages/BlogPost";
 import Resources from "./pages/Resources";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import CourseDetails from "./pages/CourseDetails";
+import MembershipDetailsEnrollment from "./pages/MembershipDetailsEnrollment";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import PaymentPending from "./pages/PaymentPending";
@@ -50,14 +50,14 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/course-details" element={<CourseDeatils />} />
+              <Route path="/membership-details" element={<MembershipDetails />} />
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/community" element={<Community />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
+              <Route path="/membership-old" element={<MembershipOLD />} />
               <Route path="/membership" element={<Membership />} />
-              <Route path="/course" element={<Course />} />
-              <Route path="/course/:courseId" element={<CourseDetails />} />
+              <Route path="/membership/:courseId" element={<MembershipDetailsEnrollment />} />
               <Route path="/payment-success" element={<PaymentSuccess />} />
               <Route path="/payment-cancel" element={<PaymentCancel />} />
               <Route path="/payment-pending" element={<PaymentPending />} />

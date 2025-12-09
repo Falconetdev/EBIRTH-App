@@ -84,7 +84,7 @@ export default function Header() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about-us" },
-    { name: "Membership", href: "/course" /*, hasDropdown: true, items: coursesItems */ },
+    { name: "Membership", href: "/membership" /*, hasDropdown: true, items: coursesItems */ },
     { name: "Community", href: "/community" },
     { name: "Blog", href: "/blog" },
     { name: "Resources", href: "/resources" },

@@ -34,8 +34,8 @@ export default function Login() {
 
       // Redirect based on user role
       if (user.role === "student") {
-        // Redirect to courses page
-        navigate("/course");
+        // Redirect to membership page
+        navigate("/membership");
       } else {
         // For other roles, redirect to main app
         window.location.href = `${import.meta.env.VITE_MAIN_APP_URL || "http://localhost:5174"}/${user.role}`;

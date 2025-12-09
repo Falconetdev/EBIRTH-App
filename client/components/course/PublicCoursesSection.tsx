@@ -38,7 +38,7 @@ function CourseCard({ course }: { course: PublicCourse }) {
             ))}
           </div>
         )}
-        <Link to={`/course/${course.id}`}>
+        <Link to={`/membership/${course.id}`}>
           <Button className="group mt-4 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#FFD700] px-5 py-3 text-sm font-semibold text-black hover:bg-[#FFC700]">
             View Details <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
