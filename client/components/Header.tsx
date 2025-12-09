@@ -87,6 +87,7 @@ export default function Header() {
     { name: "Membership", href: "/membership", hasDropdown: true, items: membershipItems },
     { name: "Courses", href: "/course" /*, hasDropdown: true, items: coursesItems */ },
     { name: "Community", href: "/community" },
+    { name: "Blog", href: "/blog" },
     { name: "Resources", href: "/resources" },
     { name: "Contact", href: "/#contact" },
   ];
