@@ -14,7 +14,7 @@ class DirectPaymentService {
   
   // Initiate direct payment without pre-creating enrollment
   // The PayHere webhook will create enrollment when payment succeeds
-  async initiateDirectPayment(paymentData: DirectPaymentData, user: any) {
+  async initiateDirectPayment(paymentData: DirectPaymentData, user: any, couponData?: any) {
     try {
       const token = localStorage.getItem('token');
       
@@ -41,16 +41,25 @@ class DirectPaymentService {
       const studentName = user?.name || user?.email?.split('@')[0] || 'Student';
       const studentEmail = user?.email || '';
 
+      // Use coupon amount if available, otherwise use original price
+      const paymentAmount = couponData?.amount || paymentData.coursePrice;
+
       // Initiate PayHere checkout
       const paymentResult = await payHereService.initiateCheckout({
-        amount: paymentData.coursePrice,
+        amount: paymentAmount,
         orderId: orderId,
         items: paymentData.courseTitle,
         courseId: paymentData.courseId,
         enrollmentId: 0, // Will be created by webhook
         customerName: studentName,
         customerEmail: studentEmail,
-        currency: paymentData.currency || 'LKR'
+        currency: paymentData.currency || 'LKR',
+        // Pass coupon data to be stored with payment
+        couponCode: couponData?.couponCode,
+        originalAmount: couponData?.originalAmount,
+        discountAmount: couponData?.discountAmount,
+        discountPercentage: couponData?.discountPercentage,
+        referredBy: couponData?.referredBy
       });
 
       return {

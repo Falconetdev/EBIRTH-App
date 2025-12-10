@@ -7,6 +7,7 @@ import type { PublicCourse } from "@shared/api";
 import { useAuth } from "@/context/AuthContext";
 import directPaymentService from "../services/directPaymentService";
 import BankTransferModal from "../components/payment/BankTransferModal";
+import PayHereCouponModal from "../components/payment/PayHereCouponModal";
 import { useToast } from "@/hooks/use-toast";
 
 type TabKey = "overview" | "curriculum" | "instructors";
@@ -23,6 +24,7 @@ export default function MembershipDetailsEnrollment() {
   const [existingEnrollment, setExistingEnrollment] = useState<any>(null);
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [showBankTransferModal, setShowBankTransferModal] = useState(false);
+  const [showPayHereCouponModal, setShowPayHereCouponModal] = useState(false);
   const [activeTab, setActiveTab] = useState<TabKey>("overview");
 
   // Check for autoOpenPayment parameter
@@ -106,11 +108,17 @@ export default function MembershipDetailsEnrollment() {
     setShowPaymentOptions(true);
   };
 
-  const handlePayHerePayment = async () => {
+  const handlePayHerePayment = () => {
+    if (!course) return;
+    setShowPaymentOptions(false);
+    setShowPayHereCouponModal(true);
+  };
+
+  const handleProceedToPayHere = async (couponData: any) => {
     if (!course) return;
     
     setEnrolling(true);
-    setShowPaymentOptions(false);
+    setShowPayHereCouponModal(false);
 
     try {
       toast({
@@ -125,7 +133,8 @@ export default function MembershipDetailsEnrollment() {
           coursePrice: course.price,
           currency: course.currency || 'LKR'
         },
-        user
+        user,
+        couponData
       );
 
       if (result.success) {
@@ -196,6 +205,17 @@ export default function MembershipDetailsEnrollment() {
 
   return (
     <>
+      {/* PayHere Coupon Modal */}
+      <PayHereCouponModal
+        isOpen={showPayHereCouponModal}
+        onClose={() => setShowPayHereCouponModal(false)}
+        courseId={course.id}
+        courseTitle={course.title}
+        coursePrice={course.price}
+        currency={course.currency}
+        onProceedToPayment={handleProceedToPayHere}
+      />
+
       {/* Bank Transfer Modal */}
       <BankTransferModal
         isOpen={showBankTransferModal}
@@ -223,8 +243,7 @@ export default function MembershipDetailsEnrollment() {
               {/* PayHere Option */}
               <button
                 onClick={handlePayHerePayment}
-                disabled={enrolling}
-                className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 border border-purple-400/30 text-white rounded-2xl p-6 transition-all disabled:opacity-50 disabled:cursor-not-allowed group shadow-lg hover:shadow-purple-500/50"
+                className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 border border-purple-400/30 text-white rounded-2xl p-6 transition-all group shadow-lg hover:shadow-purple-500/50"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">

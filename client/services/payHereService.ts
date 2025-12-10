@@ -58,6 +58,12 @@ class PayHereService {
     customerAddress?: string;
     customerCity?: string;
     currency?: string;
+    // Coupon data (optional)
+    couponCode?: string;
+    originalAmount?: number;
+    discountAmount?: number;
+    discountPercentage?: number;
+    referredBy?: number;
   }): Promise<{ status: string; orderId: string; message: string }> {
     try {
       // Validate required data
@@ -103,7 +109,12 @@ class PayHereService {
           
           // Custom Fields for our tracking
           custom_1: paymentData.courseId.toString(),
-          custom_2: paymentData.enrollmentId.toString()
+          custom_2: paymentData.enrollmentId.toString(),
+          // Store coupon data in remaining custom fields if available
+          ...(paymentData.couponCode && {
+            delivery_address: `COUPON:${paymentData.couponCode}`, // Use delivery_address to pass coupon code
+            delivery_city: paymentData.originalAmount ? `ORIGINAL:${paymentData.originalAmount}` : ''
+          })
         };
 
         console.log('PayHere payment configuration:', payment);
