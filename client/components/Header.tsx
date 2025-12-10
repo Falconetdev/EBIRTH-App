@@ -52,6 +52,8 @@ function AuthButtons({ mobile = false }: { mobile?: boolean }) {
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  /* DROPDOWN FUNCTIONALITY - COMMENTED OUT FOR NOW
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const closeTimeoutRef = useRef<number | null>(null);
 
@@ -80,6 +82,7 @@ export default function Header() {
       ]
     },
   ];
+  */
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -91,6 +94,7 @@ export default function Header() {
     { name: "Contact", href: "/#contact" },
   ];
 
+  /* DROPDOWN TOGGLE AND CLOSE HANDLERS - COMMENTED OUT
   const toggleDropdown = (linkName: string) => {
     setOpenDropdown(openDropdown === linkName ? null : linkName);
   };
@@ -108,6 +112,7 @@ export default function Header() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  */
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#1a0b2e]/95 backdrop-blur-sm border-b border-purple-800/20">
@@ -123,6 +128,19 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-8 relative">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-white/80 hover:text-white transition-colors text-sm font-medium"
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
+
+          {/* DROPDOWN NAVIGATION - COMMENTED OUT FOR NOW
           <nav className="hidden md:flex items-center gap-8 relative">
             {navLinks.map((link) => (
               <div
@@ -215,6 +233,7 @@ export default function Header() {
               </div>
             ))}
           </nav>
+          */}
 
           {/* Auth Buttons - Desktop */}
           <div className="hidden md:flex items-center gap-3">
