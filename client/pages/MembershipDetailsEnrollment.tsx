@@ -25,6 +25,21 @@ export default function MembershipDetailsEnrollment() {
   const [showBankTransferModal, setShowBankTransferModal] = useState(false);
   const [activeTab, setActiveTab] = useState<TabKey>("overview");
 
+  // Check for autoOpenPayment parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const autoOpen = urlParams.get('autoOpenPayment');
+    
+    if (autoOpen === 'true' && isAuthenticated && !existingEnrollment) {
+      // Clean URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+      // Open payment modal after a short delay to ensure page is loaded
+      setTimeout(() => {
+        setShowPaymentOptions(true);
+      }, 500);
+    }
+  }, [isAuthenticated, existingEnrollment]);
+
   useEffect(() => {
     const fetchCourse = async () => {
       try {

@@ -1,5 +1,5 @@
-import { useState, FormEvent } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, FormEvent, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
   const { login } = useAuth();
+  const location = useLocation();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -17,6 +18,9 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  
+  // Get the return URL from location state
+  const from = (location.state as any)?.from || null;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,8 +38,13 @@ export default function Login() {
 
       // Redirect based on user role
       if (user.role === "student") {
-        // Redirect to membership page
-        navigate("/membership");
+        // If there's a return URL, redirect there with auto-open flag
+        if (from) {
+          navigate(`${from}?autoOpenPayment=true`);
+        } else {
+          // Otherwise go to membership page
+          navigate("/membership");
+        }
       } else {
         // For other roles, redirect to main app
         window.location.href = `${import.meta.env.VITE_MAIN_APP_URL || "http://localhost:5174"}/${user.role}`;
