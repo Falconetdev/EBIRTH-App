@@ -168,7 +168,43 @@ const Explore = () => {
           </div>
         )}
 
-        {!loading && (
+        {!loading && filteredCourses.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+            <div className="rounded-full bg-white/5 p-6 mb-6">
+              <svg className="h-16 w-16 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-semibold text-white mb-3">
+              No {activeTab === 'online' ? 'Online' : activeTab === 'physical' ? 'Physical' : ''} Courses Available
+            </h3>
+            <p className="text-white/70 text-base max-w-md mb-6">
+              {activeTab === 'all'
+                ? "We currently don't have any courses available. Please check back soon!"
+                : `We currently don't have any ${activeTab === 'online' ? 'online' : 'physical'} membership programs available. Try switching to ${activeTab === 'online' ? 'Physical Membership' : 'Online Membership'} or view all courses!`
+              }
+            </p>
+            {activeTab !== 'all' && (
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setActiveTab(activeTab === 'online' ? 'physical' : 'online')}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#8C52FF] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#7a45e6] shadow-[0_0_20px_rgba(140,82,255,0.4)]"
+                >
+                  Switch to {activeTab === 'online' ? 'Physical' : 'Online'} Membership
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => setActiveTab('all')}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                >
+                  View All Courses
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {!loading && filteredCourses.length > 0 && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredCourses.map((course) => {
             const highlightColor =
@@ -237,7 +273,7 @@ const Explore = () => {
           </div>
         )}
 
-        {!loading && !useApiData && (
+        {!loading && !useApiData && filteredCourses.length > 0 && (
           <p className="text-center text-xs text-white/50 mt-4">
             Showing sample courses (API unavailable)
           </p>
