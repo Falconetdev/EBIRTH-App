@@ -26,6 +26,8 @@ export interface PublicCourse {
   image_url: string | null;
   course_code: string;
   duration: string; // e.g. "8 weeks"
+  total_days: number | null; // Total days of the course
+  delivery_mode: string; // "online" | "offline" | "hybrid"
   price: number;
   currency: string; // e.g. "LKR"
   created_at: string; // ISO timestamp

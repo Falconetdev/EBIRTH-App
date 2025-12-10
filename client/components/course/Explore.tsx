@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { usePublicCourses } from '@/hooks/usePublicCourses';
+import type { PublicCourse } from '@shared/api';
+import { ArrowRight } from 'lucide-react';
 
 type TabKey = "all" | "trading" | "technology" | "language";
 
@@ -21,7 +24,8 @@ const tabs: { key: TabKey; label: string }[] = [
   { key: "language", label: "Language Learning" },
 ];
 
-const courses: CourseCard[] = [
+// Fallback courses (shown if API fails or returns no data)
+const fallbackCourses: CourseCard[] = [
   {
     id: "free-trading",
     title: "Free Trading Mentorship",
@@ -86,9 +90,29 @@ const courses: CourseCard[] = [
 
 const Explore = () => {
   const [activeTab, setActiveTab] = useState<TabKey>("all");
+  const { data: apiCourses, loading, error } = usePublicCourses();
+
+  // Use API courses if available and not empty, otherwise use fallback
+  const useApiData = !loading && !error && apiCourses && apiCourses.length > 0;
+  
+  // Convert API courses to CourseCard format
+  const apiCoursesFormatted: CourseCard[] = useApiData
+    ? apiCourses.map((course: PublicCourse) => ({
+        id: course.id.toString(),
+        title: course.title,
+        description: course.description,
+        level: course.price === 0 ? "Free" : (course.price > 50000 ? "Premium" : "Advanced"),
+        category: "all" as TabKey, // API courses shown in all categories
+        duration: course.duration || `${course.total_days || 0} Days`,
+        badge: (course.delivery_mode === 'online' ? 'Online' :
+                course.delivery_mode === 'offline' ? 'Physical Classes' :
+                'Online') as CourseCard['badge'],
+        image: course.image_url || "/courses/KEG.jpg",
+      }))
+    : fallbackCourses;
 
   const filteredCourses =
-    activeTab === "all" ? courses : courses.filter((course) => course.category === activeTab);
+    activeTab === "all" ? apiCoursesFormatted : apiCoursesFormatted.filter((course) => course.category === activeTab);
 
   return (
     <section className="relative isolate overflow-hidden bg-gradient-to-br from-[#1A0450] via-[#2D0A7C] to-[#6D23FF] px-4 py-20 sm:px-6 lg:px-10">
@@ -127,8 +151,15 @@ const Explore = () => {
           })}
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredCourses.map((course) => {
+        {loading && (
+          <div className="flex justify-center py-10">
+            <span className="animate-pulse text-white/50">Loading courses...</span>
+          </div>
+        )}
+
+        {!loading && (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredCourses.map((course) => {
             const highlightColor =
               course.level === "Free"
                 ? "bg-[#FFB3B3] text-[#800F2F]"
@@ -173,17 +204,33 @@ const Explore = () => {
                     </span>
                   </div>
 
-                  <Link
-                    to="/course-details"
-                    className="mt-auto inline-flex items-center justify-center rounded-full bg-[#FFE178] px-5 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_32px_rgba(254,240,138,0.35)] transition hover:scale-[1.02]"
-                  >
-                    Learn More
-                  </Link>
+                  {useApiData ? (
+                    <Link
+                      to={`/membership/${course.id}`}
+                      className="group mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#FFE178] px-5 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_32px_rgba(254,240,138,0.35)] transition hover:scale-[1.02]"
+                    >
+                      View Details <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/course-details"
+                      className="mt-auto inline-flex items-center justify-center rounded-full bg-[#FFE178] px-5 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_32px_rgba(254,240,138,0.35)] transition hover:scale-[1.02]"
+                    >
+                      Learn More
+                    </Link>
+                  )}
                 </div>
               </article>
             );
-          })}
-        </div>
+            })}
+          </div>
+        )}
+
+        {!loading && !useApiData && (
+          <p className="text-center text-xs text-white/50 mt-4">
+            Showing sample courses (API unavailable)
+          </p>
+        )}
       </div>
     </section>
   );
