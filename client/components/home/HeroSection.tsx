@@ -81,7 +81,7 @@ const HeroSection = ({ images }: HeroSectionProps) => {
             
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               {isAuthenticated ? (
-                <a href={`${mainAppUrl}/student/courses`}>
+                <a href={`${mainAppUrl}/student/courses?token=${localStorage.getItem('token')}`}>
                   <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 py-6 text-lg rounded-lg group">
                     Continue Learning
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
