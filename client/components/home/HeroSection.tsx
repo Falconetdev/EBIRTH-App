@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 type HeroSectionProps = {
   images: string[];
 };
 
 const HeroSection = ({ images }: HeroSectionProps) => {
+  const { user, isAuthenticated } = useAuth();
+  const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
+
   return (
     <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-visible">
       <div className="absolute inset-0 bg-inherit"></div>
@@ -65,10 +71,29 @@ const HeroSection = ({ images }: HeroSectionProps) => {
             <p className="text-[#FFD700] text-lg font-semibold mb-6">
               Trading ගනා සාරථි සංඛලනයේ මුල ඉදන් ඉගෙනගමු
             </p>
+            
+            {/* Welcome Message for Authenticated Users - Above Button */}
+            {isAuthenticated && user && (
+              <p className="mb-3 text-white/70 text-sm font-medium">
+                Welcome back, <span className="text-[#FFD700]">{user.name}</span>
+              </p>
+            )}
+            
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-              <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 py-6 text-lg rounded-lg">
-                Get Started
-              </Button>
+              {isAuthenticated ? (
+                <a href={`${mainAppUrl}/student/courses`}>
+                  <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 py-6 text-lg rounded-lg group">
+                    Continue Learning
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </a>
+              ) : (
+                <Link to="/register">
+                  <Button className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 py-6 text-lg rounded-lg">
+                    Get Started
+                  </Button>
+                </Link>
+              )}
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4 py-6 lg:justify-start">
               <div className="flex -space-x-3">

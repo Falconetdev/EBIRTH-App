@@ -9,7 +9,7 @@ export default function Footer() {
               <img
                 src="/ebirth-logo.png"
                 alt="eBirth Logo"
-                className="h-10 w-auto"
+                className="h-14 w-auto"
               />
             </div>
             <div className="flex space-x-4">
