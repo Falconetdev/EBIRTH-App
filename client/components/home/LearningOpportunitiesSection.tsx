@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePublicCourses } from '@/hooks/usePublicCourses';
+import type { PublicCourse } from '@shared/api';
 
 type Membership = {
   id: string;
@@ -10,6 +12,7 @@ type Membership = {
   oldPrice: string;
   image: string;
   description: string;
+  deliveryMode?: 'online' | 'physical';
 };
 
 type LearningOpportunitiesSectionProps = {
@@ -19,15 +22,41 @@ type LearningOpportunitiesSectionProps = {
 const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSectionProps) => {
   const [activeType, setActiveType] = useState<'online' | 'physical'>('online');
   const navigate = useNavigate();
+  const { data: apiCourses, loading, error } = usePublicCourses();
+
+  // Use API courses if available, otherwise use hardcoded fallback
+  const useApiData = !loading && !error && apiCourses && apiCourses.length > 0;
+
+  // Convert API courses to Membership format
+  const apiMemberships: Membership[] = useApiData
+    ? apiCourses.map((course: PublicCourse) => ({
+        id: course.id.toString(),
+        title: course.title,
+        price: `${course.currency} ${course.price.toLocaleString()}`,
+        oldPrice: `${course.currency} ${(course.price * 1.25).toLocaleString()}`, // 25% markup for "old price"
+        image: course.image_url || "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80",
+        description: course.description,
+        deliveryMode: course.delivery_mode === 'offline' ? 'physical' : 'online',
+      }))
+    : memberships.map(m => ({
+        ...m,
+        deliveryMode: m.id.toLowerCase().includes('online') ? 'online' : 'physical'
+      }));
 
   const visibleMemberships = useMemo(() => {
-    return memberships
-      .filter(m => {
-        const isOnline = m.id.toLowerCase().includes('online');
-        return activeType === 'online' ? isOnline : !isOnline;
-      })
-      .slice(0, 2); // Ensure exactly two cards per tab
-  }, [memberships, activeType]);
+    const filtered = apiMemberships.filter(m =>
+      activeType === 'online' ? m.deliveryMode === 'online' : m.deliveryMode === 'physical'
+    );
+    
+    // Show only 2 courses per tab
+    return filtered.slice(0, 2);
+  }, [apiMemberships, activeType]);
+
+  const hasMoreCourses = useMemo(() => {
+    return apiMemberships.filter(m =>
+      activeType === 'online' ? m.deliveryMode === 'online' : m.deliveryMode === 'physical'
+    ).length > 2;
+  }, [apiMemberships, activeType]);
 
   return (
     <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-inherit overflow-hidden">
@@ -132,19 +161,22 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
                   <span className="text-base font-medium text-white/50 line-through">{plan.oldPrice}</span>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2 mt-auto">
-                 <Button
-  onClick={() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    navigate('/course-details');
-  }}
-  className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#FFD700] px-6 py-3 text-base font-semibold text-black transition hover:bg-[#FFC700]"
->
-  Enroll Now
-  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-</Button>
+                  <Button
+                    onClick={() => {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      navigate(useApiData ? `/membership/${plan.id}` : '/course-details');
+                    }}
+                    className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#FFD700] px-6 py-3 text-base font-semibold text-black transition hover:bg-[#FFC700]"
+                  >
+                    Enroll Now
+                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Button>
 
                   <Button
                     variant="outline"
+                    onClick={() => {
+                      navigate(useApiData ? `/membership/${plan.id}` : '/course-details');
+                    }}
                     className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/20 bg-white/5 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
                   >
                     Learn More
@@ -155,6 +187,27 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
             </div>
           ))}
         </div>
+
+        {hasMoreCourses && (
+          <div className="mt-10 flex justify-center">
+            <Button
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                navigate('/membership');
+              }}
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#FFD700] px-8 py-3 text-base font-semibold text-black transition hover:bg-[#FFC700] shadow-[0_0_20px_rgba(255,215,0,0.3)]"
+            >
+              View All Courses
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </div>
+        )}
+
+        {loading && (
+          <div className="flex justify-center py-6">
+            <span className="animate-pulse text-white/50 text-sm">Loading courses...</span>
+          </div>
+        )}
       </div>
     </section>
   );

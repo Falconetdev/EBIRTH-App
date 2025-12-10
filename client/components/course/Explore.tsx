@@ -4,14 +4,14 @@ import { usePublicCourses } from '@/hooks/usePublicCourses';
 import type { PublicCourse } from '@shared/api';
 import { ArrowRight } from 'lucide-react';
 
-type TabKey = "all" | "trading" | "technology" | "language";
+type TabKey = "all" | "online" | "physical";
 
 type CourseCard = {
   id: string;
   title: string;
   description: string;
   level: "Free" | "Advanced" | "Premium";
-  category: TabKey;
+  deliveryMode: "online" | "physical" | "hybrid";
   duration: string;
   badge: "Online" | "Beginner Friendly" | "Physical Classes" | "Language-specific" | "Hands-On Projects";
   image: string;
@@ -19,9 +19,8 @@ type CourseCard = {
 
 const tabs: { key: TabKey; label: string }[] = [
   { key: "all", label: "All Courses" },
-  { key: "trading", label: "Trading" },
-  { key: "technology", label: "Technology & Development" },
-  { key: "language", label: "Language Learning" },
+  { key: "online", label: "Online Membership" },
+  { key: "physical", label: "Physical Membership" },
 ];
 
 // Fallback courses (shown if API fails or returns no data)
@@ -31,7 +30,7 @@ const fallbackCourses: CourseCard[] = [
     title: "Free Trading Mentorship",
     description: "Kickstart trading fundamentals with live mentorship sessions, 100% free.",
     level: "Free",
-    category: "trading",
+    deliveryMode: "online",
     duration: "6 Weeks",
     badge: "Beginner Friendly",
     image: "/courses/KEG.jpg",
@@ -41,7 +40,7 @@ const fallbackCourses: CourseCard[] = [
     title: "Institutional Membership",
     description: "Institutional-grade mastery with structured evaluations and prop-ready frameworks.",
     level: "Premium",
-    category: "trading",
+    deliveryMode: "physical",
     duration: "12 Weeks",
     badge: "Physical Classes",
     image: "/courses/NUGEGODA.jpg",
@@ -51,7 +50,7 @@ const fallbackCourses: CourseCard[] = [
     title: "Elliott Wave Membership",
     description: "Decode market waves and master precision entries with expert-led pathing.",
     level: "Premium",
-    category: "trading",
+    deliveryMode: "physical",
     duration: "10 Weeks",
     badge: "Hands-On Projects",
     image: "/courses/EWC KEGALLE.jpg",
@@ -61,7 +60,7 @@ const fallbackCourses: CourseCard[] = [
     title: "SMC & ICT Market Core",
     description: "Institutional concepts simplified with actionable smart money playbooks.",
     level: "Advanced",
-    category: "trading",
+    deliveryMode: "online",
     duration: "8 Weeks",
     badge: "Online",
     image: "/courses/SMC.jpg",
@@ -71,7 +70,7 @@ const fallbackCourses: CourseCard[] = [
     title: "MSnR Membership",
     description: "Full-stack fundamentals for future-focused creators and career switchers.",
     level: "Advanced",
-    category: "technology",
+    deliveryMode: "online",
     duration: "10 Weeks",
     badge: "Online",
     image: "/courses/MSNRONLINE.jpg",
@@ -81,7 +80,7 @@ const fallbackCourses: CourseCard[] = [
     title: "Institutional Membership Online",
     description: "Build global communication confidence with tailored language coaching tracks.",
     level: "Premium",
-    category: "language",
+    deliveryMode: "online",
     duration: "8 Weeks",
     badge: "Online",
     image: "/courses/NUGEGODA.jpg",
@@ -102,7 +101,9 @@ const Explore = () => {
         title: course.title,
         description: course.description,
         level: course.price === 0 ? "Free" : (course.price > 50000 ? "Premium" : "Advanced"),
-        category: "all" as TabKey, // API courses shown in all categories
+        deliveryMode: (course.delivery_mode === 'offline' ? 'physical' :
+                      course.delivery_mode === 'hybrid' ? 'hybrid' :
+                      'online') as CourseCard['deliveryMode'],
         duration: course.duration || `${course.total_days || 0} Days`,
         badge: (course.delivery_mode === 'online' ? 'Online' :
                 course.delivery_mode === 'offline' ? 'Physical Classes' :
@@ -112,7 +113,13 @@ const Explore = () => {
     : fallbackCourses;
 
   const filteredCourses =
-    activeTab === "all" ? apiCoursesFormatted : apiCoursesFormatted.filter((course) => course.category === activeTab);
+    activeTab === "all"
+      ? apiCoursesFormatted
+      : apiCoursesFormatted.filter((course) =>
+          activeTab === "online" ? course.deliveryMode === "online" :
+          activeTab === "physical" ? (course.deliveryMode === "physical" || course.deliveryMode === "hybrid") :
+          true
+        );
 
   return (
     <section className="relative isolate overflow-hidden bg-gradient-to-br from-[#1A0450] via-[#2D0A7C] to-[#6D23FF] px-4 py-20 sm:px-6 lg:px-10">
@@ -131,24 +138,28 @@ const Explore = () => {
           </p>
         </header>
 
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          {tabs.map((tab) => {
-            const isActive = tab.key === activeTab;
-            return (
-              <button
-                key={tab.key}
-                type="button"
-                onClick={() => setActiveTab(tab.key)}
-                className={`rounded-full px-6 py-2 text-sm font-semibold transition ${
-                  isActive
-                    ? "bg-[#FFE178] text-[#1B0B2E] shadow-[0_12px_28px_rgba(245,209,96,0.35)]"
-                    : "bg-white/10 text-white/80 hover:bg-white/20"
-                }`}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
+        <div className="flex justify-center">
+          <div className="rounded-full bg-white/10 p-1">
+            <div className="flex items-center gap-2 rounded-full bg-black/40 p-1">
+              {tabs.map((tab) => {
+                const isActive = tab.key === activeTab;
+                return (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    onClick={() => setActiveTab(tab.key)}
+                    className={`rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] sm:text-sm transition ${
+                      isActive
+                        ? "bg-[#8C52FF] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)]"
+                        : "text-white/70 hover:text-white"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         {loading && (
