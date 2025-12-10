@@ -12,8 +12,8 @@ interface DirectPaymentData {
 
 class DirectPaymentService {
   
-  // Initiate direct payment without pre-creating enrollment
-  // The PayHere webhook will create enrollment when payment succeeds
+  // Initiate direct payment - creates payment record first, then redirects to PayHere
+  // Matches CLIENT dashboard approach
   async initiateDirectPayment(paymentData: DirectPaymentData, user: any, couponData?: any) {
     try {
       const token = localStorage.getItem('token');
@@ -31,8 +31,58 @@ class DirectPaymentService {
 
       console.log('Initiating payment for student:', studentId, 'course:', paymentData.courseId);
 
+      // First, check if enrollment exists or create one
+      let enrollmentId = 0;
+      try {
+        const enrollmentResult = await axios.get(
+          `${API_BASE_URL}/api/enrollments/student/${studentId}/course/${paymentData.courseId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+        enrollmentId = enrollmentResult.data.id;
+      } catch (err: any) {
+        // If enrollment doesn't exist (404), that's okay - webhook will create it
+        if (err.response?.status !== 404) {
+          throw err;
+        }
+      }
+
       // Generate order ID
       const orderId = payHereService.generateOrderId(paymentData.courseId, studentId);
+
+      // Use coupon amount if available, otherwise use original price
+      const paymentAmount = couponData?.amount || paymentData.coursePrice;
+
+      // Create payment record in backend FIRST (like CLIENT dashboard)
+      const paymentPayload = {
+        enrollment_id: enrollmentId,
+        course_id: paymentData.courseId,
+        amount: paymentAmount,
+        payment_type: 'full',
+        payhere_payment_id: orderId, // Temporary, will be updated by webhook
+        payhere_order_id: orderId,
+        payhere_response: { initiated: true },
+        // Include coupon data
+        coupon_code: couponData?.couponCode,
+        referred_by: couponData?.referredBy,
+        discount_amount: couponData?.discountAmount,
+        discount_percentage: couponData?.discountPercentage,
+        original_amount: couponData?.originalAmount
+      };
+
+      const { data: paymentRecord } = await axios.post(
+        `${API_BASE_URL}/api/payments/payhere`,
+        paymentPayload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      console.log('Payment record created:', paymentRecord.payment.id);
 
       // Wait for PayHere to load
       await payHereService.waitForPayHere();
@@ -41,25 +91,16 @@ class DirectPaymentService {
       const studentName = user?.name || user?.email?.split('@')[0] || 'Student';
       const studentEmail = user?.email || '';
 
-      // Use coupon amount if available, otherwise use original price
-      const paymentAmount = couponData?.amount || paymentData.coursePrice;
-
-      // Initiate PayHere checkout
+      // Now initiate PayHere checkout (without coupon data in fields)
       const paymentResult = await payHereService.initiateCheckout({
         amount: paymentAmount,
         orderId: orderId,
         items: paymentData.courseTitle,
         courseId: paymentData.courseId,
-        enrollmentId: 0, // Will be created by webhook
+        enrollmentId: enrollmentId,
         customerName: studentName,
         customerEmail: studentEmail,
-        currency: paymentData.currency || 'LKR',
-        // Pass coupon data to be stored with payment
-        couponCode: couponData?.couponCode,
-        originalAmount: couponData?.originalAmount,
-        discountAmount: couponData?.discountAmount,
-        discountPercentage: couponData?.discountPercentage,
-        referredBy: couponData?.referredBy
+        currency: paymentData.currency || 'LKR'
       });
 
       return {

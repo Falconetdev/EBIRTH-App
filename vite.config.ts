@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => ({
     port: Number(process.env.PORT) || 5173,
     strictPort: false,
     allowedHosts: [
-      'seal-app-wan5l.ondigitalocean.app',
+      'ebirth.net',
       '.ondigitalocean.app' // This allows all Digital Ocean app URLs
     ]
   },
