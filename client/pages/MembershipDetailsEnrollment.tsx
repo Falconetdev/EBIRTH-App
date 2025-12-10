@@ -262,6 +262,81 @@ export default function MembershipDetailsEnrollment() {
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#FFD700]/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
           </div>
 
+          {/* Floating Coin Animations with Wormhole Entrance */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+            {/* Left large peeking coin */}
+            <img
+              src="/Bitcoin-PNG-removebg-preview.png"
+              alt="Decorative coin"
+              className="coin-wormhole absolute left-[-90px] top-[38%] hidden md:block h-64 w-64 -rotate-[14deg]"
+              style={{ animationDelay: '0.2s' }}
+            />
+            
+            {/* Small accent above content */}
+            <img
+              src="/coin2.webp"
+              alt="Decorative coin"
+              className="coin-wormhole absolute left-[54%] top-[22%] h-16 w-16 -translate-x-1/2 rotate-[22deg]"
+              style={{ animationDelay: '0.6s' }}
+            />
+            
+            {/* Bottom subtle coin */}
+            <img
+              src="/coin2.webp"
+              alt="Decorative coin"
+              className="coin-wormhole absolute left-[52%] bottom-[18%] h-14 w-14 -translate-x-1/2 rotate-[12deg]"
+              style={{ animationDelay: '0.9s' }}
+            />
+            
+            {/* Lower-left faint coin */}
+            <img
+              src="/Bitcoin-PNG-removebg-preview.png"
+              alt="Decorative coin"
+              className="coin-wormhole absolute left-[6%] bottom-[30%] h-24 w-24 rotate-[26deg]"
+              style={{ animationDelay: '0.5s' }}
+            />
+            
+            {/* Top-right corner large coin */}
+            <img
+              src="/Bitcoin-PNG-removebg-preview.png"
+              alt="Decorative coin"
+              className="coin-wormhole absolute right-[-70px] top-[80px] hidden lg:block h-40 w-40 rotate-[-12deg]"
+              style={{ animationDelay: '0.3s' }}
+            />
+            
+            {/* Top-left medium coin */}
+            <img
+              src="/coin2.webp"
+              alt="Decorative coin"
+              className="coin-wormhole absolute left-[0%] top-[15%] h-[180px] w-[180px]"
+              style={{ animationDelay: '0.4s' }}
+            />
+            
+            {/* Top center subtle small coin */}
+            <img
+              src="/coin4.webp"
+              alt="Decorative coin"
+              className="coin-wormhole absolute left-1/2 top-[40%] h-25 w-25 -translate-x-1/2 rotate-[8deg]"
+              style={{ animationDelay: '0.7s' }}
+            />
+
+            {/* Right bottom large coin */}
+            <img
+              src="/Bitcoin-PNG-removebg-preview.png"
+              alt="Decorative coin"
+              className="coin-wormhole absolute right-[-70px] bottom-[20%] hidden lg:block h-60 w-60 rotate-[-12deg]"
+              style={{ animationDelay: '0.3s' }}
+            />
+
+            {/* Mid-right floating coin */}
+            <img
+              src="/coin2.webp"
+              alt="Decorative coin"
+              className="coin-wormhole absolute right-[10%] top-[50%] h-20 w-20 rotate-[15deg]"
+              style={{ animationDelay: '0.8s' }}
+            />
+          </div>
+
           <div className="relative z-10 pt-24 pb-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               {/* Back Button */}

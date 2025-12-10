@@ -113,6 +113,29 @@
   animation: coin-float 8s ease-in-out infinite;
 }
 
+/* Wormhole entrance animation - coins appear from far away */
+@keyframes wormhole-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) translateZ(-1000px);
+    filter: blur(20px);
+  }
+  60% {
+    opacity: 0.5;
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+    filter: blur(0);
+  }
+}
+
+.coin-wormhole {
+  animation: wormhole-entrance 2s ease-out forwards, coin-float 8s ease-in-out 2s infinite;
+  opacity: 0;
+}
+
 /* CKEditor theming */
 .ck.ck-editor {
   width: 100%;
