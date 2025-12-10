@@ -387,6 +387,69 @@ export default function MembershipDetailsEnrollment() {
             </div>
           )}
 
+          {/* Course Syllabus Section */}
+          {course.syllabus_content && course.syllabus_content.length > 0 && (
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-white mb-8">Course Syllabus</h2>
+              <div className="bg-white/5 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-8">
+                <div className="text-white/60 mb-6 flex items-center gap-2">
+                  <BookOpen className="h-5 w-5 text-[#FFD700]" />
+                  <span className="font-semibold">
+                    {course.syllabus_total_days ? `${course.syllabus_total_days} Days` : course.duration} Comprehensive Curriculum
+                  </span>
+                </div>
+                
+                <div className="space-y-6">
+                  {/* Group syllabus content by day */}
+                  {Object.entries(
+                    course.syllabus_content.reduce((acc, content) => {
+                      if (!acc[content.day_number]) {
+                        acc[content.day_number] = [];
+                      }
+                      acc[content.day_number].push(content);
+                      return acc;
+                    }, {} as Record<number, typeof course.syllabus_content>)
+                  ).map(([dayNumber, dayContents]) => (
+                    <div key={dayNumber} className="border-l-2 border-[#FFD700]/30 pl-6 py-2">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FFD700] to-[#FFA500] flex items-center justify-center flex-shrink-0">
+                          <span className="text-sm font-bold text-black">{dayNumber}</span>
+                        </div>
+                        <h3 className="text-lg font-semibold text-white">Day {dayNumber}</h3>
+                      </div>
+                      
+                      <div className="space-y-3 ml-13">
+                        {dayContents.map((content, idx) => (
+                          <div key={idx} className="flex items-start gap-3 group">
+                            <CheckCircle2 className="h-5 w-5 text-[#FFD700]/70 flex-shrink-0 mt-0.5 group-hover:text-[#FFD700] transition-colors" />
+                            <div>
+                              <h4 className="text-white font-medium group-hover:text-[#FFD700] transition-colors">
+                                {content.content_title}
+                              </h4>
+                              {content.content_description && (
+                                <p className="text-white/60 text-sm mt-1">
+                                  {content.content_description}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {course.syllabus_total_days && (
+                  <div className="mt-8 pt-6 border-t border-purple-500/20 text-center">
+                    <p className="text-white/70 text-sm">
+                      Complete {course.syllabus_content.length} topics across {course.syllabus_total_days} days of structured learning
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* What You'll Learn Section */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-white mb-8">What You'll Learn</h2>

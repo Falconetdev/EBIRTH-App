@@ -19,6 +19,13 @@ export interface PublicCourseLecturer {
   role: "primary" | "support" | "coach";
 }
 
+export interface PublicCourseSyllabusContent {
+  day_number: number;
+  content_title: string;
+  content_description: string;
+  order_index: number;
+}
+
 export interface PublicCourse {
   id: number;
   title: string;
@@ -33,4 +40,6 @@ export interface PublicCourse {
   created_at: string; // ISO timestamp
   students_count: number;
   lecturers: PublicCourseLecturer[];
+  syllabus_total_days: number | null; // Total days in syllabus
+  syllabus_content: PublicCourseSyllabusContent[]; // Course syllabus content
 }
