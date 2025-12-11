@@ -36,7 +36,7 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
         oldPrice: `${course.currency} ${(course.price * 1.25).toLocaleString()}`, // 25% markup for "old price"
         image: course.image_url || "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80",
         description: course.description,
-        deliveryMode: course.delivery_mode === 'offline' ? 'physical' : 'online',
+        deliveryMode: course.delivery_mode === 'physical' ? 'physical' : 'online',
       }))
     : memberships.map(m => ({
         ...m,

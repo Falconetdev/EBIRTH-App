@@ -101,12 +101,12 @@ const Explore = () => {
         title: course.title,
         description: course.description,
         level: course.price === 0 ? "Free" : (course.price > 50000 ? "Premium" : "Advanced"),
-        deliveryMode: (course.delivery_mode === 'offline' ? 'physical' :
+        deliveryMode: (course.delivery_mode === 'physical' ? 'physical' :
                       course.delivery_mode === 'hybrid' ? 'hybrid' :
                       'online') as CourseCard['deliveryMode'],
         duration: course.duration || `${course.total_days || 0} Days`,
         badge: (course.delivery_mode === 'online' ? 'Online' :
-                course.delivery_mode === 'offline' ? 'Physical Classes' :
+                course.delivery_mode === 'physical' ? 'Physical Classes' :
                 'Online') as CourseCard['badge'],
         image: course.image_url || "/courses/KEG.jpg",
       }))
