@@ -18,7 +18,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  
+
   // Get the return URL from location state
   const from = (location.state as any)?.from || null;
 
@@ -68,13 +68,13 @@ export default function Login() {
             src="/coin3.webp"
             alt="Decorative coin"
             className="coin-float absolute left-8 top-32 h-32 w-24 rotate-[-12deg] hidden lg:block"
-            style={{ animationDelay: '0.5s' }}
+            style={{ animationDelay: "0.5s" }}
           />
           <img
             src="/Bitcoin-PNG-removebg-preview.png"
             alt="Decorative coin"
             className="coin-float absolute right-16 top-40 h-20 w-20 rotate-[15deg] hidden lg:block"
-            style={{ animationDelay: '1.2s' }}
+            style={{ animationDelay: "1.2s" }}
           />
         </div>
 
@@ -88,12 +88,16 @@ export default function Login() {
                 <span className="text-[#FFD700]">eBirth Academy</span>
               </h1>
               <p className="text-white/80 text-xl mb-8 max-w-lg">
-                Continue your journey in trading and business education.
-                Login to access your courses and community.
+                Continue your journey in trading and business education. Login
+                to access your courses and community.
               </p>
               <div className="flex items-center gap-4 text-white/60">
                 <div className="flex -space-x-2">
-                  {["/students/s1.svg", "/students/s2.svg", "/students/s3.svg"].map((img, i) => (
+                  {[
+                    "/students/s1.svg",
+                    "/students/s2.svg",
+                    "/students/s3.svg",
+                  ].map((img, i) => (
                     <img
                       key={i}
                       src={img}
@@ -102,7 +106,9 @@ export default function Login() {
                     />
                   ))}
                 </div>
-                <span className="text-[#FFD700] font-semibold">Join 10K+ students</span>
+                <span className="text-[#FFD700] font-semibold">
+                  Join 10K+ students
+                </span>
               </div>
             </div>
 
@@ -126,7 +132,9 @@ export default function Login() {
                       />
                     </svg>
                   </div>
-                  <h2 className="text-3xl font-bold text-white mb-2">Sign In</h2>
+                  <h2 className="text-3xl font-bold text-white mb-2">
+                    Sign In
+                  </h2>
                   <p className="text-white/60">Access your account</p>
                 </div>
 
@@ -156,9 +164,20 @@ export default function Login() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="password" className="text-white font-semibold">
-                      Password
-                    </Label>
+                    <div className="flex items-center justify-between">
+                      <Label
+                        htmlFor="password"
+                        className="text-white font-semibold"
+                      >
+                        Password
+                      </Label>
+                      <Link
+                        to="/forgot-password"
+                        className="text-sm text-[#FFD700] hover:text-[#FFC700] hover:underline"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
                     <Input
                       id="password"
                       name="password"
@@ -194,10 +213,12 @@ export default function Login() {
                       <div className="w-full border-t border-purple-500/20"></div>
                     </div>
                     <div className="relative flex justify-center text-sm">
-                      <span className="px-2 bg-[#1a0b2e] text-white/60">New to eBirth?</span>
+                      <span className="px-2 bg-[#1a0b2e] text-white/60">
+                        New to eBirth?
+                      </span>
                     </div>
                   </div>
-                  
+
                   <Link to="/register">
                     <Button
                       variant="outline"
