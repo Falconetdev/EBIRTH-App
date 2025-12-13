@@ -322,34 +322,54 @@ export default function CourseDetails() {
               </div>
 
               {/* Price */}
-              <div className="flex items-center justify-between bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
-                <div>
-                  <div className="text-white/60 text-sm mb-1">Course Price</div>
-                  <div className="text-3xl font-bold text-[#FFD700]">
-                    {course.currency} {course.price.toLocaleString()}
+              <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <div className="text-white/60 text-sm mb-1">Course Price</div>
+                    <div className="text-3xl font-bold text-[#FFD700]">
+                      {course.currency} {course.price.toLocaleString()}
+                    </div>
                   </div>
-                </div>
-                <Button
-                  onClick={handleEnrollClick}
-                  disabled={enrolling || !!existingEnrollment}
-                  className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-8 py-6 text-lg rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {enrolling ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Processing...
-                    </>
-                  ) : existingEnrollment ? (
-                    "Already Enrolled"
-                  ) : isAuthenticated ? (
-                    <>
-                      <CreditCard className="mr-2 h-5 w-5" />
-                      Enroll Now
-                    </>
-                  ) : (
-                    "Login to Enroll"
+                  {!existingEnrollment && (
+                    <Button
+                      onClick={handleEnrollClick}
+                      disabled={enrolling}
+                      className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-8 py-6 text-lg rounded-xl"
+                    >
+                      {enrolling ? (
+                        <>
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                          Processing...
+                        </>
+                      ) : isAuthenticated ? (
+                        <>
+                          <CreditCard className="mr-2 h-5 w-5" />
+                          Enroll Now
+                        </>
+                      ) : (
+                        "Login to Enroll"
+                      )}
+                    </Button>
                   )}
-                </Button>
+                </div>
+                
+                {existingEnrollment && (
+                  <div className="space-y-3">
+                    <div className="bg-green-500/20 border border-green-500/30 rounded-xl p-4 text-center">
+                      <CheckCircle2 className="h-6 w-6 text-green-400 mx-auto mb-2" />
+                      <p className="text-green-300 font-semibold">You're Already Enrolled!</p>
+                    </div>
+                    <Button
+                      onClick={() => {
+                        const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
+                        window.location.href = `${mainAppUrl}/student/courses`;
+                      }}
+                      className="w-full bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-8 py-6 text-lg rounded-xl"
+                    >
+                      Go to LMS Dashboard →
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -417,25 +437,35 @@ export default function CourseDetails() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {isAuthenticated ? (
-                <Button
-                  onClick={handleEnrollClick}
-                  disabled={enrolling || !!existingEnrollment}
-                  className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-12 py-6 text-lg rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {enrolling ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Processing Payment...
-                    </>
-                  ) : existingEnrollment ? (
-                    "Already Enrolled - Go to Dashboard"
-                  ) : (
-                    <>
-                      <CreditCard className="mr-2 h-5 w-5" />
-                      Enroll Now - {course.currency} {course.price.toLocaleString()}
-                    </>
-                  )}
-                </Button>
+                existingEnrollment ? (
+                  <Button
+                    onClick={() => {
+                      const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
+                      window.location.href = `${mainAppUrl}/student/courses`;
+                    }}
+                    className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-12 py-6 text-lg rounded-xl"
+                  >
+                    Go to LMS Dashboard →
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleEnrollClick}
+                    disabled={enrolling}
+                    className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-12 py-6 text-lg rounded-xl"
+                  >
+                    {enrolling ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Processing Payment...
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard className="mr-2 h-5 w-5" />
+                        Enroll Now - {course.currency} {course.price.toLocaleString()}
+                      </>
+                    )}
+                  </Button>
+                )
               ) : (
                 <>
                   <Button

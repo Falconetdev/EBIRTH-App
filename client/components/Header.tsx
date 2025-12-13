@@ -10,6 +10,8 @@ function AuthButtons({ mobile = false }: { mobile?: boolean }) {
   const navigate = useNavigate();
 
   if (isAuthenticated && user) {
+    const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
+    
     return (
       <div className={`flex ${mobile ? 'flex-col' : 'items-center'} gap-3`}>
         <div className={`flex items-center gap-2 ${mobile ? 'px-4 py-2' : ''} text-white/80`}>
@@ -18,14 +20,24 @@ function AuthButtons({ mobile = false }: { mobile?: boolean }) {
         </div>
         <Button
           onClick={() => {
+            window.location.href = `${mainAppUrl}/student/courses`;
+          }}
+          className={`bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold ${mobile ? 'w-full' : ''}`}
+        >
+          Go to Dashboard
+        </Button>
+        <Button
+          onClick={() => {
             logout();
             navigate("/");
           }}
           variant="outline"
-          className={`border-purple-500/50 text-white hover:bg-purple-800/20 ${mobile ? 'w-full' : ''}`}
+          size="icon"
+          className={`border-purple-500/50 text-white hover:bg-purple-800/20 hover:text-white hover:border-purple-400/70 ${mobile ? 'w-full' : ''}`}
+          title="Logout"
         >
-          <LogOut size={16} className="mr-2" />
-          Logout
+          <LogOut size={18} />
+          {mobile && <span className="ml-2">Logout</span>}
         </Button>
       </div>
     );

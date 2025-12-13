@@ -678,27 +678,43 @@ export default function MembershipDetailsEnrollment() {
                         </div>
                       </div>
 
-                      <Button
-                        onClick={handleEnrollClick}
-                        disabled={enrolling || !!existingEnrollment}
-                        className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-6 text-lg rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-[#FFD700]/50 transition-all"
-                      >
-                        {enrolling ? (
-                          <>
-                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                            Processing...
-                          </>
-                        ) : existingEnrollment ? (
-                          "Already Enrolled"
-                        ) : isAuthenticated ? (
-                          <>
-                            <CreditCard className="mr-2 h-5 w-5" />
-                            Enroll Now
-                          </>
-                        ) : (
-                          "Login to Enroll"
-                        )}
-                      </Button>
+                      {existingEnrollment ? (
+                        <div className="space-y-3">
+                          <div className="bg-green-500/20 border border-green-500/30 rounded-xl p-4 text-center">
+                            <CheckCircle2 className="h-6 w-6 text-green-400 mx-auto mb-2" />
+                            <p className="text-green-300 font-semibold">You're Already Enrolled!</p>
+                          </div>
+                          <Button
+                            onClick={() => {
+                              const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
+                              window.location.href = `${mainAppUrl}/student/courses`;
+                            }}
+                            className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-6 text-lg rounded-2xl shadow-lg hover:shadow-[#FFD700]/50 transition-all"
+                          >
+                            Go to LMS Dashboard →
+                          </Button>
+                        </div>
+                      ) : (
+                        <Button
+                          onClick={handleEnrollClick}
+                          disabled={enrolling}
+                          className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-6 text-lg rounded-2xl shadow-lg hover:shadow-[#FFD700]/50 transition-all"
+                        >
+                          {enrolling ? (
+                            <>
+                              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                              Processing...
+                            </>
+                          ) : isAuthenticated ? (
+                            <>
+                              <CreditCard className="mr-2 h-5 w-5" />
+                              Enroll Now
+                            </>
+                          ) : (
+                            "Login to Enroll"
+                          )}
+                        </Button>
+                      )}
 
                       {!isAuthenticated && (
                         <p className="text-center text-white/60 text-sm mt-4">
