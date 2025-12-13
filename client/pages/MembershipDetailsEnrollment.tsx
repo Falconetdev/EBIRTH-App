@@ -687,7 +687,8 @@ export default function MembershipDetailsEnrollment() {
                           <Button
                             onClick={() => {
                               const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
-                              window.location.href = `${mainAppUrl}/student/courses`;
+                              const token = localStorage.getItem('token');
+                              window.location.href = `${mainAppUrl}/student/courses${token ? `?token=${token}` : ''}`;
                             }}
                             className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-6 text-lg rounded-2xl shadow-lg hover:shadow-[#FFD700]/50 transition-all"
                           >

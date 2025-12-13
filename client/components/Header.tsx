@@ -20,7 +20,8 @@ function AuthButtons({ mobile = false }: { mobile?: boolean }) {
         </div>
         <Button
           onClick={() => {
-            window.location.href = `${mainAppUrl}/student/courses`;
+            const token = localStorage.getItem('token');
+            window.location.href = `${mainAppUrl}/student/courses${token ? `?token=${token}` : ''}`;
           }}
           className={`bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold ${mobile ? 'w-full' : ''}`}
         >

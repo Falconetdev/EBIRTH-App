@@ -362,7 +362,8 @@ export default function CourseDetails() {
                     <Button
                       onClick={() => {
                         const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
-                        window.location.href = `${mainAppUrl}/student/courses`;
+                        const token = localStorage.getItem('token');
+                        window.location.href = `${mainAppUrl}/student/courses${token ? `?token=${token}` : ''}`;
                       }}
                       className="w-full bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-8 py-6 text-lg rounded-xl"
                     >
@@ -441,7 +442,8 @@ export default function CourseDetails() {
                   <Button
                     onClick={() => {
                       const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
-                      window.location.href = `${mainAppUrl}/student/courses`;
+                      const token = localStorage.getItem('token');
+                      window.location.href = `${mainAppUrl}/student/courses${token ? `?token=${token}` : ''}`;
                     }}
                     className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-bold px-12 py-6 text-lg rounded-xl"
                   >
