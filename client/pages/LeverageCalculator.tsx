@@ -167,7 +167,7 @@ export default function LeverageCalculator() {
                 </a>
 
                 <div className="text-gray-600 text-[9px] uppercase tracking-[0.3em] font-mono">
-                  Powered by Team Inner Racers • 2024
+                  Powered by Team Inner Racers • 2025
                 </div>
               </div>
             </div>
