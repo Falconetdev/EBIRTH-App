@@ -70,13 +70,17 @@ export default function LeverageCalculator() {
   ];
 
   return (
-    <PageLayout className="bg-[#1a0b2e] bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-transparent">
-      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
+    <PageLayout
+      showFooter={true}
+      className="bg-[#0a0118]"
+      mainClassName="bg-[#0a0118]"
+    >
+      <section className="relative min-h-screen bg-[#0a0118] bg-gradient-to-br from-purple-900/20 via-purple-800/10 to-transparent">
         <div className="pointer-events-none absolute left-1/2 top-1/3 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,215,0,0.15),_rgba(26,11,46,0))] blur-3xl"></div>
-        <div className="max-w-3xl mx-auto relative z-10">
-          <div className="min-h-screen bg-app-bg text-app-text font-sans selection:bg-app-gold selection:text-black flex justify-center py-10 px-4 relative overflow-hidden">
+        
+        <div className="relative text-app-text font-sans selection:bg-app-gold selection:text-black flex justify-center py-10 px-4 overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20">
             {/* DotGrid Background */}
-            <div className="fixed inset-0 pointer-events-none">
+            <div className="absolute inset-0 pointer-events-none">
               <DotGrid
                 dotSize={2} // Request: Small Dots
                 gap={10} // Closer gap for small dots
@@ -167,7 +171,6 @@ export default function LeverageCalculator() {
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </section>
     </PageLayout>
