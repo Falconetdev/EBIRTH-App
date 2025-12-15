@@ -179,7 +179,7 @@ export default function PaymentSuccess() {
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Amount Paid:</span>
               <span className="font-semibold text-gray-900">
-                {paymentDetails.currency} {paymentDetails.amount?.toFixed(2)}
+                {paymentDetails.currency} {parseFloat(paymentDetails.amount || 0).toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between text-sm">
