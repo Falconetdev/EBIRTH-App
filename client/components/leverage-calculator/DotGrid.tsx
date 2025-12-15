@@ -68,6 +68,9 @@ const DotGrid: React.FC<DotGridProps> = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dotsRef = useRef<Dot[]>([]);
+  // Store text pixel data to create the "moving text" effect
+  const textDataRef = useRef<{ data: Uint8ClampedArray; width: number; height: number } | null>(null);
+  
   const pointerRef = useRef({
     x: 0,
     y: 0,
@@ -96,6 +99,8 @@ const DotGrid: React.FC<DotGridProps> = ({
     if (!wrap || !canvas) return;
 
     const { width, height } = wrap.getBoundingClientRect();
+    if (width === 0 || height === 0) return;
+
     const dpr = window.devicePixelRatio || 1;
 
     canvas.width = width * dpr;
@@ -104,6 +109,33 @@ const DotGrid: React.FC<DotGridProps> = ({
     canvas.style.height = `${height}px`;
     const ctx = canvas.getContext('2d');
     if (ctx) ctx.scale(dpr, dpr);
+
+    // --- Prepare Text Canvas ---
+    const tCanvas = document.createElement('canvas');
+    const tCtx = tCanvas.getContext('2d');
+    if (tCtx) {
+        // Font size approx 20% of screen height
+        const fontSize = Math.floor(height * 0.2); 
+        const text = "INNER RACERS";
+        tCtx.font = `900 ${fontSize}px sans-serif`;
+        const measure = tCtx.measureText(text);
+        
+        tCanvas.width = Math.ceil(measure.width);
+        tCanvas.height = Math.ceil(fontSize * 1.5);
+        
+        tCtx.font = `900 ${fontSize}px sans-serif`;
+        tCtx.fillStyle = '#ffffff';
+        tCtx.textBaseline = 'middle';
+        // Center text vertically in the canvas
+        tCtx.fillText(text, 0, tCanvas.height / 2);
+        
+        textDataRef.current = {
+            data: tCtx.getImageData(0, 0, tCanvas.width, tCanvas.height).data,
+            width: tCanvas.width,
+            height: tCanvas.height
+        };
+    }
+    // ---------------------------
 
     const cols = Math.floor((width + gap) / (dotSize + gap));
     const rows = Math.floor((height + gap) / (dotSize + gap));
@@ -143,6 +175,23 @@ const DotGrid: React.FC<DotGridProps> = ({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const { x: px, y: py } = pointerRef.current;
+      const time = Date.now();
+      
+      const textRef = textDataRef.current;
+      // Scroll speed: move left
+      const scrollSpeed = 0.05; 
+      // Calculate current scroll offset. 
+      // We loop (canvas.width + textWidth) to have it scroll fully off then restart
+      const loopWidth = (canvas.width / window.devicePixelRatio) + (textRef?.width || 0);
+      const scrollX = (time * scrollSpeed) % loopWidth;
+      
+      const textW = textRef?.width || 1;
+      const textH = textRef?.height || 1;
+      const textData = textRef?.data;
+      
+      // Vertical centering of text relative to screen
+      const screenH = canvas.height / window.devicePixelRatio;
+      const textDestY = (screenH - textH) / 2;
 
       for (const dot of dotsRef.current) {
         const ox = dot.cx + dot.xOffset;
@@ -151,15 +200,42 @@ const DotGrid: React.FC<DotGridProps> = ({
         const dy = dot.cy - py;
         const dsq = dx * dx + dy * dy;
 
-        let style = baseColor;
+        let r = baseRgb.r;
+        let g = baseRgb.g;
+        let b = baseRgb.b;
+
+        // 1. Check proximity (Mouse Interaction)
         if (dsq <= proxSq) {
           const dist = Math.sqrt(dsq);
           const t = 1 - dist / proximity;
-          const r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
-          const g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
-          const b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
-          style = `rgb(${r},${g},${b})`;
+          r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
+          g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
+          b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
+        } 
+        // 2. Check Text Overlap (Background Effect)
+        else if (textData) {
+            // Map dot position to text bitmap coordinates
+            // Text is scrolling LEFT, so dotX relative to text is dotX + scrollX
+            // However, we want text to enter from right. 
+            // effectiveX = dot.cx - (screenW - scrollX) ... simplified:
+            const relativeX = dot.cx - (canvas.width/window.devicePixelRatio) + scrollX;
+            const relativeY = dot.cy - textDestY;
+
+            if (relativeX >= 0 && relativeX < textW && relativeY >= 0 && relativeY < textH) {
+                const ix = Math.floor(relativeX);
+                const iy = Math.floor(relativeY);
+                const idx = (iy * textW + ix) * 4;
+                // If alpha > 0 (text pixel exists here)
+                if (textData[idx + 3] > 128) {
+                     // Light up this dot with Gold color (approx RGB 255, 215, 0)
+                     r = 255;
+                     g = 215;
+                     b = 0;
+                }
+            }
         }
+
+        const style = `rgb(${r},${g},${b})`;
 
         ctx.save();
         ctx.translate(ox, oy);
