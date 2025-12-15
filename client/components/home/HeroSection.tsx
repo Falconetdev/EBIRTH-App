@@ -64,12 +64,12 @@ const HeroSection = ({ images }: HeroSectionProps) => {
               Business Academy
             </h1>
             <p className="text-white/80 font-bold text-xl sm:text-2xl mb-8 max-w-xl">
-              Where Dreams Take Flight
+              Where Visionaries Are Made
               <br />
-              and Entrepreneurs Are Born
+              Not Just Born
             </p>
             <p className="text-[#FFD700] text-lg font-semibold mb-6">
-              Trading ගනා සාරථි සංඛලනයේ මුල ඉදන් ඉගෙනගමු
+              සාර්ථකත්වය උරුමයක් නොවේ; නිවැරදි මගපෙන්වීම තුළින් හෙට ලෝකය දිනන නියමුවෙකු වන්න.
             </p>
             
             {/* Welcome Message for Authenticated Users - Above Button */}

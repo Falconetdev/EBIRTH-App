@@ -128,25 +128,52 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Legal & Contact Info */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Contact</h3>
+            <h3 className="text-white font-semibold mb-4">Legal & Contact</h3>
             <ul className="space-y-2 text-sm text-white/60">
-              <li>Email: info@ebirth.com</li>
-              <li>Phone: +94 123 456 789</li>
-              <li>Address: Colombo, Sri Lanka</li>
+              <li>
+                <a href="/privacy-policy" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="/terms-of-service" className="hover:text-white transition-colors">
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="/refund-policy" className="hover:text-white transition-colors">
+                  Refund Policy
+                </a>
+              </li>
+              <li className="pt-2 border-t border-purple-900/30">
+                <a href="mailto:contact@ebirth.net" className="hover:text-white transition-colors">
+                  Email: contact@ebirth.net
+                </a>
+              </li>
+              <li>Phone: 011 449 2444</li>
+              <li>Phone: 035 728 6586</li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-purple-900/30 mt-8 pt-8">
-          <div className="flex justify-between items-center">
-            <p className="text-white/40 text-sm">
-              © {new Date().getFullYear()} eBirth Business Academy. All rights reserved.
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-white/40 text-sm text-center sm:text-left">
+              © {new Date().getFullYear()} eBirth Business Academy (Pvt) Ltd. All rights reserved.
             </p>
-            <p className="text-white/40 text-sm">
-              Terms & Conditions.
-            </p>
+            <div className="flex gap-4 text-sm">
+              <a href="/privacy-policy" className="text-white/40 hover:text-white transition-colors">
+                Privacy
+              </a>
+              <a href="/terms-of-service" className="text-white/40 hover:text-white transition-colors">
+                Terms
+              </a>
+              <a href="/refund-policy" className="text-white/40 hover:text-white transition-colors">
+                Refunds
+              </a>
+            </div>
           </div>
         </div>
       </div>

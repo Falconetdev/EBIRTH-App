@@ -22,9 +22,9 @@ const CourseFeedbackSection = ({ testimonials }: CourseFeedbackSectionProps) => 
       <div className="pointer-events-none absolute left-1/2 top-6 h-64 w-64 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.45),_rgba(217,193,255,0))]"></div>
       <div className="relative mx-auto max-w-6xl">
         <div className="text-center space-y-3 sm:space-y-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-black">Student's Feedback</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-black">Voices of Victory</h2>
           <p className="text-sm sm:text-base md:text-lg font-medium text-black/70">
-            eBirth Academy එකේ විශිෂ්ට journey එක start කරන අපේ students ලගේ learning experience එක ගැන කියන feedbacks ?
+            අප ගැන අප කියනවාට වඩා, Inner Racer සමඟ එක්ව ජීවිතය ජයගත් 1000+ සිසුන්ගේ සාර්ථකත්වයේ කතා වලට සවන් දෙන්න
           </p>
           <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.35em] sm:tracking-[0.45em] text-black/50">
             Based on 1000+ Feedbacks

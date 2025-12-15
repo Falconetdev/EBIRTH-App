@@ -26,18 +26,46 @@ const WhoWeAreSection = () => {
         
         <div className="order-1 text-center lg:order-2 lg:text-left">
           
-          <h3 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-extrabold text-white opacity-70">
-            <span>Empowering Dreams, </span>
-            <span className="text-[#FFD700]">Building Futures</span>
+          <h3 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
+            <span className="text-[#FFD700]">Building Your Business Dreams, Step by Step</span>
           </h3>
-          <p className="mt-6 text-sm sm:text-base md:text-md leading-relaxed text-white/80">
-            eBirth Business Academy is Sri Lanka's leading trading education hub. At eBirth Business Academy - Where Entrepreneurs Are Born - we connect ambition with the strategies, mentorship, and community needed to grow sustainable ventures.
+          
+          <h4 className="mt-6 text-xl sm:text-2xl font-bold text-[#FFD700]">Our Story</h4>
+          <p className="mt-3 text-sm sm:text-base md:text-md leading-relaxed text-white/80">
+            Our journey started in 2019 with a clear vision: to help new entrepreneurs succeed. What began as a small initiative has now grown into a government-registered educational institute. Today, we serve students from our main offices in Kegalle and Nugegoda, as well as through our online platforms.
           </p>
-          <p className="mt-4 text-sm sm:text-base md:text-md leading-relaxed text-white/70">
-            eBirth Business Academy ඔබේ trading හීන සරු රටාවකට පත් කරන්න සත්‍ය අත්දැකීම්, industry expert प्रशिक्षकයන් සහ flexible learning journeys එකතු කරලා උචිත දැනුම ලබාදෙයි. Real-world skills සහ data-driven insights සමඟ ඔබේ trading journey එකට විශ්වාසය එකතු කරමු.
+          
+          <h4 className="mt-6 text-xl sm:text-2xl font-bold text-[#FFD700]">What We Do</h4>
+          <p className="mt-3 text-sm sm:text-base md:text-md leading-relaxed text-white/80">
+            We are more than just a classroom. We have expanded into three focused areas to give you a complete business education:
           </p>
-          <p className="mt-4 text-sm sm:text-base md:text-md leading-relaxed text-white/70">
-            Innovative ideas හඳුනාගෙන thriving entrepreneur community එකක් සමඟ එකතුවී ඔබේ entrepreneurial dreams reality බවට පත්කරන්න අපි ඔබට අත්වැලක්. Let's design the future you imagine.
+          <ul className="mt-3 space-y-2 text-sm sm:text-base text-white/70">
+            <li className="flex items-start gap-2">
+              <span className="text-[#FFD700] mt-1">•</span>
+              <span><strong className="text-white">Inner Racers:</strong> This is our trading arm, where we teach you how to master financial markets and investing.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#FFD700] mt-1">•</span>
+              <span><strong className="text-white">Invocade:</strong> Here, we focus on the future, teaching you about AI technology and modern tech solutions.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#FFD700] mt-1">•</span>
+              <span><strong className="text-white">Viyala:</strong> This division helps you explore opportunities in the tourism and hospitality industry.</span>
+            </li>
+          </ul>
+          
+          <h4 className="mt-6 text-xl sm:text-2xl font-bold text-[#FFD700]">How We Teach</h4>
+          <p className="mt-3 text-sm sm:text-base md:text-md leading-relaxed text-white/80">
+            We believe that practice makes perfect. That is why our courses are designed with <strong className="text-[#FFD700]">30% theory and 70% practical work</strong>. We don't just teach you from a book; we invite you to our <strong className="text-[#FFD700]">"24/7 Live Trading Club"</strong> to trade alongside experts. Plus, once you join us, you get a <strong className="text-[#FFD700]">Lifetime Membership</strong> to keep learning and growing.
+          </p>
+          
+          <h4 className="mt-6 text-xl sm:text-2xl font-bold text-[#FFD700]">Trusted Partnerships</h4>
+          <p className="mt-3 text-sm sm:text-base md:text-md leading-relaxed text-white/80">
+            Quality is our priority. We have partnered with the <strong className="text-white">University of Sri Jayewardenepura</strong> and the <strong className="text-white">Entre' Club</strong> to bring you university-level knowledge. Our lecturers are experienced professionals who are qualified to guide you on your path to success.
+          </p>
+          
+          <p className="mt-6 text-base sm:text-lg font-semibold text-white/90">
+            Join eBirth Business Academy today, and let's turn your ideas into a real business.
           </p>
         </div>
 

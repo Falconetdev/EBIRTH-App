@@ -105,9 +105,9 @@ const FeedbackSection = () => {
       <div className="pointer-events-none absolute left-1/2 top-6 h-64 w-64 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.65),_rgba(217,193,255,0))]"></div>
       <div className="relative mx-auto max-w-6xl">
         <div className="space-y-3 text-center">
-          <h2 className="text-4xl font-extrabold text-[#10002B] md:text-5xl">Student's Feedback</h2>
+          <h2 className="text-4xl font-extrabold text-[#10002B] md:text-5xl">Voices of Victory.</h2>
           <p className="mx-auto max-w-2xl text-base font-medium text-[#2D0C5F]/80 md:text-lg">
-            Discover what our students have to say about their learning experience with us.
+            අප ගැන අප කියනවාට වඩා, Inner Racer සමඟ එක්ව ජීවිතය ජයගත් 1000+ සිසුන්ගේ සාර්ථකත්වයේ කතා වලට සවන් දෙන්න.
           </p>
           <p className="text-xs font-semibold uppercase tracking-[0.45em] text-[#533393]/70">
             Based on 1000+ Feedbacks

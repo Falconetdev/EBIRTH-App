@@ -105,12 +105,10 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
       <div className="relative mx-auto max-w-5xl">
         <div className="text-center px-8 space-y-10">
           <h2 className="text-4xl font-extrabold text-[#FFD700] drop-shadow md:text-5xl ">
-            Explore Our Learning Opportunities
+            First You Learn. Then You Earn.
           </h2>
           <p className="mt-5 text-base font-semibold leading-relaxed text-white/80 sm:text-lg md:text-xl px-10">
-            Beginner කෙනෙක්ද? හොඳයි ✅ Expert levelවත් ඔබට අවශ්‍යද? No worries,
-            අපේ course catalog එක definitely ඔයාට match වෙන එකක් sure වෙලාම තියෙනවා!
-            Join වෙලා skills level up කරමු!!
+            දැනුම යනු ආයෝජනයකි. නිවැරදි ඉගෙනීම තුළින් ඔබේ මූල්‍ය නිදහස ළඟා කරගන්නා ආකාරය පියවරෙන් පියවර අපෙන් ඉගෙන ගන්න.
           </p>
         </div>
 

@@ -26,80 +26,93 @@ const PolicySection = ({ number, title, content }: PolicySectionProps) => {
 	);
 };
 
-const HighlightCard = ({ children }: { children: ReactNode }) => (
-	<div className="rounded-3xl border border-white/10 bg-white/10 px-8 py-6 text-center text-sm font-semibold text-white/90 shadow-[0_16px_40px_rgba(20,5,50,0.35)]">
+const HighlightCard = ({ children, variant = "warning" }: { children: ReactNode; variant?: "warning" | "danger" }) => (
+	<div className={`rounded-3xl border px-8 py-6 text-center text-sm font-semibold shadow-[0_16px_40px_rgba(20,5,50,0.35)] ${
+		variant === "danger" 
+			? "border-red-500/30 bg-red-500/10 text-red-200" 
+			: "border-white/10 bg-white/10 text-white/90"
+	}`}>
 		{children}
 	</div>
 );
 
-const RefundPolicy = () => {
+const TermsOfService = () => {
 	const sections: PolicySectionProps[] = [
 		{
 			number: "1",
-			title: "General Refund Eligibility",
+			title: "Membership & Access",
 			content: (
-				<div className="space-y-3">
-					<p>We are committed to providing high-quality education. However, if you are not satisfied, you may request a refund within <strong className="text-[#FFE500]">14 calendar days</strong> of the original purchase date.</p>
-					<p className="text-white/70 italic">Requests made after this 14-day window will be automatically rejected.</p>
+				<div className="space-y-4">
+					<div>
+						<h3 className="font-semibold text-white mb-2">Lifetime Access:</h3>
+						<p>Enrolled students are granted lifetime access to the "Live Trading Club" and course revision materials, subject to the Code of Conduct.</p>
+					</div>
+					<div>
+						<h3 className="font-semibold text-white mb-2">Free Batch Retake:</h3>
+						<p>Students are entitled to join one (1) additional batch of the same course free of charge for revision purposes.</p>
+						<p className="text-white/70 text-sm mt-2">Participation beyond this second batch may be subject to a re-enrollment fee.</p>
+					</div>
 				</div>
 			),
 		},
 		{
 			number: "2",
-			title: "Service Charge Deduction",
+			title: "Code of Conduct & Termination (Zero Tolerance)",
 			content: (
-				<div className="space-y-3">
-					<p>To cover non-recoverable payment gateway fees (PayHere) and administrative costs, all approved refunds are subject to a mandatory <strong className="text-[#FFE500]">8% service charge</strong>.</p>
-					<p>You will be refunded <strong className="text-[#FFE500]">92%</strong> of your original payment amount.</p>
+				<div className="space-y-4">
+					<p className="font-medium text-[#FFE500]">
+						Ebirth Business Academy reserves the right to immediately terminate your membership and revoke all access (LMS, Live Classes, Groups) without refund if you engage in any of the following:
+					</p>
+					<ul className="space-y-3 text-white/80">
+						<li className="flex items-start gap-2">
+							<span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red-400"></span>
+							<span><strong className="text-white">Illegal Activities:</strong> Using the platform for any purpose deemed unlawful under Sri Lankan law</span>
+						</li>
+						<li className="flex items-start gap-2">
+							<span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red-400"></span>
+							<span><strong className="text-white">Scams & Fraud:</strong> Attempting to defraud, mislead, or scam other students or staff members</span>
+						</li>
+						<li className="flex items-start gap-2">
+							<span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red-400"></span>
+							<span><strong className="text-white">Unauthorized Solicitation:</strong> Creating private groups (e.g., WhatsApp, Telegram) to poach students, soliciting money from students, or promoting competing services</span>
+						</li>
+						<li className="flex items-start gap-2">
+							<span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red-400"></span>
+							<span><strong className="text-white">Financial Misconduct:</strong> Collecting money from other students under false pretenses</span>
+						</li>
+					</ul>
 				</div>
 			),
 		},
 		{
 			number: "3",
-			title: "Course-Specific Conditions",
+			title: "Payment Terms",
 			content: (
-				<div className="space-y-4">
-					<div>
-						<h3 className="font-semibold text-white mb-2">Online Courses:</h3>
-						<p className="mb-3">You are eligible for a refund within the 14-day window ONLY IF you have not attended more than one (1) day of live classes OR accessed more than one module of pre-recorded content.</p>
-						<p className="text-white/70 text-sm">Usage is verified via system logs. If logs indicate attendance exceeding these limits, the refund will be denied.</p>
-					</div>
-					<div>
-						<h3 className="font-semibold text-white mb-2">Physical (In-Person) Classes:</h3>
-						<p className="mb-3">Once the course batch has officially commenced, no monetary refunds will be issued due to seat reservation and material costs.</p>
-						<p className="text-[#FFE500] font-medium">Batch Transfer Option:</p>
-						<p className="text-white/80 text-sm">If you cannot attend the physical batch you registered for, you may request a transfer to the next available Online Batch at no additional cost.</p>
-					</div>
-					<div>
-						<h3 className="font-semibold text-white mb-2">Digital Goods:</h3>
-						<p>Downloadable resources (e-books, templates, presets) are non-refundable once access/download rights have been granted.</p>
-					</div>
+				<div className="space-y-3">
+					<ul className="space-y-2 text-white/80">
+						<li className="flex items-start gap-2">
+							<span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#FFE500]"></span>
+							<span><strong className="text-white">Currency:</strong> All transactions are processed in Sri Lankan Rupees (LKR)</span>
+						</li>
+						<li className="flex items-start gap-2">
+							<span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#FFE500]"></span>
+							<span><strong className="text-white">Taxes:</strong> All listed prices are inclusive of applicable taxes</span>
+						</li>
+						<li className="flex items-start gap-2">
+							<span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#FFE500]"></span>
+							<span><strong className="text-white">Installments:</strong> We do not offer direct installment plans. Credit card installment facilities are subject to the terms and approval of your specific bank</span>
+						</li>
+					</ul>
 				</div>
 			),
 		},
 		{
 			number: "4",
-			title: "Processing Time",
+			title: "Certification",
 			content: (
 				<p>
-					Once a refund is approved, please allow up to <strong className="text-[#FFE500]">14 business days</strong> for the funds to be credited back to your original bank account or payment method.
+					Digital certificates or official confirmation letters are issued only upon specific request (via email or written letter) after successful course completion.
 				</p>
-			),
-		},
-		{
-			number: "5",
-			title: "Contact for Refunds",
-			content: (
-				<div className="space-y-2">
-					<p className="flex items-center gap-2">
-						<span className="inline-block h-1.5 w-1.5 rounded-full bg-[#FFE500]"></span>
-						<strong>Email:</strong> contact@ebirth.net
-					</p>
-					<p className="flex items-center gap-2">
-						<span className="inline-block h-1.5 w-1.5 rounded-full bg-[#FFE500]"></span>
-						<strong>Phone:</strong> 011 449 2444 / 035 728 6586
-					</p>
-				</div>
 			),
 		},
 	];
@@ -168,13 +181,12 @@ const RefundPolicy = () => {
 					<p className="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">
 						eBirth Business Academy (Pvt) Ltd
 					</p>
-					<h1 className="text-4xl font-extrabold sm:text-5xl">Refund Policy</h1>
+					<h1 className="text-4xl font-extrabold sm:text-5xl">Terms of Service & Membership</h1>
 					<p className="text-lg text-white/80">
 						Effective Date: May 8, 2024
 					</p>
 					<p className="mx-auto max-w-3xl text-base text-white/75">
-						Thank you for choosing eBirth Business Academy for your educational needs. Please
-						read our refund policy carefully to understand your rights and responsibilities.
+						By enrolling in our courses, you agree to comply with these terms of service. Please read them carefully to understand your rights and responsibilities as a member of eBirth Business Academy.
 					</p>
 				</header>
 
@@ -184,12 +196,12 @@ const RefundPolicy = () => {
 							<PolicySection {...section} />
 							{index === 0 && (
 								<HighlightCard>
-									Important: Refund requests made after 14 days will be automatically rejected.
+									Benefit: Lifetime access to Live Trading Club and one free batch retake included with enrollment.
 								</HighlightCard>
 							)}
 							{index === 1 && (
-								<HighlightCard>
-									Service Charge: 8% deducted to cover payment gateway and administrative costs.
+								<HighlightCard variant="danger">
+									⚠️ Zero Tolerance Policy: Any violation will result in immediate termination without refund.
 								</HighlightCard>
 							)}
 						</Fragment>
@@ -197,7 +209,7 @@ const RefundPolicy = () => {
 
 					<div className="rounded-[28px] bg-white/12 px-8 py-8 text-center text-white">
 						<p className="text-base font-medium text-white/85">
-							For refund requests or questions about this policy, please contact us:
+							If you have any questions about these terms or need clarification:
 						</p>
 						<div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center items-center">
 							<a
@@ -210,7 +222,7 @@ const RefundPolicy = () => {
 								href="tel:0114492444"
 								className="inline-flex items-center justify-center rounded-full border-2 border-[#FFE500] px-8 py-3 text-sm font-semibold text-[#FFE500] transition hover:bg-[#FFE500]/10"
 							>
-								Call Us
+								Call: 011 449 2444
 							</a>
 						</div>
 					</div>
@@ -222,4 +234,4 @@ const RefundPolicy = () => {
 	);
 };
 
-export default RefundPolicy;
+export default TermsOfService;

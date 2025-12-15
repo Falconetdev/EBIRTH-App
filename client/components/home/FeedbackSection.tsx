@@ -43,16 +43,11 @@ const FeedbackSection = () => {
       <div className="relative mx-auto max-w-6xl">
         <div className="text-center space-y-4">
           <h2 className="text-4xl font-extrabold text-black md:text-5xl">
-            Student&apos;s Feedback
+            Voices of Victory
           </h2>
 
           <p className="text-base font-medium text-black/70 md:text-lg">
-            eBirth Academy එකේ විශිෂ්ට journey එක start කරන අපේ students ලගේ
-            learning experience එක ගැන කියන feedbacks 📝
-          </p>
-
-          <p className="text-xs font-semibold uppercase tracking-[0.45em] text-black/50">
-            Based on 1000+ Feedbacks
+            අප ගැන අප කියනවාට වඩා, Inner Racer සමඟ එක්ව ජීවිතය ජයගත් 1000+ සිසුන්ගේ සාර්ථකත්වයේ කතා වලට සවන් දෙන්න
           </p>
         </div>
 
