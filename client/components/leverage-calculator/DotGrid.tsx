@@ -114,8 +114,8 @@ const DotGrid: React.FC<DotGridProps> = ({
     const tCanvas = document.createElement('canvas');
     const tCtx = tCanvas.getContext('2d');
     if (tCtx) {
-        // Font size approx 20% of screen height
-        const fontSize = Math.floor(height * 0.2); 
+        // Font size approx 15% of screen height (reduced from 20%)
+        const fontSize = Math.floor(height * 0.15);
         const text = "INNER RACERS";
         tCtx.font = `900 ${fontSize}px sans-serif`;
         const measure = tCtx.measureText(text);

@@ -2,6 +2,7 @@ export enum CalculatorTab {
   CLASSIC = "CLASSIC",
   PRO = "PRO",
   MARGIN = "MARGIN",
+  AI_JOURNAL = "AI_JOURNAL",
 }
 
 export enum TradeDirection {

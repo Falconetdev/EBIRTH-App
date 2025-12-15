@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { CalculatorTab } from "../types/leverage-calculator";
 import ClassicCalculator from "../components/leverage-calculator/ClassicCalculator";
 import ProCalculator from "../components/leverage-calculator/ProCalculator";
 import MarginCalculator from "../components/leverage-calculator/MarginCalculator";
+import MemberToolsTab from "../components/leverage-calculator/MemberToolsTab";
 import DotGrid from "../components/leverage-calculator/DotGrid";
 
 export default function LeverageCalculator() {
@@ -67,18 +68,24 @@ export default function LeverageCalculator() {
         </svg>
       ),
     },
+    {
+      id: CalculatorTab.AI_JOURNAL,
+      label: "AI + Journal 🔒",
+      icon: (
+        <span className="text-base">🤖</span>
+      ),
+    },
   ];
 
   return (
     <PageLayout
       showFooter={true}
-      className="bg-[#0a0118]"
-      mainClassName="bg-[#0a0118]"
+      className="bg-app-bg"
+      mainClassName="bg-app-bg"
     >
-      <section className="relative min-h-screen bg-[#0a0118] bg-gradient-to-br from-purple-900/20 via-purple-800/10 to-transparent">
-        <div className="pointer-events-none absolute left-1/2 top-1/3 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,215,0,0.15),_rgba(26,11,46,0))] blur-3xl"></div>
+      <div className="min-h-screen bg-app-bg text-app-text font-sans selection:bg-app-gold selection:text-black flex flex-col items-center py-10 px-4 relative overflow-hidden">
         
-        {/* DotGrid Background - Fixed Position */}
+        {/* DotGrid Background */}
         <div className="fixed inset-0 pointer-events-none">
           <DotGrid
             dotSize={2} // Request: Small Dots
@@ -95,11 +102,10 @@ export default function LeverageCalculator() {
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-overlay"></div>
         </div>
 
-        <div className="relative text-app-text font-sans selection:bg-app-gold selection:text-black flex justify-center py-10 px-4 overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20">
-
-            <div className="w-full max-w-xl relative z-10 flex flex-col items-center">
-              {/* Header - Animated Liquid Text */}
-              <div className="text-center mb-10 relative">
+        <div className="w-full max-w-xl relative z-10 flex flex-col items-center flex-grow">
+          
+          {/* Header - Animated Liquid Text */}
+          <div className="text-center mb-10 relative w-full">
                 <h1 className="text-5xl md:text-6xl font-black tracking-tighter liquid-text drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] mb-2">
                   INNER RACERS
                 </h1>
@@ -111,40 +117,56 @@ export default function LeverageCalculator() {
               </div>
 
               {/* Glass Navigation */}
-              <div className="glass-panel p-1.5 rounded-2xl flex gap-2 mb-8 w-full max-w-lg">
-                {tabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex-1 py-3 px-2 rounded-xl text-xs font-bold transition-all duration-300 relative overflow-hidden flex items-center justify-center gap-2 ${
-                      activeTab === tab.id
-                        ? "bg-app-gold text-black shadow-[0_0_20px_rgba(251,191,36,0.3)]"
-                        : "text-gray-400 hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    {tab.icon}
-                    {tab.label}
-                  </button>
-                ))}
+              <div className="glass-panel p-1.5 rounded-2xl flex flex-wrap gap-2 mb-8 w-full">
+                {tabs.map((tab) => {
+                  const isSpecial = tab.id === CalculatorTab.AI_JOURNAL;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`flex-1 min-w-[80px] py-2 px-2 rounded-xl text-xs font-bold transition-all duration-300 relative overflow-hidden flex items-center justify-center gap-2 ${
+                        activeTab === tab.id
+                          ? "bg-app-gold text-black shadow-[0_0_20px_rgba(251,191,36,0.3)]"
+                          : isSpecial
+                            ? "text-app-gold border border-app-gold/30 bg-app-gold/5 hover:bg-app-gold/10 shadow-[0_0_15px_rgba(255,215,0,0.15)]"
+                            : "text-gray-400 hover:text-white hover:bg-white/5"
+                      }`}
+                      style={isSpecial && activeTab !== tab.id ? {
+                        animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                      } : undefined}
+                    >
+                      {tab.icon}
+                      {isSpecial ? (
+                        <span>{tab.label.replace(" 🔒", "")} <span className="opacity-70">🔒</span></span>
+                      ) : (
+                        tab.label
+                      )}
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Main Content Card - With Moving Yellow Light Border */}
-              <div className="calculator-frame w-full mb-8">
+              <div className="calculator-frame w-full relative mb-12">
                 {/* Independent Layer for the Border Animation (Masked) */}
                 <div className="calculator-border-gradient"></div>
 
                 {/* Content Layer (Glass) */}
                 <div className="calculator-content p-6 md:p-8">
-                  {activeTab === CalculatorTab.CLASSIC && <ClassicCalculator />}
-                  {activeTab === CalculatorTab.PRO && <ProCalculator />}
-                  {activeTab === CalculatorTab.MARGIN && <MarginCalculator />}
+                  <div key={activeTab} className="animate-slide-up">
+                    {activeTab === CalculatorTab.CLASSIC && <ClassicCalculator />}
+                    {activeTab === CalculatorTab.PRO && <ProCalculator />}
+                    {activeTab === CalculatorTab.MARGIN && <MarginCalculator />}
+                    {activeTab === CalculatorTab.AI_JOURNAL && <MemberToolsTab />}
+                  </div>
                 </div>
               </div>
 
               {/* -------------------------------------------------- */}
               {/* LIFETIME MEMBERSHIP PROMO CARD                     */}
               {/* -------------------------------------------------- */}
-              <div className="w-full relative mb-8 group animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              {activeTab !== CalculatorTab.AI_JOURNAL && (
+                <div className="w-full relative mb-8 group animate-slide-up" style={{ animationDelay: '0.2s' }}>
                 {/* Ambient Glow */}
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-600 via-app-gold to-yellow-600 rounded-3xl blur opacity-15 group-hover:opacity-30 transition duration-1000"></div>
                 
@@ -213,7 +235,8 @@ export default function LeverageCalculator() {
                     </span>
                   </a>
                 </div>
-              </div>
+                </div>
+              )}
 
               {/* Footer Section */}
               <div className="w-full flex flex-col items-center gap-3 relative z-10 pb-8">
@@ -245,9 +268,10 @@ export default function LeverageCalculator() {
                   Powered by Team Inner Racers • 2025
                 </div>
               </div>
-            </div>
+
         </div>
-      </section>
+
+      </div>
     </PageLayout>
   );
 }
