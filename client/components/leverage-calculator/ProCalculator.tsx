@@ -41,6 +41,14 @@ const ProCalculator: React.FC = () => {
   const [slPercentage, setSlPercentage] = useState<number>(0);
   const [targetPercentage, setTargetPercentage] = useState<number>(0);
 
+  // Auto-set Defaults when Capital is entered
+  useEffect(() => {
+    if (capital !== '' && capital > 0) {
+      if (marginPct === null) setMarginPct(5);
+      if (riskPct === null) setRiskPct(2.5);
+    }
+  }, [capital, marginPct, riskPct]);
+
   // Sync Margin Pct with Values
   useEffect(() => {
     if (marginPct !== null && capital !== "" && capital > 0) {
@@ -150,9 +158,21 @@ const ProCalculator: React.FC = () => {
   const rr = slDist > 0 ? targetDist / slDist : 0;
   const profit = rr > 0 ? riskVal * rr : 0;
   const capitalRiskPct = capitalVal > 0 ? (riskVal / capitalVal) * 100 : 0;
+  // Fix precision issue for display comparisons
+  const displayRiskPct = Number(capitalRiskPct.toFixed(2));
+
+  // Liquidation Error Logic
+  const isLiquidationError = mode === MarginMode.ISOLATED && riskVal > marginVal;
+
+  // Bad Trade Logic (RR < 1.5)
+  const isBadTrade = rr > 0 && rr < 1.5;
+
+  // ROI Reality Check
+  const courseFee = 105;
+  const tradesToCover = profit > 0 ? Math.ceil(courseFee / profit) : 0;
 
   const copySignal = () => {
-    if (leverage === 0) return;
+    if (leverage === 0 || isLiquidationError) return;
     const riskPercentage = capitalVal > 0 ? (riskVal / capitalVal) * 100 : 0;
     const rewardPercentage = targetP ? Math.abs(rr) * riskPercentage : 0;
 
@@ -166,12 +186,19 @@ ${direction === TradeDirection.LONG ? "🟢 BUY / LONG SETUP" : "🔴 SELL / SHO
 
 ⚠️ Risk : ${riskPercentage.toFixed(2)}%
 💰 Reward : ${targetP ? rewardPercentage.toFixed(2) + "%" : "N/A"}
-    `.trim();
+
+⚡ Powered by Inner Racers`.trim();
 
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+  
+  const isHighRisk = leverage > 0 && displayRiskPct > 5;
+  const hasError = Object.keys(errors).length > 0;
+  
+  // LOGIC UPDATE: Show help if Bad Trade, Liquidation Error, High Risk, or General Error
+  const showHelp = isHighRisk || hasError || isLiquidationError || (isBadTrade && leverage > 0);
 
   return (
     <div className="space-y-6">
@@ -254,6 +281,10 @@ ${direction === TradeDirection.LONG ? "🟢 BUY / LONG SETUP" : "🔴 SELL / SHO
             prefix="$"
             highlight
             tooltip="Maximum amount you are willing to lose."
+            cornerHint={capitalVal > 0 && riskVal > 0 ? {
+                text: `${displayRiskPct}% of Cap`,
+                color: displayRiskPct > 5 ? 'text-app-danger' : 'text-gray-400'
+            } : undefined}
           />
           <PercentageGroup
             options={[1, 2.5, 5]}
@@ -314,6 +345,12 @@ ${direction === TradeDirection.LONG ? "🟢 BUY / LONG SETUP" : "🔴 SELL / SHO
       {/* Result Section */}
       <div className="w-full mt-8 p-1 rounded-3xl bg-white/5 border border-white/5">
         <div className="relative z-10 px-2 flex flex-col gap-6 py-6">
+            
+            {/* Disclaimer Text */}
+            <div className="text-[10px] text-gray-400 italic text-center -mb-2">
+              Note: Trading fees are not included. Actual returns may vary slightly.
+            </div>
+
           {/* Grid First */}
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div className="bg-black/20 p-4 rounded-xl border border-white/5 backdrop-blur-sm">
@@ -325,7 +362,7 @@ ${direction === TradeDirection.LONG ? "🟢 BUY / LONG SETUP" : "🔴 SELL / SHO
                   <>
                     <span
                       className={
-                        rr < 1.5
+                        isBadTrade
                           ? "text-app-danger"
                           : rr < 2
                             ? "text-yellow-500"
@@ -335,17 +372,13 @@ ${direction === TradeDirection.LONG ? "🟢 BUY / LONG SETUP" : "🔴 SELL / SHO
                       1 : {rr.toFixed(2)}
                     </span>
                     <div className="text-[9px] mt-1 font-sans opacity-80 leading-tight">
-                      {rr < 1.5 ? (
+                      {isBadTrade ? (
                         <span className="text-red-400">
-                          ⛔ Bad Trade
-                          <br />
-                          (Don't Take)
+                          ⛔ Consider adjusting SL/TP for better R:R
                         </span>
                       ) : rr < 2 ? (
                         <span className="text-yellow-500">
-                          ⚠️ Okay
-                          <br />
-                          (Not Perfect)
+                          ⚠️ Okay<br/>(Medium)
                         </span>
                       ) : (
                         <span className="text-green-400">✅ Good Trade</span>
@@ -357,13 +390,28 @@ ${direction === TradeDirection.LONG ? "🟢 BUY / LONG SETUP" : "🔴 SELL / SHO
                 )}
               </div>
             </div>
-            <div className="bg-black/20 p-4 rounded-xl border border-white/5 backdrop-blur-sm">
+            <div className="bg-black/20 p-4 rounded-xl border border-white/5 backdrop-blur-sm flex flex-col justify-center">
               <div className="text-gray-500 text-[10px] uppercase tracking-wider mb-1">
                 Est. Profit
               </div>
               <div className="font-mono font-bold text-xl text-app-success">
                 {formatCurrency(profit)}
               </div>
+              
+              {/* ROI Reality Check - HIDE if Bad Trade, Liquidation Error, or Need > 10 Trades */}
+              {profit > 0 && rr >= 1.5 && !isLiquidationError && !isBadTrade && tradesToCover <= 10 && (
+                <a href="https://wa.me/94777890356" target="_blank" rel="noopener noreferrer" className="mt-1 text-[9px] text-app-gold font-bold leading-tight hover:underline">
+                  {profit >= courseFee ? (
+                      <span className="text-green-400 animate-pulse">
+                          🔥 Boom! This single trade pays for your Lifetime Membership!
+                      </span>
+                  ) : (
+                      <span>
+                          💡 Insight: Just {tradesToCover} win{tradesToCover > 1 ? 's' : ''} like this covers your Lifetime Membership.
+                      </span>
+                  )}
+                </a>
+              )}
             </div>
             <div className="bg-black/20 p-4 rounded-xl border border-white/5 backdrop-blur-sm">
               <div className="text-gray-500 text-[10px] uppercase tracking-wider mb-1">
@@ -389,21 +437,26 @@ ${direction === TradeDirection.LONG ? "🟢 BUY / LONG SETUP" : "🔴 SELL / SHO
           {/* Risk Feedback */}
           {leverage > 0 && (
             <div className="flex justify-center w-full">
-              {capitalRiskPct > 5 ? (
-                <div className="w-full text-center text-red-400 text-xs font-bold bg-red-900/20 px-4 py-2 rounded-lg border border-red-500/30 flex items-center justify-center gap-2">
+              {isLiquidationError ? (
+                <div className="w-full text-center text-red-400 text-xs font-bold bg-red-900/20 px-4 py-2 rounded-lg border border-red-500/30 flex items-center justify-center gap-2 animate-pulse">
                   <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                  ⚠️ Bad Risk ({capitalRiskPct.toFixed(2)}% of Capital)
-                </div>
-              ) : capitalRiskPct <= 2.5 ? (
-                <div className="w-full text-center text-green-400 text-xs font-bold bg-green-900/20 px-4 py-2 rounded-lg border border-green-500/30 flex items-center justify-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-green-500"></span>✅
-                  Perfect Risk ({capitalRiskPct.toFixed(2)}% of Capital)
-                </div>
+                  ⛔ Liquidation Risk! Risk ({formatCurrency(riskVal)}) exceeds Margin ({formatCurrency(marginVal)})
+               </div>
+              ) : displayRiskPct > 5 ? (
+               <div className="w-full text-center text-red-400 text-xs font-bold bg-red-900/20 px-4 py-2 rounded-xl border border-red-500/30 flex flex-col items-center justify-center gap-1 leading-tight">
+                  <span className="uppercase tracking-widest text-[10px]">⚠️ Capital Risk Warning</span>
+                  <span>You are risking <span className="text-app-gold font-black">{displayRiskPct.toFixed(2)}%</span> of your TOTAL Capital.</span>
+               </div>
+              ) : displayRiskPct <= 2.5 ? (
+               <div className="w-full text-center text-green-400 text-xs font-bold bg-green-900/20 px-4 py-2 rounded-lg border border-green-500/30 flex items-center justify-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                  ✅ Perfect Risk ({displayRiskPct.toFixed(2)}% of Capital)
+               </div>
               ) : (
-                <div className="w-full text-center text-orange-400 text-xs font-bold bg-orange-900/20 px-4 py-2 rounded-lg border border-orange-500/30 flex items-center justify-center gap-2">
+               <div className="w-full text-center text-orange-400 text-xs font-bold bg-orange-900/20 px-4 py-2 rounded-lg border border-orange-500/30 flex items-center justify-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-orange-400"></span>
-                  ⚖️ Moderate Risk ({capitalRiskPct.toFixed(2)}% of Capital)
-                </div>
+                  ⚖️ Moderate Risk ({displayRiskPct.toFixed(2)}% of Capital)
+               </div>
               )}
             </div>
           )}
@@ -411,10 +464,10 @@ ${direction === TradeDirection.LONG ? "🟢 BUY / LONG SETUP" : "🔴 SELL / SHO
           {/* Leverage Section Moved Bottom */}
           <div className="text-center">
             <div className="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-2">
-              Calculated Leverage
+              {displayRiskPct <= 5 && !isLiquidationError ? "Best Safe Leverage" : "Calculated Leverage"}
             </div>
             <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-app-gold to-yellow-600 drop-shadow-sm flex justify-center items-baseline gap-1">
-              {leverage}
+              {isLiquidationError ? 0 : leverage}
               <span className="text-2xl text-yellow-700 font-bold">x</span>
             </div>
 
@@ -430,8 +483,25 @@ ${direction === TradeDirection.LONG ? "🟢 BUY / LONG SETUP" : "🔴 SELL / SHO
                 </div>
               )}
             </div>
+               
+               {/* FEATURE 1: Help Me Button */}
+               {showHelp && (
+                <div className="mt-4 pt-4 border-t border-white/5 animate-slide-down w-full flex flex-col items-center">
+                  <div className="text-gray-300 text-xs font-medium mb-3 text-center">
+                    දිගටම Loss වෙනවද? (Keep losing?) <br/> Get Professional Risk Training.
+                  </div>
+                  <a 
+                    href="https://wa.me/94777890356?text=Hi%20Inner%20Racers,%20I%20keep%20getting%20High%20Risk%20warnings.%20I%20need%20help."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white px-4 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-[0_0_15px_rgba(239,68,68,0.4)] transition-all transform hover:-translate-y-0.5"
+                  >
+                    👉 Ask Inner Racers
+                  </a>
+                </div>
+               )}
 
-            {leverage > 0 && (
+            {leverage > 0 && !isLiquidationError && (
               <button
                 onClick={copySignal}
                 className={`mt-6 w-full py-3 rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2
