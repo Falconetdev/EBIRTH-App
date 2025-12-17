@@ -83,7 +83,7 @@ export default function LeverageCalculator() {
       className="bg-app-bg"
       mainClassName="bg-app-bg"
     >
-      <div className="min-h-screen bg-app-bg text-app-text font-sans selection:bg-app-gold selection:text-black flex flex-col items-center py-10 px-4 relative overflow-hidden">
+      <div className="min-h-screen bg-app-bg text-app-text font-sans selection:bg-app-gold selection:text-black flex flex-col items-center pt-28 pb-10 px-4 relative overflow-hidden">
         
         {/* DotGrid Background */}
         <div className="fixed inset-0 pointer-events-none">
