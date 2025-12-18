@@ -53,18 +53,18 @@ const Faq = () => {
   };
 
   return (
-    <section className="relative isolate overflow-hidden  px-4 py-20 sm:px-6 lg:px-8">
+    <section className="relative isolate overflow-hidden px-4 py-16 sm:py-20 sm:px-6 lg:px-8">
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-70">
         <div className="absolute left-[-10%] top-[-8%] h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.2),_transparent_60%)] blur-2xl" />
         <div className="absolute right-[-12%] bottom-[-18%] h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(116,64,255,0.4),_transparent_70%)] blur-3xl" />
       </div>
 
-      <div className="mx-auto flex max-w-5xl flex-col gap-12 text-white">
-        <header className="text-center">
-          <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
+      <div className="mx-auto flex max-w-5xl flex-col gap-8 sm:gap-12 text-white">
+        <header className="text-center px-2">
+          <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl md:text-4xl lg:text-5xl">
             Frequently Asked <span className="bg-gradient-to-r from-[#FFE178] via-[#E8C843] to-[#C29E1B] bg-clip-text text-transparent">Questions</span>
           </h2>
-          <p className="mt-4 text-base text-white/75">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base text-white/75">
             Everything you need to know about how our memberships work before you get started.
           </p>
         </header>
@@ -78,16 +78,16 @@ const Faq = () => {
                 key={faq.id}
                 type="button"
                 onClick={() => toggleItem(faq.id)}
-                className="group w-full overflow-hidden rounded-[28px] border border-white/15 bg-black/20 text-left shadow-[0_24px_60px_rgba(7,2,26,0.35)] backdrop-blur transition focus:outline-none focus:ring-2 focus:ring-[#FFD700]/80"
+                className="group w-full overflow-hidden rounded-2xl sm:rounded-[28px] border border-white/15 bg-black/20 text-left shadow-[0_24px_60px_rgba(7,2,26,0.35)] backdrop-blur transition focus:outline-none focus:ring-2 focus:ring-[#FFD700]/80"
               >
-                <div className="flex items-center justify-between px-6 py-5 sm:px-8 sm:py-6">
-                  <span className="text-base font-semibold sm:text-lg">
+                <div className="flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
+                  <span className="text-sm font-semibold sm:text-base lg:text-lg pr-3">
                     {faq.question}
                   </span>
-                  <span className="ml-6 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#FFD700] text-[#1B0B2E] transition group-hover:rotate-180">
+                  <span className="ml-3 sm:ml-6 flex h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#FFD700] text-[#1B0B2E] transition group-hover:rotate-180">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className={`h-5 w-5 transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
+                      className={`h-4 w-4 sm:h-5 sm:w-5 transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -100,10 +100,10 @@ const Faq = () => {
                 <div
                   className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
                     isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                  } px-6 pb-0 sm:px-8`}
+                  } px-4 pb-0 sm:px-6 lg:px-8`}
                 >
-                  <div className="overflow-hidden text-sm leading-relaxed text-white/75">
-                    <div className="pb-6">
+                  <div className="overflow-hidden text-xs sm:text-sm leading-relaxed text-white/75">
+                    <div className="pb-4 sm:pb-6">
                       {faq.answer}
                     </div>
                   </div>

@@ -230,30 +230,30 @@ export default function MembershipDetailsEnrollment() {
       {/* Payment Options Modal */}
       {showPaymentOptions && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[9998] p-4">
-          <div className="bg-gradient-to-br from-[#1a0b2e] to-[#2d1b4e] border border-[#FFD700]/20 rounded-3xl shadow-2xl max-w-md w-full p-8">
+          <div className="bg-gradient-to-br from-[#1a0b2e] to-[#2d1b4e] border border-[#FFD700]/20 rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8">
             <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#FFD700] to-[#FFA500] rounded-full flex items-center justify-center mx-auto mb-4">
-                <CreditCard className="h-8 w-8 text-black" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-[#FFD700] to-[#FFA500] rounded-full flex items-center justify-center mx-auto mb-4">
+                <CreditCard className="h-6 w-6 sm:h-8 sm:w-8 text-black" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Choose Payment Method</h3>
-              <p className="text-white/70">Select your preferred payment option</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Choose Payment Method</h3>
+              <p className="text-sm sm:text-base text-white/70">Select your preferred payment option</p>
             </div>
             
             <div className="space-y-4">
               {/* PayHere Option */}
               <button
                 onClick={handlePayHerePayment}
-                className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 border border-purple-400/30 text-white rounded-2xl p-6 transition-all group shadow-lg hover:shadow-purple-500/50"
+                className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 border border-purple-400/30 text-white rounded-2xl p-4 sm:p-6 transition-all group shadow-lg hover:shadow-purple-500/50"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                    <CreditCard className="h-7 w-7 text-[#FFD700]" />
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors flex-shrink-0">
+                    <CreditCard className="h-5 w-5 sm:h-7 sm:w-7 text-[#FFD700]" />
                   </div>
-                  <div className="text-left flex-1">
-                    <div className="font-bold text-lg">PayHere Gateway</div>
-                    <div className="text-sm text-white/70">Cards, Bank Transfer, Mobile</div>
+                  <div className="text-left flex-1 min-w-0">
+                    <div className="font-bold text-base sm:text-lg">PayHere Gateway</div>
+                    <div className="text-xs sm:text-sm text-white/70">Cards, Bank Transfer, Mobile</div>
                   </div>
-                  <div className="text-2xl text-[#FFD700]">→</div>
+                  <div className="text-xl sm:text-2xl text-[#FFD700]">→</div>
                 </div>
               </button>
 
@@ -263,17 +263,17 @@ export default function MembershipDetailsEnrollment() {
                   setShowPaymentOptions(false);
                   setShowBankTransferModal(true);
                 }}
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 border border-blue-400/30 text-white rounded-2xl p-6 transition-all group shadow-lg hover:shadow-blue-500/50"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 border border-blue-400/30 text-white rounded-2xl p-4 sm:p-6 transition-all group shadow-lg hover:shadow-blue-500/50"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                    <Building2 className="h-7 w-7 text-[#FFD700]" />
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors flex-shrink-0">
+                    <Building2 className="h-5 w-5 sm:h-7 sm:w-7 text-[#FFD700]" />
                   </div>
-                  <div className="text-left flex-1">
-                    <div className="font-bold text-lg">Direct Bank Transfer</div>
-                    <div className="text-sm text-white/70">Manual deposit with receipt</div>
+                  <div className="text-left flex-1 min-w-0">
+                    <div className="font-bold text-base sm:text-lg">Direct Bank Transfer</div>
+                    <div className="text-xs sm:text-sm text-white/70">Manual deposit with receipt</div>
                   </div>
-                  <div className="text-2xl text-[#FFD700]">→</div>
+                  <div className="text-xl sm:text-2xl text-[#FFD700]">→</div>
                 </div>
               </button>
             </div>
@@ -292,128 +292,96 @@ export default function MembershipDetailsEnrollment() {
         <div className="relative min-h-screen">
           {/* Animated Background Elements */}
           <div className="fixed inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#FFD700]/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 sm:w-72 h-48 sm:h-72 bg-purple-500/10 rounded-full blur-2xl sm:blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-64 sm:w-96 h-64 sm:h-96 bg-[#FFD700]/10 rounded-full blur-2xl sm:blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
           </div>
 
-          {/* Floating Coin Animations with Wormhole Entrance */}
-          <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+          {/* Floating Coin Animations with Wormhole Entrance - Hidden on mobile */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 hidden md:block">
             {/* Left large peeking coin */}
             <img
               src="/Bitcoin-PNG-removebg-preview.png"
               alt="Decorative coin"
-              className="coin-wormhole absolute left-[-90px] top-[38%] hidden md:block h-64 w-64 -rotate-[14deg]"
+              className="coin-wormhole absolute left-[-90px] top-[38%] h-48 lg:h-64 w-48 lg:w-64 -rotate-[14deg]"
               style={{ animationDelay: '0.2s' }}
             />
-            
+
             {/* Small accent above content */}
             <img
               src="/coin2.webp"
               alt="Decorative coin"
-              className="coin-wormhole absolute left-[54%] top-[22%] h-16 w-16 -translate-x-1/2 rotate-[22deg]"
+              className="coin-wormhole absolute left-[54%] top-[22%] h-12 lg:h-16 w-12 lg:w-16 -translate-x-1/2 rotate-[22deg] hidden lg:block"
               style={{ animationDelay: '0.6s' }}
             />
-            
-            {/* Bottom subtle coin */}
-            <img
-              src="/coin2.webp"
-              alt="Decorative coin"
-              className="coin-wormhole absolute left-[52%] bottom-[18%] h-14 w-14 -translate-x-1/2 rotate-[12deg]"
-              style={{ animationDelay: '0.9s' }}
-            />
-            
-            {/* Lower-left faint coin */}
-            <img
-              src="/Bitcoin-PNG-removebg-preview.png"
-              alt="Decorative coin"
-              className="coin-wormhole absolute left-[6%] bottom-[30%] h-24 w-24 rotate-[26deg]"
-              style={{ animationDelay: '0.5s' }}
-            />
-            
+
             {/* Top-right corner large coin */}
             <img
               src="/Bitcoin-PNG-removebg-preview.png"
               alt="Decorative coin"
-              className="coin-wormhole absolute right-[-70px] top-[80px] hidden lg:block h-40 w-40 rotate-[-12deg]"
+              className="coin-wormhole absolute right-[-70px] top-[80px] h-32 lg:h-40 w-32 lg:w-40 rotate-[-12deg]"
               style={{ animationDelay: '0.3s' }}
             />
-            
+
             {/* Top-left medium coin */}
             <img
               src="/coin2.webp"
               alt="Decorative coin"
-              className="coin-wormhole absolute left-[0%] top-[15%] h-[180px] w-[180px]"
+              className="coin-wormhole absolute left-[0%] top-[15%] h-[120px] lg:h-[180px] w-[120px] lg:w-[180px] hidden lg:block"
               style={{ animationDelay: '0.4s' }}
-            />
-            
-            {/* Top center subtle small coin */}
-            <img
-              src="/coin4.webp"
-              alt="Decorative coin"
-              className="coin-wormhole absolute left-1/2 top-[40%] h-25 w-25 -translate-x-1/2 rotate-[8deg]"
-              style={{ animationDelay: '0.7s' }}
             />
 
             {/* Right bottom large coin */}
             <img
               src="/Bitcoin-PNG-removebg-preview.png"
               alt="Decorative coin"
-              className="coin-wormhole absolute right-[-70px] bottom-[20%] hidden lg:block h-60 w-60 rotate-[-12deg]"
+              className="coin-wormhole absolute right-[-70px] bottom-[20%] h-48 lg:h-60 w-48 lg:w-60 rotate-[-12deg]"
               style={{ animationDelay: '0.3s' }}
-            />
-
-            {/* Mid-right floating coin */}
-            <img
-              src="/coin2.webp"
-              alt="Decorative coin"
-              className="coin-wormhole absolute right-[10%] top-[50%] h-20 w-20 rotate-[15deg]"
-              style={{ animationDelay: '0.8s' }}
             />
           </div>
 
-          <div className="relative z-10 pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+          <div className="relative z-10 pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               {/* Back Button */}
-              <Link 
-                to="/membership" 
-                className="inline-flex items-center gap-2 text-[#FFD700] hover:text-[#FFC700] mb-8 transition-colors group"
+              <Link
+                to="/membership"
+                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 text-[#FFD700] hover:text-[#FFC700] mb-8 sm:mb-10 transition-all group shadow-lg"
               >
-                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-                <span className="font-medium">Back to Courses</span>
+                <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform" />
+                <span className="font-semibold text-sm sm:text-base">Back to Courses</span>
               </Link>
 
               {/* Hero Section */}
-              <div className="grid lg:grid-cols-3 gap-8 mb-16">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
                 {/* Left: Main Content (2/3) */}
-                <div className="lg:col-span-2 space-y-8">
+                <div className="lg:col-span-2 space-y-6 sm:space-y-8">
                   {/* Course Header */}
-                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
-                    <div className="flex items-start justify-between mb-6">
+                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl">
+                    <div className="mb-4 sm:mb-6">
                       <div className="flex-1">
-                        <div className="inline-flex items-center gap-2 bg-[#FFD700]/20 border border-[#FFD700]/30 px-4 py-2 rounded-full mb-4">
-                          <Award className="h-4 w-4 text-[#FFD700]" />
-                          <span className="text-[#FFD700] font-semibold text-sm uppercase tracking-wide">{course.course_code}</span>
+                        <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#FFD700]/20 border border-[#FFD700]/30 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full mb-3 sm:mb-4">
+                          <Award className="h-3 w-3 sm:h-4 sm:w-4 text-[#FFD700]" />
+                          <span className="text-[#FFD700] font-semibold text-xs sm:text-sm uppercase tracking-wide">{course.course_code}</span>
                         </div>
-                        <h1 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-white leading-tight mb-3 sm:mb-4">
                           {course.title}
                         </h1>
-                        <p className="text-lg text-white/70 leading-relaxed mb-6">
+                        <p className="text-sm sm:text-base lg:text-lg text-white/70 leading-relaxed mb-4 sm:mb-6">
                           {course.description}
                         </p>
-                        
+
                         {/* Badges */}
-                        <div className="flex flex-wrap gap-3">
-                          <div className="inline-flex items-center gap-2 bg-purple-500/20 border border-purple-400/30 px-4 py-2 rounded-full">
-                            <Star className="h-4 w-4 text-[#FFD700]" />
-                            <span className="text-white font-medium text-sm">4.9 Rating</span>
+                        <div className="flex flex-wrap gap-2 sm:gap-3">
+                          <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-purple-500/20 border border-purple-400/30 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full">
+                            <Star className="h-3 w-3 sm:h-4 sm:w-4 text-[#FFD700]" />
+                            <span className="text-white font-medium text-xs sm:text-sm">4.9 Rating</span>
                           </div>
-                          <div className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 px-4 py-2 rounded-full">
-                            <Users className="h-4 w-4 text-blue-300" />
-                            <span className="text-white font-medium text-sm">{course.students_count}+ Students</span>
+                          <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-blue-500/20 border border-blue-400/30 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full">
+                            <Users className="h-3 w-3 sm:h-4 sm:w-4 text-blue-300" />
+                            <span className="text-white font-medium text-xs sm:text-sm">{course.students_count}+ Students</span>
                           </div>
-                          <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-400/30 px-4 py-2 rounded-full capitalize">
-                            <MapPin className="h-4 w-4 text-green-300" />
-                            <span className="text-white font-medium text-sm">{course.delivery_mode}</span>
+                          <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-green-500/20 border border-green-400/30 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full capitalize">
+                            <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-green-300" />
+                            <span className="text-white font-medium text-xs sm:text-sm">{course.delivery_mode}</span>
                           </div>
                         </div>
                       </div>
@@ -421,11 +389,11 @@ export default function MembershipDetailsEnrollment() {
 
                     {/* Course Image */}
                     {course.image_url && (
-                      <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                      <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
                         <img
                           src={course.image_url}
                           alt={course.title}
-                          className="w-full h-auto object-cover"
+                          className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                       </div>
@@ -433,85 +401,87 @@ export default function MembershipDetailsEnrollment() {
                   </div>
 
                   {/* Quick Stats Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-gradient-to-br from-purple-500/20 to-purple-600/10 border border-purple-400/30 rounded-2xl p-6 text-center">
-                      <Clock className="h-8 w-8 text-purple-300 mx-auto mb-3" />
-                      <div className="text-2xl font-bold text-white mb-1">{course.duration}</div>
-                      <div className="text-white/60 text-sm">Duration</div>
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                    <div className="bg-gradient-to-br from-purple-500/20 to-purple-600/10 border border-purple-400/30 rounded-2xl p-4 sm:p-6 text-center">
+                      <Clock className="h-6 w-6 sm:h-8 sm:w-8 text-purple-300 mx-auto mb-2 sm:mb-3" />
+                      <div className="text-lg sm:text-2xl font-bold text-white mb-1">{course.duration}</div>
+                      <div className="text-white/60 text-xs sm:text-sm">Duration</div>
                     </div>
-                    
+
                     {course.total_days && (
-                      <div className="bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-400/30 rounded-2xl p-6 text-center">
-                        <Calendar className="h-8 w-8 text-blue-300 mx-auto mb-3" />
-                        <div className="text-2xl font-bold text-white mb-1">{course.total_days}</div>
-                        <div className="text-white/60 text-sm">Days</div>
+                      <div className="bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-400/30 rounded-2xl p-4 sm:p-6 text-center">
+                        <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-blue-300 mx-auto mb-2 sm:mb-3" />
+                        <div className="text-lg sm:text-2xl font-bold text-white mb-1">{course.total_days}</div>
+                        <div className="text-white/60 text-xs sm:text-sm">Days</div>
                       </div>
                     )}
-                    
-                    <div className="bg-gradient-to-br from-green-500/20 to-green-600/10 border border-green-400/30 rounded-2xl p-6 text-center">
-                      <Users className="h-8 w-8 text-green-300 mx-auto mb-3" />
-                      <div className="text-2xl font-bold text-white mb-1">{course.students_count}</div>
-                      <div className="text-white/60 text-sm">Enrolled</div>
+
+                    <div className="bg-gradient-to-br from-green-500/20 to-green-600/10 border border-green-400/30 rounded-2xl p-4 sm:p-6 text-center">
+                      <Users className="h-6 w-6 sm:h-8 sm:w-8 text-green-300 mx-auto mb-2 sm:mb-3" />
+                      <div className="text-lg sm:text-2xl font-bold text-white mb-1">{course.students_count}</div>
+                      <div className="text-white/60 text-xs sm:text-sm">Enrolled</div>
                     </div>
-                    
-                    <div className="bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-400/30 rounded-2xl p-6 text-center">
-                      <TrendingUp className="h-8 w-8 text-orange-300 mx-auto mb-3" />
-                      <div className="text-2xl font-bold text-white mb-1">Top</div>
-                      <div className="text-white/60 text-sm">Rated</div>
+
+                    <div className="bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-400/30 rounded-2xl p-4 sm:p-6 text-center">
+                      <TrendingUp className="h-6 w-6 sm:h-8 sm:w-8 text-orange-300 mx-auto mb-2 sm:mb-3" />
+                      <div className="text-lg sm:text-2xl font-bold text-white mb-1">Top</div>
+                      <div className="text-white/60 text-xs sm:text-sm">Rated</div>
                     </div>
                   </div>
 
                   {/* Tabbed Content Section */}
-                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
                     {/* Tab Navigation */}
                     <div className="border-b border-white/10 bg-white/5">
-                      <div className="flex">
+                      <div className="flex overflow-x-auto">
                         <button
                           onClick={() => setActiveTab("overview")}
-                          className={`flex-1 px-6 py-4 font-semibold transition-all relative ${
+                          className={`flex-1 px-3 sm:px-6 py-3 sm:py-4 font-semibold transition-all relative whitespace-nowrap ${
                             activeTab === "overview"
                               ? "text-[#FFD700]"
                               : "text-white/60 hover:text-white/80"
                           }`}
                         >
-                          <div className="flex items-center justify-center gap-2">
-                            <BookOpen className="h-5 w-5" />
-                            <span>What You'll Learn</span>
+                          <div className="flex items-center justify-center gap-1 sm:gap-2">
+                            <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <span className="text-xs sm:text-base">What You'll Learn</span>
                           </div>
                           {activeTab === "overview" && (
                             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500]"></div>
                           )}
                         </button>
-                        
+
+
                         <button
                           onClick={() => setActiveTab("curriculum")}
-                          className={`flex-1 px-6 py-4 font-semibold transition-all relative ${
+                          className={`flex-1 px-3 sm:px-6 py-3 sm:py-4 font-semibold transition-all relative whitespace-nowrap ${
                             activeTab === "curriculum"
                               ? "text-[#FFD700]"
                               : "text-white/60 hover:text-white/80"
                           }`}
                         >
-                          <div className="flex items-center justify-center gap-2">
-                            <Calendar className="h-5 w-5" />
-                            <span>Course Curriculum</span>
+                          <div className="flex items-center justify-center gap-1 sm:gap-2">
+                            <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <span className="text-xs sm:text-base">Course Curriculum</span>
                           </div>
                           {activeTab === "curriculum" && (
                             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500]"></div>
                           )}
                         </button>
-                        
+
+
                         {course.lecturers && course.lecturers.length > 0 && (
                           <button
                             onClick={() => setActiveTab("instructors")}
-                            className={`flex-1 px-6 py-4 font-semibold transition-all relative ${
+                            className={`flex-1 px-3 sm:px-6 py-3 sm:py-4 font-semibold transition-all relative whitespace-nowrap ${
                               activeTab === "instructors"
                                 ? "text-[#FFD700]"
                                 : "text-white/60 hover:text-white/80"
                             }`}
                           >
-                            <div className="flex items-center justify-center gap-2">
-                              <Users className="h-5 w-5" />
-                              <span>Your Instructors</span>
+                            <div className="flex items-center justify-center gap-1 sm:gap-2">
+                              <Users className="h-4 w-4 sm:h-5 sm:w-5" />
+                              <span className="text-xs sm:text-base">Your Instructors</span>
                             </div>
                             {activeTab === "instructors" && (
                               <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500]"></div>
@@ -522,7 +492,7 @@ export default function MembershipDetailsEnrollment() {
                     </div>
 
                     {/* Tab Content */}
-                    <div className="p-8">
+                    <div className="p-4 sm:p-6 lg:p-8">
                       {/* Overview Tab */}
                       {activeTab === "overview" && (
                         <div className="animate-in fade-in duration-500">
@@ -648,28 +618,28 @@ export default function MembershipDetailsEnrollment() {
 
                 {/* Right: Sticky Pricing Card (1/3) */}
                 <div className="lg:col-span-1">
-                  <div className="sticky top-24 space-y-6">
+                  <div className="lg:sticky lg:top-24 space-y-6">
                     {/* Price Card */}
-                    <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-[#FFD700]/30 rounded-3xl p-8 shadow-2xl">
+                    <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-[#FFD700]/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
                       <div className="text-center mb-6">
                         {course.course_code === 'MCMAI01' ? (
                           <>
                             <div className="text-white/60 text-sm uppercase tracking-wide mb-3">Original Price</div>
-                            <div className="text-4xl font-bold text-red-400/90 line-through mb-4 relative">
+                            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-400/90 line-through mb-4 relative">
                               {course.currency} 39,000
                               <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full rotate-12 font-bold">
                                 -13%
                               </div>
                             </div>
-                            <div className="text-emerald-400 text-sm uppercase tracking-wide mb-2 font-semibold">Special Price</div>
-                            <div className="text-6xl font-black text-[#FFD700] mb-2 drop-shadow-[0_4px_12px_rgba(255,215,0,0.6)]">
+                            <div className="text-emerald-400 text-xs sm:text-sm uppercase tracking-wide mb-2 font-semibold">Special Price</div>
+                            <div className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#FFD700] mb-2 drop-shadow-[0_4px_12px_rgba(255,215,0,0.6)]">
                               {course.currency} {course.price.toLocaleString()}
                             </div>
                           </>
                         ) : (
                           <>
-                            <div className="text-white/60 text-sm uppercase tracking-wide mb-2">Course Price</div>
-                            <div className="text-5xl font-black text-[#FFD700] mb-2">
+                            <div className="text-white/60 text-xs sm:text-sm uppercase tracking-wide mb-2">Course Price</div>
+                            <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#FFD700] mb-2">
                               {course.currency} {course.price.toLocaleString()}
                             </div>
                           </>
@@ -677,21 +647,21 @@ export default function MembershipDetailsEnrollment() {
                         <div className="text-white/60 text-sm">One-time payment</div>
                       </div>
 
-                      <div className="space-y-3 mb-6">
-                        <div className="flex items-center gap-3 text-white/80">
-                          <CheckCircle2 className="h-5 w-5 text-[#FFD700] flex-shrink-0" />
+                      <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+                        <div className="flex items-center gap-2 sm:gap-3 text-white/80 text-sm sm:text-base">
+                          <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#FFD700] flex-shrink-0" />
                           <span>Lifetime Access</span>
                         </div>
-                        <div className="flex items-center gap-3 text-white/80">
-                          <CheckCircle2 className="h-5 w-5 text-[#FFD700] flex-shrink-0" />
+                        <div className="flex items-center gap-2 sm:gap-3 text-white/80 text-sm sm:text-base">
+                          <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#FFD700] flex-shrink-0" />
                           <span>Certificate of Completion</span>
                         </div>
-                        <div className="flex items-center gap-3 text-white/80">
-                          <CheckCircle2 className="h-5 w-5 text-[#FFD700] flex-shrink-0" />
+                        <div className="flex items-center gap-2 sm:gap-3 text-white/80 text-sm sm:text-base">
+                          <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#FFD700] flex-shrink-0" />
                           <span>Expert Support</span>
                         </div>
-                        <div className="flex items-center gap-3 text-white/80">
-                          <CheckCircle2 className="h-5 w-5 text-[#FFD700] flex-shrink-0" />
+                        <div className="flex items-center gap-2 sm:gap-3 text-white/80 text-sm sm:text-base">
+                          <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#FFD700] flex-shrink-0" />
                           <span>Community Access</span>
                         </div>
                       </div>
@@ -708,7 +678,7 @@ export default function MembershipDetailsEnrollment() {
                               const token = localStorage.getItem('token');
                               window.location.href = `${mainAppUrl}/student/courses${token ? `?token=${token}` : ''}`;
                             }}
-                            className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-6 text-lg rounded-2xl shadow-lg hover:shadow-[#FFD700]/50 transition-all"
+                            className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-4 sm:py-6 text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-lg hover:shadow-[#FFD700]/50 transition-all"
                           >
                             Go to LMS Dashboard →
                           </Button>
@@ -717,7 +687,7 @@ export default function MembershipDetailsEnrollment() {
                         <Button
                           onClick={handleEnrollClick}
                           disabled={enrolling}
-                          className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-6 text-lg rounded-2xl shadow-lg hover:shadow-[#FFD700]/50 transition-all"
+                          className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-4 sm:py-6 text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-lg hover:shadow-[#FFD700]/50 transition-all"
                         >
                           {enrolling ? (
                             <>
@@ -746,34 +716,34 @@ export default function MembershipDetailsEnrollment() {
                     </div>
 
                     {/* Trust Badges */}
-                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-                      <h3 className="text-white font-semibold mb-4">Why Choose Us</h3>
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
-                            <CheckCircle2 className="h-5 w-5 text-green-400" />
+                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+                      <h3 className="text-white font-semibold text-sm sm:text-base mb-3 sm:mb-4">Why Choose Us</h3>
+                      <div className="space-y-2 sm:space-y-3">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
                           </div>
                           <div>
-                            <div className="text-white font-medium text-sm">Verified Content</div>
-                            <div className="text-white/60 text-xs">Expert-curated curriculum</div>
+                            <div className="text-white font-medium text-xs sm:text-sm">Verified Content</div>
+                            <div className="text-white/60 text-[10px] sm:text-xs">Expert-curated curriculum</div>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                            <Users className="h-5 w-5 text-blue-400" />
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Users className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
                           </div>
                           <div>
-                            <div className="text-white font-medium text-sm">Active Community</div>
-                            <div className="text-white/60 text-xs">24/7 peer support</div>
+                            <div className="text-white font-medium text-xs sm:text-sm">Active Community</div>
+                            <div className="text-white/60 text-[10px] sm:text-xs">24/7 peer support</div>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                            <Award className="h-5 w-5 text-purple-400" />
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Award className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
                           </div>
                           <div>
-                            <div className="text-white font-medium text-sm">Certificates</div>
-                            <div className="text-white/60 text-xs">Industry-recognized</div>
+                            <div className="text-white font-medium text-xs sm:text-sm">Certificates</div>
+                            <div className="text-white/60 text-[10px] sm:text-xs">Industry-recognized</div>
                           </div>
                         </div>
                       </div>

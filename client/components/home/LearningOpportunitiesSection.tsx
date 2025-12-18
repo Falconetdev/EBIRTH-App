@@ -112,28 +112,30 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
           </p>
         </div>
 
-        <div className="mt-10 flex justify-center">
-          <div className="rounded-full bg-white/10 p-1">
-            <div className="flex items-center gap-2 rounded-full bg-black/40 p-1">
+        <div className="mt-10 flex justify-center px-4">
+          <div className="inline-flex rounded-full bg-white/10 p-1 max-w-full">
+            <div className="flex items-center gap-1 sm:gap-2 rounded-full bg-black/40 p-1">
               <button
                 type="button"
                 onClick={() => setActiveType('online')}
-                className={`rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] sm:text-sm transition ${activeType === 'online' ? 'bg-[#8C52FF] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)]' : 'text-white/70 hover:text-white'}`}
+                className={`flex-1 rounded-full px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-tight sm:tracking-normal transition-all ${activeType === 'online' ? 'bg-[#8C52FF] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)]' : 'text-white/70 hover:text-white hover:bg-white/5'}`}
               >
-                Online Membership
+                <span className="sm:hidden">Online</span>
+                <span className="hidden sm:inline">Online Membership</span>
               </button>
               <button
                 type="button"
                 onClick={() => setActiveType('physical')}
-                className={`rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] sm:text-sm transition ${activeType === 'physical' ? 'bg-[#8C52FF] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)]' : 'text-white/70 hover:text-white'}`}
+                className={`flex-1 rounded-full px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-tight sm:tracking-normal transition-all ${activeType === 'physical' ? 'bg-[#8C52FF] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)]' : 'text-white/70 hover:text-white hover:bg-white/5'}`}
               >
-                Physical Membership
+                <span className="sm:hidden">Physical</span>
+                <span className="hidden sm:inline">Physical Membership</span>
               </button>
             </div>
           </div>
         </div>
 
-        <p className="mt-10 text-center text-sm font-semibold uppercase tracking-[0.4em] text-white/60">
+        <p className="mt-10 text-center text-xs sm:text-sm font-semibold uppercase tracking-wider sm:tracking-[0.3em] text-white/60 px-4">
           Online Mentorship & Life-Time Memberships
         </p>
 

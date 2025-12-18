@@ -17,10 +17,10 @@ type CourseCard = {
   image: string;
 };
 
-const tabs: { key: TabKey; label: string }[] = [
-  { key: "all", label: "All Courses" },
-  { key: "online", label: "Online Membership" },
-  { key: "physical", label: "Physical Membership" },
+const tabs: { key: TabKey; label: string; shortLabel: string }[] = [
+  { key: "all", label: "All Courses", shortLabel: "All" },
+  { key: "online", label: "Online Membership", shortLabel: "Online" },
+  { key: "physical", label: "Physical Membership", shortLabel: "Physical" },
 ];
 
 // Fallback courses (shown if API fails or returns no data)
@@ -129,18 +129,18 @@ const Explore = () => {
       </div>
 
       <div className="mx-auto max-w-6xl space-y-12 text-white">
-        <header className="text-center space-y-4">
-          <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
+        <header className="text-center space-y-3 sm:space-y-4">
+          <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl md:text-4xl lg:text-5xl px-2">
             Explore Our <span className="bg-gradient-to-r from-[#FFE178] via-[#E8C843] to-[#C29E1B] bg-clip-text text-transparent">Courses & Mentorship</span> Programs
           </h2>
-          <p className="text-base text-white/80">
+          <p className="text-sm sm:text-base text-white/80 px-4">
             Choose from free, advanced, institutional, and specialized tracks to match your learning goals.
           </p>
         </header>
 
-        <div className="flex justify-center">
-          <div className="rounded-full bg-white/10 p-1">
-            <div className="flex items-center gap-2 rounded-full bg-black/40 p-1">
+        <div className="flex justify-center px-4">
+          <div className="inline-flex rounded-full bg-white/10 p-1 max-w-full">
+            <div className="flex items-center gap-1 sm:gap-2 rounded-full bg-black/40 p-1">
               {tabs.map((tab) => {
                 const isActive = tab.key === activeTab;
                 return (
@@ -148,13 +148,15 @@ const Explore = () => {
                     key={tab.key}
                     type="button"
                     onClick={() => setActiveTab(tab.key)}
-                    className={`rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.3em] sm:text-sm transition ${
+                    className={`flex-1 rounded-full px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold uppercase tracking-tight sm:tracking-normal transition-all ${
                       isActive
                         ? "bg-[#8C52FF] text-white shadow-[0_0_20px_rgba(140,82,255,0.4)]"
-                        : "text-white/70 hover:text-white"
+                        : "text-white/70 hover:text-white hover:bg-white/5"
                     }`}
                   >
-                    {tab.label}
+                    {/* Show short label on mobile, full label on larger screens */}
+                    <span className="sm:hidden">{tab.shortLabel}</span>
+                    <span className="hidden sm:inline">{tab.label}</span>
                   </button>
                 );
               })}
@@ -219,7 +221,7 @@ const Explore = () => {
                 key={course.id}
                 className="group relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/15 bg-white/10 backdrop-blur transition hover:-translate-y-2 hover:bg-white/15 hover:shadow-[0_28px_60px_rgba(8,0,40,0.45)]"
               >
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-40 sm:h-48 overflow-hidden">
                   <img
                     src={course.image}
                     alt={course.title}
@@ -227,19 +229,19 @@ const Explore = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#361088]/80 to-transparent" />
                   {course.level === "Free" ? (
-                    <span className="absolute right-4 top-4 inline-flex items-center rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#A10027] shadow-lg">
+                    <span className="absolute right-3 top-3 sm:right-4 sm:top-4 inline-flex items-center rounded-full bg-white px-2 sm:px-3 py-1 text-xs font-semibold text-[#A10027] shadow-lg">
                       Free
                     </span>
                   ) : null}
                 </div>
 
-                <div className="flex flex-1 flex-col gap-5  bg-[#361088]/90 p-6 text-white">
+                <div className="flex flex-1 flex-col gap-4 sm:gap-5 bg-[#361088]/90 p-4 sm:p-6 text-white">
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold leading-tight">{course.title}</h3>
-                    <p className="text-sm text-white/70">{course.description}</p>
+                    <h3 className="text-base sm:text-lg font-semibold leading-tight">{course.title}</h3>
+                    <p className="text-xs sm:text-sm text-white/70 line-clamp-3">{course.description}</p>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.25em]">
+                  <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-xs font-medium uppercase tracking-wide sm:tracking-[0.15em]">
                     <span className={`flex items-center rounded-full px-3 py-1 ${highlightColor}`}>
                       {course.level}
                     </span>
@@ -254,14 +256,14 @@ const Explore = () => {
                   {useApiData ? (
                     <Link
                       to={`/membership/${course.id}`}
-                      className="group mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#FFE178] px-5 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_32px_rgba(254,240,138,0.35)] transition hover:scale-[1.02]"
+                      className="group mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#FFE178] px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_32px_rgba(254,240,138,0.35)] transition hover:scale-[1.02]"
                     >
-                      View Details <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      View Details <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   ) : (
                     <Link
                       to="/course-details"
-                      className="mt-auto inline-flex items-center justify-center rounded-full bg-[#FFE178] px-5 py-3 text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_32px_rgba(254,240,138,0.35)] transition hover:scale-[1.02]"
+                      className="mt-auto inline-flex items-center justify-center rounded-full bg-[#FFE178] px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-[#1B0B2E] shadow-[0_18px_32px_rgba(254,240,138,0.35)] transition hover:scale-[1.02]"
                     >
                       Learn More
                     </Link>
