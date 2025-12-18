@@ -45,21 +45,21 @@ function AuthButtons({ mobile = false }: { mobile?: boolean }) {
   }
 
   return (
-    <>
-      <Link to="/login">
+    <div className={`flex ${mobile ? 'flex-col' : 'items-center'} gap-3 ${mobile ? 'w-full' : ''}`}>
+      <Link to="/login" className={mobile ? 'w-full' : ''}>
         <Button
           variant="outline"
-          className={`border-purple-500/50 text-white hover:bg-purple-800/20 ${mobile ? 'w-full' : ''}`}
+          className={`border-purple-500/50 text-white hover:bg-purple-800/20 hover:text-white hover:border-purple-400/70 ${mobile ? 'w-full' : ''}`}
         >
           Login
         </Button>
       </Link>
-      <Link to="/register">
+      <Link to="/register" className={mobile ? 'w-full' : ''}>
         <Button className={`bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold ${mobile ? 'w-full' : ''}`}>
           Get Started
         </Button>
       </Link>
-    </>
+    </div>
   );
 }
 
@@ -263,25 +263,33 @@ export default function Header() {
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-purple-800/20">
-            <nav className="flex flex-col gap-4">
-              {navLinks.map((link) => (
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="py-4 border-t border-purple-800/20">
+            <nav className="flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-300">
+              {navLinks.map((link, index) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-white/80 hover:text-white transition-colors text-sm font-medium"
+                  className="text-white/80 hover:text-white transition-colors text-sm font-medium px-2"
                   onClick={() => setIsMenuOpen(false)}
+                  style={{
+                    animationDelay: `${index * 50}ms`,
+                    animationFillMode: 'backwards'
+                  }}
                 >
                   {link.name}
                 </a>
               ))}
-              <div className="mt-4">
+              <div className="mt-4 pt-4 border-t border-purple-800/20">
                 <AuthButtons mobile />
               </div>
             </nav>
           </div>
-        )}
+        </div>
       </div>
     </header>
   );
