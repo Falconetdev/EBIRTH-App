@@ -653,9 +653,20 @@ export default function MembershipDetailsEnrollment() {
                     <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-[#FFD700]/30 rounded-3xl p-8 shadow-2xl">
                       <div className="text-center mb-6">
                         <div className="text-white/60 text-sm uppercase tracking-wide mb-2">Course Price</div>
-                        <div className="text-5xl font-black text-[#FFD700] mb-2">
-                          {course.currency} {course.price.toLocaleString()}
-                        </div>
+                        {course.course_code === 'MCMAI01' ? (
+                          <>
+                            <div className="text-2xl font-bold text-white/40 line-through mb-1">
+                              {course.currency} 39,000
+                            </div>
+                            <div className="text-5xl font-black text-[#FFD700] mb-2">
+                              {course.currency} {course.price.toLocaleString()}
+                            </div>
+                          </>
+                        ) : (
+                          <div className="text-5xl font-black text-[#FFD700] mb-2">
+                            {course.currency} {course.price.toLocaleString()}
+                          </div>
+                        )}
                         <div className="text-white/60 text-sm">One-time payment</div>
                       </div>
 
