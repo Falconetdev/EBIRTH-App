@@ -39,6 +39,7 @@ import ResourceEditor from "./pages/admin/ResourceEditor";
 import { ThemeProvider } from "@/context/ThemeContext";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/login" element={<Login />} />

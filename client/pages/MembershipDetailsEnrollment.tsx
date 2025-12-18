@@ -85,6 +85,7 @@ export default function MembershipDetailsEnrollment() {
 
   const handleEnrollClick = () => {
     if (!isAuthenticated) {
+      window.scrollTo({ top: 0, behavior: "instant" });
       navigate("/login", { state: { from: `/membership/${courseId}` } });
       return;
     }
