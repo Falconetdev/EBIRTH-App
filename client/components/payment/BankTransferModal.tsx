@@ -155,19 +155,19 @@ export default function BankTransferModal({
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-white/60">Bank Name:</span>
-                <span className="font-medium text-white">Bank of Ceylon</span>
+                <span className="font-medium text-white">Sampath Bank</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/60">Account Name:</span>
-                <span className="font-medium text-white">eBirth Academy</span>
+                <span className="font-medium text-white">eBirth Business Academy</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/60">Account Number:</span>
-                <span className="font-medium text-white">1234567890</span>
+                <span className="font-medium text-white">006410005482</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/60">Branch:</span>
-                <span className="font-medium text-white">Colombo</span>
+                <span className="font-medium text-white">Kegalle</span>
               </div>
             </div>
           </div>
