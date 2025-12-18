@@ -150,7 +150,7 @@ export default function PayHereCouponModal({
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-green-400 font-medium">
-                    Discount ({couponDiscount.discount.percentage}%):
+                    Discount:
                   </span>
                   <span className="text-green-400 font-medium">
                     -{bankTransferService.formatCurrency(couponDiscount.discount.amount, currency)}

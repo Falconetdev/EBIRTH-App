@@ -216,7 +216,7 @@ export default function BankTransferModal({
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-green-400">
-                      Discount ({couponDiscount.discount.percentage}%):
+                      Discount:
                     </span>
                     <span className="text-green-400">
                       -{bankTransferService.formatCurrency(couponDiscount.discount.amount, currency)}
