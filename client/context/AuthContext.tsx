@@ -11,6 +11,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<User>;
+  googleLogin: (credential: string, phone?: string | null) => Promise<any>;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -109,10 +110,49 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(null);
   };
 
+  const googleLogin = async (credential: string, phone: string | null = null): Promise<any> => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"}/api/auth/google-login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ credential, phone }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Google login failed");
+      }
+
+      // If requires phone, return the temp data
+      if (data.requiresPhone) {
+        return {
+          requiresPhone: true,
+          tempUserData: data.tempUserData,
+        };
+      }
+
+      // Login successful
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
+
+      return { user: data.user, isNewUser: data.isNewUser };
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const value = {
     user,
     loading,
     login,
+    googleLogin,
     logout,
     isAuthenticated: !!user,
   };

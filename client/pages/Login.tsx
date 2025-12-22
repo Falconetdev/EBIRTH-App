@@ -1,4 +1,4 @@
-import { useState, FormEvent, useEffect } from "react";
+import { useState, FormEvent, useEffect, useRef } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,9 +7,10 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Loader2 } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
 import { useAuth } from "@/context/AuthContext";
+import GooglePhoneModal from "@/components/GooglePhoneModal";
 
 export default function Login() {
-  const { login } = useAuth();
+  const { login, googleLogin } = useAuth();
   const location = useLocation();
   const [credentials, setCredentials] = useState({
     email: "",
@@ -17,10 +18,37 @@ export default function Login() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPhoneModal, setShowPhoneModal] = useState(false);
+  const [tempGoogleData, setTempGoogleData] = useState<any>(null);
+  const [phoneLoading, setPhoneLoading] = useState(false);
+  const googleButtonRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   // Get the return URL from location state
   const from = (location.state as any)?.from || null;
+
+  // Initialize Google Sign-In
+  useEffect(() => {
+    if (window.google && googleButtonRef.current) {
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: handleGoogleSuccess,
+        auto_select: false,
+        cancel_on_tap_outside: true,
+      });
+
+      window.google.accounts.id.renderButton(
+        googleButtonRef.current,
+        {
+          theme: 'filled_black',
+          size: 'large',
+          width: googleButtonRef.current.offsetWidth,
+          text: 'continue_with',
+          shape: 'rectangular',
+        }
+      );
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -54,6 +82,64 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    setError("");
+    setLoading(true);
+
+    try {
+      const result = await googleLogin(credentialResponse.credential);
+
+      if (result.requiresPhone) {
+        // New user needs to provide phone number
+        setTempGoogleData({
+          credential: credentialResponse.credential,
+          ...result.tempUserData,
+        });
+        setShowPhoneModal(true);
+        setLoading(false);
+      } else {
+        // Existing user or registration complete
+        const { user } = result;
+
+        // Navigate to membership page for students
+        if (from) {
+          navigate(`${from}?autoOpenPayment=true`);
+        } else {
+          navigate("/membership");
+        }
+      }
+    } catch (err: any) {
+      setError(err.message || "Google login failed. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  const handlePhoneSubmit = async (phone: string) => {
+    setPhoneLoading(true);
+    setError("");
+
+    try {
+      const result = await googleLogin(tempGoogleData.credential, phone);
+
+      if (!result.requiresPhone) {
+        // Registration successful
+        setShowPhoneModal(false);
+        setTempGoogleData(null);
+        navigate("/membership");
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to complete registration. Please try again.");
+    } finally {
+      setPhoneLoading(false);
+    }
+  };
+
+  const handleClosePhoneModal = () => {
+    setShowPhoneModal(false);
+    setTempGoogleData(null);
+    setLoading(false);
   };
 
   return (
@@ -207,6 +293,30 @@ export default function Login() {
                   </Button>
                 </form>
 
+                {/* Google Sign In Divider */}
+                <div className="mt-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-purple-500/20"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2 bg-[#1a0b2e] text-white/60">
+                        Or continue with
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Google Sign In Button */}
+                <div className="mt-6 flex justify-center">
+                  <div ref={googleButtonRef} className="w-full"></div>
+                </div>
+
+                <p className="mt-4 text-center text-sm text-white/60">
+                  Google login is available for{" "}
+                  <span className="font-semibold text-[#FFD700]">students only</span>
+                </p>
+
                 <div className="mt-6 text-center space-y-4">
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
@@ -240,6 +350,17 @@ export default function Login() {
           </div>
         </div>
       </section>
+
+      {/* Phone Number Modal for New Google Users */}
+      {showPhoneModal && tempGoogleData && (
+        <GooglePhoneModal
+          isOpen={showPhoneModal}
+          onClose={handleClosePhoneModal}
+          onSubmit={handlePhoneSubmit}
+          loading={phoneLoading}
+          userName={tempGoogleData.name}
+        />
+      )}
     </PageLayout>
   );
 }

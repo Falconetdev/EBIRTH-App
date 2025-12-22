@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,8 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import PageLayout from "@/components/layout/PageLayout";
+import GooglePhoneModal from "@/components/GooglePhoneModal";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Register() {
+  const { googleLogin } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,7 +21,34 @@ export default function Register() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPhoneModal, setShowPhoneModal] = useState(false);
+  const [tempGoogleData, setTempGoogleData] = useState<any>(null);
+  const [phoneLoading, setPhoneLoading] = useState(false);
+  const googleButtonRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  // Initialize Google Sign-In
+  useEffect(() => {
+    if (window.google && googleButtonRef.current) {
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: handleGoogleSuccess,
+        auto_select: false,
+        cancel_on_tap_outside: true,
+      });
+
+      window.google.accounts.id.renderButton(
+        googleButtonRef.current,
+        {
+          theme: 'filled_black',
+          size: 'large',
+          width: googleButtonRef.current.offsetWidth,
+          text: 'signup_with',
+          shape: 'rectangular',
+        }
+      );
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -95,6 +125,54 @@ export default function Register() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    setError("");
+    setLoading(true);
+
+    try {
+      const result = await googleLogin(credentialResponse.credential);
+
+      if (result.requiresPhone) {
+        setTempGoogleData({
+          credential: credentialResponse.credential,
+          ...result.tempUserData,
+        });
+        setShowPhoneModal(true);
+        setLoading(false);
+      } else {
+        navigate("/membership");
+      }
+    } catch (err: any) {
+      setError(err.message || "Google registration failed. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  const handlePhoneSubmit = async (phone: string) => {
+    setPhoneLoading(true);
+    setError("");
+
+    try {
+      const result = await googleLogin(tempGoogleData.credential, phone);
+
+      if (!result.requiresPhone) {
+        setShowPhoneModal(false);
+        setTempGoogleData(null);
+        navigate("/membership");
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to complete registration. Please try again.");
+    } finally {
+      setPhoneLoading(false);
+    }
+  };
+
+  const handleClosePhoneModal = () => {
+    setShowPhoneModal(false);
+    setTempGoogleData(null);
+    setLoading(false);
   };
 
   return (
@@ -294,6 +372,23 @@ export default function Register() {
                   </Button>
                 </form>
 
+                {/* Google Sign Up Divider */}
+                <div className="mt-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-purple-500/20"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2 bg-[#1a0b2e] text-white/60">Or sign up with</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Google Sign Up Button */}
+                <div className="mt-6 flex justify-center">
+                  <div ref={googleButtonRef} className="w-full"></div>
+                </div>
+
                 <div className="mt-6 text-center space-y-4">
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
@@ -325,6 +420,17 @@ export default function Register() {
           </div>
         </div>
       </section>
+
+      {/* Phone Number Modal for New Google Users */}
+      {showPhoneModal && tempGoogleData && (
+        <GooglePhoneModal
+          isOpen={showPhoneModal}
+          onClose={handleClosePhoneModal}
+          onSubmit={handlePhoneSubmit}
+          loading={phoneLoading}
+          userName={tempGoogleData.name}
+        />
+      )}
     </PageLayout>
   );
 }
