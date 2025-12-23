@@ -62,8 +62,8 @@ export default function Register() {
     setLoading(true);
 
     // Validation
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      setError("All fields except phone are required");
+    if (!formData.name || !formData.email || !formData.phone || !formData.password || !formData.confirmPassword) {
+      setError("All fields are required");
       setLoading(false);
       return;
     }
@@ -307,13 +307,14 @@ export default function Register() {
 
                   <div className="space-y-2">
                     <Label htmlFor="phone" className="text-white font-semibold">
-                      Phone Number <span className="text-white/40 text-xs">(Optional)</span>
+                      Phone Number <span className="text-[#FFD700]">*</span>
                     </Label>
                     <Input
                       id="phone"
                       name="phone"
                       type="tel"
                       autoComplete="tel"
+                      required
                       value={formData.phone}
                       onChange={handleChange}
                       className="bg-white/5 border-purple-500/30 text-white placeholder:text-white/40 focus:border-[#FFD700] focus:ring-[#FFD700] h-12"
