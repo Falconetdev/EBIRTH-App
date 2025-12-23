@@ -68,6 +68,20 @@ export default function Register() {
       return;
     }
 
+    // Phone number validation
+    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/;
+    if (!phoneRegex.test(formData.phone.replace(/\s/g, ''))) {
+      setError("Please enter a valid phone number (e.g., +94 77 123 4567)");
+      setLoading(false);
+      return;
+    }
+
+    if (formData.phone.length > 50) {
+      setError("Phone number is too long (max 50 characters)");
+      setLoading(false);
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       setLoading(false);

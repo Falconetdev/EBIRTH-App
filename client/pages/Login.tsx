@@ -312,11 +312,6 @@ export default function Login() {
                   <div ref={googleButtonRef} className="w-full"></div>
                 </div>
 
-                <p className="mt-4 text-center text-sm text-white/60">
-                  Google login is available for{" "}
-                  <span className="font-semibold text-[#FFD700]">students only</span>
-                </p>
-
                 <div className="mt-6 text-center space-y-4">
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
