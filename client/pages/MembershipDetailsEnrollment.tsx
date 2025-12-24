@@ -623,7 +623,21 @@ export default function MembershipDetailsEnrollment() {
                     {/* Price Card */}
                     <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-[#FFD700]/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
                       <div className="text-center mb-6">
-                        {(course.course_code === 'MCMAI01' || course.course_code === 'IOAI01' || course.course_code === 'EWOAI001') ? (
+                        {course.course_code === 'IOAL001' ? (
+                          <>
+                            <div className="text-white/60 text-sm uppercase tracking-wide mb-3">Original Price</div>
+                            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-400/90 line-through mb-4 relative">
+                              {course.currency} 54,000
+                              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full rotate-12 font-bold">
+                                SPECIAL
+                              </div>
+                            </div>
+                            <div className="text-emerald-400 text-xs sm:text-sm uppercase tracking-wide mb-2 font-semibold">Special Price</div>
+                            <div className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#FFD700] mb-2 drop-shadow-[0_4px_12px_rgba(255,215,0,0.6)]">
+                              {course.currency} {course.price.toLocaleString()}
+                            </div>
+                          </>
+                        ) : (course.course_code === 'MCMAI01' || course.course_code === 'IOAI01' || course.course_code === 'EWOAI001') ? (
                           <>
                             <div className="text-white/60 text-sm uppercase tracking-wide mb-3">Original Price</div>
                             <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-400/90 line-through mb-4 relative">
