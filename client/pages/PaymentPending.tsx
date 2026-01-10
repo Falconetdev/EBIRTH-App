@@ -100,7 +100,7 @@ export default function PaymentPending() {
         {/* Action Buttons */}
         <div className="space-y-3">
           <button
-            onClick={() => navigate('/courses')}
+            onClick={() => navigate('/membership')}
             className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg hover:from-purple-700 hover:to-purple-900 font-medium transition-all"
           >
             Browse More Courses

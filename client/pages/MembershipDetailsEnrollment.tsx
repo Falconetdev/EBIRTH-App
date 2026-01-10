@@ -445,7 +445,7 @@ export default function MembershipDetailsEnrollment() {
                         >
                           <div className="flex items-center justify-center gap-1 sm:gap-2">
                             <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
-                            <span className="text-xs sm:text-base">What You'll Learn</span>
+                            <span className="text-xs sm:text-base">What You'll Get</span>
                           </div>
                           {activeTab === "overview" && (
                             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500]"></div>
@@ -496,21 +496,90 @@ export default function MembershipDetailsEnrollment() {
                     <div className="p-4 sm:p-6 lg:p-8">
                       {/* Overview Tab */}
                       {activeTab === "overview" && (
-                        <div className="animate-in fade-in duration-500">
-                          <div className="grid md:grid-cols-2 gap-4">
-                            {[
-                              "Master fundamentals and advanced concepts",
-                              "Gain practical, hands-on experience",
-                              "Learn from industry experts",
-                              "Access exclusive resources & materials",
-                              "Join a thriving community",
-                              "Lifetime access to all content",
-                            ].map((item, index) => (
-                              <div key={index} className="flex items-start gap-3 bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors">
-                                <CheckCircle2 className="h-6 w-6 text-[#FFD700] flex-shrink-0 mt-0.5" />
-                                <span className="text-white/90">{item}</span>
+                        <div className="animate-in fade-in duration-500 space-y-8">
+                          {/* Combo Course Sub-Courses */}
+                          {course.is_combo_course && course.sub_courses && course.sub_courses.length > 0 && (
+                            <div className="bg-gradient-to-br from-orange-500/10 to-pink-500/10 border-2 border-orange-500/30 rounded-2xl p-6">
+                              <div className="flex items-center gap-3 mb-6">
+                                <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-orange-500 to-pink-500 flex items-center justify-center">
+                                  <span className="text-2xl">📦</span>
+                                </div>
+                                <div>
+                                  <h3 className="text-xl font-bold text-white">Combo Course Package</h3>
+                                  <p className="text-white/70 text-sm">This bundle includes {course.sub_courses.length} complete courses</p>
+                                </div>
                               </div>
-                            ))}
+
+                              <div className="space-y-4">
+                                {course.sub_courses.map((subCourse, index) => (
+                                  <div key={subCourse.id} className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:border-[#FFD700]/30 transition-all">
+                                    <div className="flex items-start gap-4">
+                                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#FFD700] to-[#FFA500] flex items-center justify-center flex-shrink-0">
+                                        <span className="text-lg font-bold text-black">{index + 1}</span>
+                                      </div>
+                                      <div className="flex-1">
+                                        <h4 className="text-lg font-semibold text-white mb-1">{subCourse.title}</h4>
+                                        <p className="text-white/60 text-sm mb-3">{subCourse.description}</p>
+                                        <div className="flex flex-wrap items-center gap-4 text-xs">
+                                          <div className="flex items-center gap-2 text-white/70">
+                                            <Clock className="h-4 w-4" />
+                                            <span>{subCourse.duration}</span>
+                                          </div>
+                                          <div className="flex items-center gap-2">
+                                            <span className="text-white/50">Individual Price:</span>
+                                            <span className="text-[#FFD700] font-semibold">
+                                              {subCourse.currency} {subCourse.price.toLocaleString()}
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <CheckCircle2 className="h-6 w-6 text-green-400 flex-shrink-0" />
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+
+                              {/* Total Value Calculation */}
+                              <div className="mt-6 pt-6 border-t border-white/10">
+                                <div className="flex items-center justify-between text-sm mb-2">
+                                  <span className="text-white/70">Total Individual Value:</span>
+                                  <span className="text-white/90 font-semibold">
+                                    {course.currency} {course.sub_courses.reduce((sum, sub) => sum + sub.price, 0).toLocaleString()}
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between text-lg font-bold">
+                                  <span className="text-white">Combo Package Price:</span>
+                                  <span className="text-[#FFD700]">
+                                    {course.currency} {course.price.toLocaleString()}
+                                  </span>
+                                </div>
+                                <div className="mt-3 text-center">
+                                  <span className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 text-green-400 rounded-full text-sm font-semibold">
+                                    💰 Save {course.currency} {(course.sub_courses.reduce((sum, sub) => sum + sub.price, 0) - course.price).toLocaleString()}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Benefits Grid */}
+                          <div>
+                            <h3 className="text-xl font-bold text-white mb-4">What You'll Get</h3>
+                            <div className="grid md:grid-cols-2 gap-4">
+                              {[
+                                "Master fundamentals and advanced concepts",
+                                "Gain practical, hands-on experience",
+                                "Learn from industry experts",
+                                "Access exclusive resources & materials",
+                                "Join a thriving community",
+                                "Lifetime access to all content",
+                              ].map((item, index) => (
+                                <div key={index} className="flex items-start gap-3 bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors">
+                                  <CheckCircle2 className="h-6 w-6 text-[#FFD700] flex-shrink-0 mt-0.5" />
+                                  <span className="text-white/90">{item}</span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       )}
@@ -623,27 +692,13 @@ export default function MembershipDetailsEnrollment() {
                     {/* Price Card */}
                     <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-[#FFD700]/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
                       <div className="text-center mb-6">
-                        {course.course_code === 'IOAL001' ? (
+                        {course.original_price && course.original_price > course.price ? (
                           <>
                             <div className="text-white/60 text-sm uppercase tracking-wide mb-3">Original Price</div>
                             <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-400/90 line-through mb-4 relative">
-                              {course.currency} 54,000
+                              {course.currency} {course.original_price.toLocaleString()}
                               <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full rotate-12 font-bold">
-                                SPECIAL
-                              </div>
-                            </div>
-                            <div className="text-emerald-400 text-xs sm:text-sm uppercase tracking-wide mb-2 font-semibold">Special Price</div>
-                            <div className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#FFD700] mb-2 drop-shadow-[0_4px_12px_rgba(255,215,0,0.6)]">
-                              {course.currency} {course.price.toLocaleString()}
-                            </div>
-                          </>
-                        ) : (course.course_code === 'MCMAI01' || course.course_code === 'IOAI01' || course.course_code === 'EWOAI001') ? (
-                          <>
-                            <div className="text-white/60 text-sm uppercase tracking-wide mb-3">Original Price</div>
-                            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-400/90 line-through mb-4 relative">
-                              {course.currency} 39,000
-                              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full rotate-12 font-bold">
-                                -13%
+                                -{Math.round(((course.original_price - course.price) / course.original_price) * 100)}%
                               </div>
                             </div>
                             <div className="text-emerald-400 text-xs sm:text-sm uppercase tracking-wide mb-2 font-semibold">Special Price</div>
