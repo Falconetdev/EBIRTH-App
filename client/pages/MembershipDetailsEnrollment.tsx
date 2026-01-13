@@ -692,7 +692,7 @@ export default function MembershipDetailsEnrollment() {
                     {/* Price Card */}
                     <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-[#FFD700]/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
                       <div className="text-center mb-6">
-                        {course.original_price && course.original_price > course.price ? (
+                        {course.original_price && Number(course.original_price) > Number(course.price) ? (
                           <>
                             <div className="text-white/60 text-sm uppercase tracking-wide mb-3">Original Price</div>
                             <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-400/90 line-through mb-4 relative">

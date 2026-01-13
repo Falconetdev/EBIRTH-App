@@ -11,7 +11,7 @@ function CourseCard({ course }: { course: PublicCourse }) {
     ? course.sub_courses.reduce((sum, sub) => sum + sub.price, 0)
     : 0;
   const savings = totalValue > 0 ? totalValue - course.price : 0;
-  const hasDiscount = course.original_price && course.original_price > course.price;
+  const hasDiscount = course.original_price && Number(course.original_price) > Number(course.price);
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-sm transition hover:bg-white/10">
