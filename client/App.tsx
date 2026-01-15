@@ -23,6 +23,7 @@ import InstitutionalMembership from "./pages/InstitutionalMembership";
 import TradingMentorship from "./pages/TradingMentorship";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Events from "./pages/Events";
 import Resources from "./pages/Resources";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -34,6 +35,8 @@ import LeverageCalculator from "./pages/LeverageCalculator";
 import AdminLogin from "./pages/admin/AdminLogin";
 import BlogAdmin from "./pages/admin/BlogAdmin";
 import BlogEditor from "./pages/admin/BlogEditor";
+import EventsAdmin from "./pages/admin/EventsAdmin";
+import EventEditor from "./pages/admin/EventEditor";
 import ResourceAdmin from "./pages/admin/ResourceAdmin";
 import ResourceEditor from "./pages/admin/ResourceEditor";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -87,6 +90,7 @@ const App = () => (
                 />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/events" element={<Events />} />
                 <Route path="/resources" element={<Resources />} />
                 <Route
                   path="/leverage-calculator"
@@ -99,6 +103,12 @@ const App = () => (
                   <Route
                     path="/admin/blog/:slug/edit"
                     element={<BlogEditor />}
+                  />
+                  <Route path="/admin/events" element={<EventsAdmin />} />
+                  <Route path="/admin/events/new" element={<EventEditor />} />
+                  <Route
+                    path="/admin/events/:slug/edit"
+                    element={<EventEditor />}
                   />
                   <Route path="/admin/resources" element={<ResourceAdmin />} />
                   <Route

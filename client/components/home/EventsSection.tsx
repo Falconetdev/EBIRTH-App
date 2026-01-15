@@ -1,22 +1,69 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { collection, getDocs, query, where, orderBy, type DocumentData } from "firebase/firestore";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, CalendarDays, Clock3, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { db } from "@/lib/firebase";
+import type { Event } from "@/types/event";
 
-type Event = {
-  id: string;
-  title: string;
-  description: string;
-  schedule: string;
-  time: string;
-  location: string;
-  image: string;
-};
+const EventsSection = () => {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
 
-type EventsSectionProps = {
-  events: Event[];
-};
+  useEffect(() => {
+    const fetchFeaturedEvents = async () => {
+      try {
+        const eventsQuery = query(
+          collection(db, "events"),
+          where("featured", "==", true),
+          orderBy("createdAt", "desc")
+        );
+        const snapshot = await getDocs(eventsQuery);
+        const mapped = snapshot.docs.map((doc) => {
+          const data = doc.data() as DocumentData;
+          return {
+            id: doc.id,
+            title: data.title ?? "Untitled",
+            slug: data.slug ?? doc.id,
+            description: data.description ?? "",
+            schedule: data.schedule ?? "",
+            time: data.time ?? "",
+            location: data.location ?? "",
+            coverUrl: data.coverUrl ?? null,
+            coverStoragePath: data.coverStoragePath ?? null,
+            createdAt: data.createdAt ?? null,
+            updatedAt: data.updatedAt ?? null,
+            featured: data.featured ?? false,
+          } satisfies Event;
+        });
+        setEvents(mapped.slice(0, 3)); // Show max 3 featured events
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-const EventsSection = ({ events }: EventsSectionProps) => {
+    fetchFeaturedEvents();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-inherit overflow-hidden">
+        <div className="relative mx-auto max-w-6xl">
+          <div className="text-center">
+            <p className="text-white/70">Loading events...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (events.length === 0) {
+    return null; // Don't show section if no featured events
+  }
+
   return (
     <section className="relative  py-20 px-4 sm:px-6 lg:px-8 bg-inherit overflow-hidden">
       {/* <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,215,0,0.14),_rgba(34,9,67,0))]"></div> */}
@@ -39,15 +86,17 @@ const EventsSection = ({ events }: EventsSectionProps) => {
               className="group relative overflow-hidden rounded-[36px] border border-white/10 bg-[#2b0f4e]/70 shadow-[0_0_45px_rgba(110,63,190,0.35)]"
             >
               <div className="relative h-60 overflow-hidden">
-                <img
-                  src={event.image}
-                  alt={event.title}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                  onError={(e) => {
-                    if (e.currentTarget.src.includes("placeholder.svg")) return;
-                    e.currentTarget.src = "/placeholder.svg";
-                  }}
-                />
+                {event.coverUrl ? (
+                  <img
+                    src={event.coverUrl}
+                    alt={event.title}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#6E21FF] to-[#4013A5]">
+                    <CalendarDays className="h-16 w-16 text-white/40" />
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#2b0f4e]/30 to-[#2b0f4e]"></div>
               </div>
 
@@ -58,7 +107,7 @@ const EventsSection = ({ events }: EventsSectionProps) => {
                 <h3 className="text-xl font-bold leading-8 text-[#FFD700]">
                   {event.title}
                 </h3>
-                <p className="text-sm text-white/75 leading-relaxed">
+                <p className="text-sm text-white/75 leading-relaxed line-clamp-3">
                   {event.description}
                 </p>
                 <div className="space-y-3">
@@ -81,13 +130,15 @@ const EventsSection = ({ events }: EventsSectionProps) => {
         </div>
 
         <div className="mt-16 flex justify-center">
-          <Button
-            variant="outline"
-            className="group inline-flex items-center gap-3 rounded-full border-2 border-[#FFD700] bg-transparent px-10 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD700] transition hover:bg-[#FFD700] hover:text-black"
-          >
-            See All Events
-            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Button>
+          <Link to="/events">
+            <Button
+              variant="outline"
+              className="group inline-flex items-center gap-3 rounded-full border-2 border-[#FFD700] bg-transparent px-10 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#FFD700] transition hover:bg-[#FFD700] hover:text-black"
+            >
+              See All Events
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

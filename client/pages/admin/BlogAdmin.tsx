@@ -166,6 +166,12 @@ const BlogAdmin = () => {
             <div className="flex overflow-hidden rounded-full border border-white/20">
               <span className="bg-white/20 px-4 py-2 text-sm font-semibold text-white">Blog</span>
               <Link
+                to="/admin/events"
+                className="px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
+              >
+                Events
+              </Link>
+              <Link
                 to="/admin/resources"
                 className="px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
               >
