@@ -33,12 +33,15 @@ import PaymentCancel from "./pages/PaymentCancel";
 import PaymentPending from "./pages/PaymentPending";
 import LeverageCalculator from "./pages/LeverageCalculator";
 import AdminLogin from "./pages/admin/AdminLogin";
+import AdminLayout from "./components/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
 import BlogAdmin from "./pages/admin/BlogAdmin";
 import BlogEditor from "./pages/admin/BlogEditor";
 import EventsAdmin from "./pages/admin/EventsAdmin";
 import EventEditor from "./pages/admin/EventEditor";
 import ResourceAdmin from "./pages/admin/ResourceAdmin";
 import ResourceEditor from "./pages/admin/ResourceEditor";
+import Settings from "./pages/admin/Settings";
 import { ThemeProvider } from "@/context/ThemeContext";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
@@ -98,27 +101,32 @@ const App = () => (
                 />
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route element={<ProtectedRoute />}>
-                  <Route path="/admin/blog" element={<BlogAdmin />} />
-                  <Route path="/admin/blog/new" element={<BlogEditor />} />
-                  <Route
-                    path="/admin/blog/:slug/edit"
-                    element={<BlogEditor />}
-                  />
-                  <Route path="/admin/events" element={<EventsAdmin />} />
-                  <Route path="/admin/events/new" element={<EventEditor />} />
-                  <Route
-                    path="/admin/events/:slug/edit"
-                    element={<EventEditor />}
-                  />
-                  <Route path="/admin/resources" element={<ResourceAdmin />} />
-                  <Route
-                    path="/admin/resources/new"
-                    element={<ResourceEditor />}
-                  />
-                  <Route
-                    path="/admin/resources/:slug/edit"
-                    element={<ResourceEditor />}
-                  />
+                  <Route element={<AdminLayout />}>
+                    <Route path="/admin" element={<Dashboard />} />
+                    <Route path="/admin/dashboard" element={<Dashboard />} />
+                    <Route path="/admin/blogs" element={<BlogAdmin />} />
+                    <Route path="/admin/blogs/new" element={<BlogEditor />} />
+                    <Route
+                      path="/admin/blogs/:slug/edit"
+                      element={<BlogEditor />}
+                    />
+                    <Route path="/admin/events" element={<EventsAdmin />} />
+                    <Route path="/admin/events/new" element={<EventEditor />} />
+                    <Route
+                      path="/admin/events/:slug/edit"
+                      element={<EventEditor />}
+                    />
+                    <Route path="/admin/resources" element={<ResourceAdmin />} />
+                    <Route
+                      path="/admin/resources/new"
+                      element={<ResourceEditor />}
+                    />
+                    <Route
+                      path="/admin/resources/:slug/edit"
+                      element={<ResourceEditor />}
+                    />
+                    <Route path="/admin/settings" element={<Settings />} />
+                  </Route>
                 </Route>
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />

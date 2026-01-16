@@ -14,10 +14,10 @@ const EventsSection = () => {
   useEffect(() => {
     const fetchFeaturedEvents = async () => {
       try {
+        // Query for featured events only (no orderBy to avoid index requirement)
         const eventsQuery = query(
           collection(db, "events"),
-          where("featured", "==", true),
-          orderBy("createdAt", "desc")
+          where("featured", "==", true)
         );
         const snapshot = await getDocs(eventsQuery);
         const mapped = snapshot.docs.map((doc) => {
@@ -37,7 +37,15 @@ const EventsSection = () => {
             featured: data.featured ?? false,
           } satisfies Event;
         });
-        setEvents(mapped.slice(0, 3)); // Show max 3 featured events
+        
+        // Sort by createdAt client-side and take top 3
+        const sorted = mapped.sort((a, b) => {
+          const aTime = a.createdAt?.toMillis?.() ?? 0;
+          const bTime = b.createdAt?.toMillis?.() ?? 0;
+          return bTime - aTime; // Descending order (newest first)
+        });
+        
+        setEvents(sorted.slice(0, 3)); // Show max 3 featured events
       } catch (error) {
         console.error("Failed to fetch events:", error);
       } finally {

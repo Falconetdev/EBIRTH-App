@@ -98,10 +98,10 @@ const Events = () => {
               {events.map((event) => (
                 <article
                   key={event.id}
-                  className="group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur transition hover:-translate-y-1 hover:border-white/40 hover:shadow-xl hover:shadow-[#FFE500]/10"
+                  className="group relative overflow-hidden rounded-[36px] border border-white/10 bg-[#2b0f4e]/70 shadow-[0_0_45px_rgba(110,63,190,0.35)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_60px_rgba(255,229,0,0.25)]"
                 >
                   {/* Event Image */}
-                  <div className="relative h-64 w-full overflow-hidden">
+                  <div className="relative h-60 overflow-hidden">
                     {event.coverUrl ? (
                       <img
                         src={event.coverUrl}
@@ -117,40 +117,46 @@ const Events = () => {
                       </div>
                     )}
                     {event.featured && (
-                      <div className="absolute left-4 top-4 rounded-full bg-[#FFE500] px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#1B0B2E]">
+                      <div className="absolute left-4 top-4 rounded-full bg-[#FFD700] px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#1B0B2E] shadow-lg">
                         Featured
                       </div>
                     )}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#2b0f4e]/30 to-[#2b0f4e]"></div>
                   </div>
 
                   {/* Event Details */}
-                  <div className="flex flex-1 flex-col gap-4 p-6">
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-semibold text-white line-clamp-2">{event.title}</h3>
-                      <p className="text-sm text-white/70 line-clamp-3">{event.description}</p>
-                    </div>
-
+                  <div className="space-y-6 px-8 py-10 text-center">
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/50">
+                      {event.featured ? "Featured Community Event" : "Community Event"}
+                    </p>
+                    <h3 className="text-xl font-bold leading-8 text-[#FFD700]">
+                      {event.title}
+                    </h3>
+                    <p className="text-sm text-white/75 leading-relaxed line-clamp-3">
+                      {event.description}
+                    </p>
+                    
                     {/* Event Info */}
-                    <div className="space-y-2 text-sm">
+                    <div className="space-y-3">
                       {event.schedule && (
-                        <div className="flex items-center gap-2 text-white/60">
-                          <svg className="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center justify-center gap-3 text-sm font-medium text-white">
+                          <svg className="h-5 w-5 text-[#FFD700]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                           <span>{event.schedule}</span>
                         </div>
                       )}
                       {event.time && (
-                        <div className="flex items-center gap-2 text-white/60">
-                          <svg className="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center justify-center gap-3 text-sm font-medium text-white">
+                          <svg className="h-5 w-5 text-[#FFD700]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                           <span>{event.time}</span>
                         </div>
                       )}
                       {event.location && (
-                        <div className="flex items-center gap-2 text-white/60">
-                          <svg className="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-white/60">
+                          <svg className="h-4 w-4 text-[#FFD700]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
@@ -159,7 +165,7 @@ const Events = () => {
                       )}
                     </div>
 
-                    <div className="mt-auto text-xs text-white/50">
+                    <div className="mt-6 pt-4 border-t border-white/10 text-xs text-white/50">
                       Added {formatDate(event.createdAt as { toDate: () => Date } | null)}
                     </div>
                   </div>

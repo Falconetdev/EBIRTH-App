@@ -159,69 +159,45 @@ const EventsAdmin = () => {
   }, [deletingSlug, emptyState, error, loading, navigate, events]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#090014] via-[#1a0b2e] to-[#2c0f42] text-white">
-      <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.4em] text-white/60">Inner Racers Studio</p>
-            <h1 className="text-3xl font-semibold text-white">Events Admin</h1>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="flex overflow-hidden rounded-full border border-white/20">
-              <Link
-                to="/admin/blog"
-                className="px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
-              >
-                Blog
-              </Link>
-              <span className="bg-white/20 px-4 py-2 text-sm font-semibold text-white">Events</span>
-              <Link
-                to="/admin/resources"
-                className="px-4 py-2 text-sm text-white/70 transition hover:bg-white/10"
-              >
-                Resources
-              </Link>
-            </div>
-            <Link
-              to="/admin/events/new"
-              className="rounded-xl bg-[#FFE500] px-5 py-2 text-sm font-semibold text-[#1B0B2E] transition hover:bg-[#ffd700]"
-            >
-              New Event
-            </Link>
-            <a
-              href="/events"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-xl border border-white/20 px-5 py-2 text-sm text-white transition hover:bg-white/10"
-            >
-              View public events
-            </a>
-            <button
-              onClick={async () => {
-                await logout();
-                navigate("/admin/login", { replace: true });
-              }}
-              className="rounded-xl border border-white/20 px-5 py-2 text-sm text-white transition hover:bg-white/10"
-            >
-              Logout
-            </button>
-          </div>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-2">Events</h1>
+          <p className="text-white/60">Manage your events and schedules</p>
         </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            to="/admin/events/new"
+            className="rounded-xl bg-[#FFE500] px-5 py-2.5 text-sm font-semibold text-[#1B0B2E] transition hover:bg-[#ffd700] hover:shadow-lg hover:shadow-[#FFE500]/20"
+          >
+            + New Event
+          </Link>
+          <a
+            href="/events"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-xl border border-white/20 px-5 py-2.5 text-sm text-white transition hover:bg-white/10"
+          >
+            View Public Events
+          </a>
+        </div>
+      </div>
 
-        <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-white/10 text-white">
-              <tr>
-                <th className="px-4 py-3 font-semibold">Title</th>
-                <th className="px-4 py-3 font-semibold">Schedule</th>
-                <th className="px-4 py-3 font-semibold">Location</th>
-                <th className="px-4 py-3 text-center font-semibold">Featured</th>
-                <th className="px-4 py-3 text-right font-semibold">Actions</th>
-              </tr>
-            </thead>
-            <tbody>{tableBody}</tbody>
-          </table>
-        </div>
+      {/* Table */}
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-white/10 text-white">
+            <tr>
+              <th className="px-4 py-3 font-semibold">Title</th>
+              <th className="px-4 py-3 font-semibold">Schedule</th>
+              <th className="px-4 py-3 font-semibold">Location</th>
+              <th className="px-4 py-3 text-center font-semibold">Featured</th>
+              <th className="px-4 py-3 text-right font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody>{tableBody}</tbody>
+        </table>
       </div>
     </div>
   );

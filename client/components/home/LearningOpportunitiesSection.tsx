@@ -33,7 +33,9 @@ const LearningOpportunitiesSection = ({ memberships }: LearningOpportunitiesSect
         id: course.id.toString(),
         title: course.title,
         price: `${course.currency} ${course.price.toLocaleString()}`,
-        oldPrice: `${course.currency} ${(course.price * 1.25).toLocaleString()}`, // 25% markup for "old price"
+        oldPrice: course.original_price
+          ? `${course.currency} ${course.original_price.toLocaleString()}`
+          : `${course.currency} ${course.price.toLocaleString()}`, // Use original_price from API, fallback to same price if not set
         image: course.image_url || "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80",
         description: course.description,
         deliveryMode: course.delivery_mode === 'physical' ? 'physical' : 'online',

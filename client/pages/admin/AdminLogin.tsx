@@ -14,7 +14,7 @@ const AdminLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const redirectPath = (location.state as { from?: Location })?.from?.pathname ?? "/admin/blog";
+  const redirectPath = (location.state as { from?: Location })?.from?.pathname ?? "/admin/dashboard";
 
   useEffect(() => {
     if (user) {
