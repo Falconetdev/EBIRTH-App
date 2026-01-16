@@ -1,11 +1,60 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { collection, getDocs, query, where, orderBy, type DocumentData } from "firebase/firestore";
+import { collection, getDocs, query, where, type DocumentData } from "firebase/firestore";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, CalendarDays, Clock3, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/firebase";
 import type { Event } from "@/types/event";
+
+// Default hardcoded events (fallback when no real events exist)
+const DEFAULT_EVENTS: Event[] = [
+  {
+    id: "event-1",
+    title: "INNER RACERS YOUTUBE LIVE LESSONS & LIVE TRADING",
+    slug: "inner-racers-youtube-live-1",
+    description:
+      "ඔබත් \"INNER RACERS\" YouTube එකට සම්බන්ධ වෙලා අපේ LIVE TRADING sessions වලින් real-time දැනුම ලබාගන්න.",
+    schedule: "Every Saturday",
+    time: "8.00 PM",
+    location: "YouTube Live",
+    coverUrl: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80",
+    coverStoragePath: null,
+    createdAt: null,
+    updatedAt: null,
+    featured: true,
+  },
+  {
+    id: "event-2",
+    title: "INNER RACERS YOUTUBE LIVE LESSONS & LIVE TRADING",
+    slug: "inner-racers-youtube-live-2",
+    description:
+      "අපගේ LIVE TRADING sessions join වෙලා strategy breakdowns, Q&A සහ mentorship එකක් එක්වරටම ලබාගන්න.",
+    schedule: "Every Saturday",
+    time: "8.00 PM",
+    location: "Hybrid Studio",
+    coverUrl: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80",
+    coverStoragePath: null,
+    createdAt: null,
+    updatedAt: null,
+    featured: true,
+  },
+  {
+    id: "event-3",
+    title: "INNER RACERS YOUTUBE LIVE LESSONS & LIVE TRADING",
+    slug: "inner-racers-youtube-live-3",
+    description:
+      "Trading community එකක් වෙලා එකට ඉගෙන ගන්න අපේ mentorship crew එකත් සමඟ hands-on market reviews එකට connect වෙන්න.",
+    schedule: "Every Saturday",
+    time: "8.00 PM",
+    location: "eBirth HQ",
+    coverUrl: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+    coverStoragePath: null,
+    createdAt: null,
+    updatedAt: null,
+    featured: true,
+  },
+];
 
 const EventsSection = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -45,9 +94,16 @@ const EventsSection = () => {
           return bTime - aTime; // Descending order (newest first)
         });
         
-        setEvents(sorted.slice(0, 3)); // Show max 3 featured events
+        // If no real events, use default hardcoded events
+        if (sorted.length === 0) {
+          setEvents(DEFAULT_EVENTS);
+        } else {
+          setEvents(sorted.slice(0, 3)); // Show max 3 featured events
+        }
       } catch (error) {
         console.error("Failed to fetch events:", error);
+        // On error, fall back to default events
+        setEvents(DEFAULT_EVENTS);
       } finally {
         setLoading(false);
       }
@@ -68,10 +124,7 @@ const EventsSection = () => {
     );
   }
 
-  if (events.length === 0) {
-    return null; // Don't show section if no featured events
-  }
-
+  // Always show section - either with real events or defaults
   return (
     <section className="relative  py-20 px-4 sm:px-6 lg:px-8 bg-inherit overflow-hidden">
       {/* <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,215,0,0.14),_rgba(34,9,67,0))]"></div> */}
