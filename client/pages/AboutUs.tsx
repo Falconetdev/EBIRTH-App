@@ -5,17 +5,35 @@ import ContactSection from "@/components/home/ContactSection";
 import MissionComponent from "@/components/about-us/Mission";
 import PageLayout from "@/components/layout/PageLayout";
 import FeedbackSection from "@/components/home/FeedbackSection";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const AboutUs = () => {
   return (
     <PageLayout mainClassName="pt-24">
       
-      <WhoWeAreSection />
-      <StatsSection />
-      <MissionComponent />
-      <JoinCommunitySection />
-      <FeedbackSection />
-      <ContactSection />
+      <ScrollReveal>
+        <WhoWeAreSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <StatsSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <MissionComponent />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <JoinCommunitySection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <FeedbackSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <ContactSection />
+      </ScrollReveal>
     </PageLayout>
   );
 };

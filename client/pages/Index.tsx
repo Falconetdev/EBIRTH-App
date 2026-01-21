@@ -10,6 +10,30 @@ import ContactSection from "@/components/home/ContactSection";
 import WhatsAppButton from "@/components/home/WhatsAppButton";
 import PageLayout from "@/components/layout/PageLayout";
 import DecorativeCoins from "@/components/layout/DecorativeCoins";
+import ScrollReveal from "@/components/ScrollReveal";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1] as const,
+    }
+  }
+};
 
 export default function Index() {
   const images = [
@@ -87,25 +111,48 @@ export default function Index() {
   return (
     <PageLayout className="bg-[#1a0b2e] bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-transparent">
       {/* <DecorativeCoins /> */}
-      <HeroSection images={images} />
+      
+      {/* Above-the-fold sections with staggered animation */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={itemVariants}>
+          <HeroSection images={images} />
+        </motion.div>
 
-      <WhoWeAreSection />
+        <motion.div variants={itemVariants}>
+          <WhoWeAreSection />
+        </motion.div>
+      </motion.div>
+
+      {/* Scroll-triggered sections */}
+      <ScrollReveal>
+        <StatsSection />
+      </ScrollReveal>
  
-      <StatsSection />
-
       {/* <NewLessonsSection lessons={lessons} /> */}
 
-      <WhatsAppBanner />
+      <ScrollReveal>
+        <WhatsAppBanner />
+      </ScrollReveal>
 
-      <LearningOpportunitiesSection memberships={memberships} />
+      <ScrollReveal>
+        <LearningOpportunitiesSection memberships={memberships} />
+      </ScrollReveal>
 
-      <EventsSection />
+      <ScrollReveal>
+        <EventsSection />
+      </ScrollReveal>
 
-      <div className="bg-[#1a0b2e]">
+      <ScrollReveal className="bg-[#1a0b2e]">
         <FeedbackSection />
-      </div>
+      </ScrollReveal>
 
-      <ContactSection />
+      <ScrollReveal>
+        <ContactSection />
+      </ScrollReveal>
 
       <WhatsAppButton />
     </PageLayout>

@@ -53,6 +53,7 @@ export interface PublicCourse {
   created_at: string; // ISO timestamp
   category: string | null; // Course category (e.g., "Programming", "Design")
   is_combo_course: boolean; // Whether this is a combo/bundle course
+  start_date: string | null; // Course start date (YYYY-MM-DD format)
   students_count: number;
   lecturers: PublicCourseLecturer[];
   syllabus_total_days: number | null; // Total days in syllabus

@@ -30,6 +30,8 @@
     "firebase": "^12.6.0",
     "gsap": "^3.14.1",
     "ogl": "^1.0.11",
+    "react-countup": "^6.5.3",
+    "react-intersection-observer": "^10.0.2",
     "zod": "^3.25.76"
   },
   "devDependencies": {
@@ -80,7 +82,7 @@
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
-    "framer-motion": "^12.23.12",
+    "framer-motion": "^12.27.5",
     "globals": "^16.3.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.539.0",

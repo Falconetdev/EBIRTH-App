@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import directPaymentService from "../services/directPaymentService";
 import BankTransferModal from "../components/payment/BankTransferModal";
 import PayHereCouponModal from "../components/payment/PayHereCouponModal";
+import CompactCountdown from "../components/CompactCountdown";
 import { useToast } from "@/hooks/use-toast";
 
 type TabKey = "overview" | "curriculum" | "instructors";
@@ -716,6 +717,13 @@ export default function MembershipDetailsEnrollment() {
                         )}
                         <div className="text-white/60 text-sm">One-time payment</div>
                       </div>
+
+                      {/* Countdown Timer - Only show if start_date exists and is in the future */}
+                      {course.start_date && (
+                        <div className="mb-6">
+                          <CompactCountdown startDate={course.start_date} />
+                        </div>
+                      )}
 
                       <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                         <div className="flex items-center gap-2 sm:gap-3 text-white/80 text-sm sm:text-base">
