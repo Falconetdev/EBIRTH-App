@@ -7,7 +7,6 @@ import LearningOpportunitiesSection from "@/components/home/LearningOpportunitie
 import EventsSection from "@/components/home/EventsSection";
 import FeedbackSection from "@/components/home/FeedbackSection";
 import ContactSection from "@/components/home/ContactSection";
-import WhatsAppButton from "@/components/home/WhatsAppButton";
 import PageLayout from "@/components/layout/PageLayout";
 import DecorativeCoins from "@/components/layout/DecorativeCoins";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -153,8 +152,6 @@ export default function Index() {
       <ScrollReveal>
         <ContactSection />
       </ScrollReveal>
-
-      <WhatsAppButton />
     </PageLayout>
   );
 }

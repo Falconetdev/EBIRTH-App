@@ -1,4 +1,5 @@
-import { Quote, Facebook, Star } from "lucide-react";
+import { Quote, Star } from "lucide-react";
+import { FaFacebook } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import {
   Carousel,
@@ -66,7 +67,7 @@ const FeedbackSection = () => {
               className="group inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-semibold rounded-full shadow-lg hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105"
             >
               <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors">
-                <Facebook className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" />
+                <FaFacebook className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div className="flex flex-col items-start">
                 <span className="text-sm sm:text-base font-bold">View All Reviews on Facebook</span>

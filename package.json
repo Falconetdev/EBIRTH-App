@@ -31,6 +31,7 @@
     "gsap": "^3.14.1",
     "ogl": "^1.0.11",
     "react-countup": "^6.5.3",
+    "react-icons": "^5.5.0",
     "react-intersection-observer": "^10.0.2",
     "zod": "^3.25.76"
   },

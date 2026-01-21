@@ -3,22 +3,19 @@ import { Clock, MapPin, Phone } from "lucide-react";
 
 const ContactSection = () => {
   const locations = [
-  {
-    id: "kegalle",
-    title: "Kegalle Branch",
-    mapLink: "https://www.google.com/maps/place/eBirth+Business+Academy+-+Kegalle+Branch/@7.2535918,80.3455975,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae3175a5a86912d:0x6d864de0ec469045!8m2!3d7.2535918!4d80.3481724!16s%2Fg%2F11s7cjvvy7",
-    embedSrc:
-      "https://www.google.com/maps?q=eBirth+Business+Academy+-+Kegalle+Branch&output=embed",
-  },
-  {
-    id: "nugegoda",
-    title: "Nugegoda Branch",
-    mapLink: "https://www.google.com/maps/place/eBirth+Business+Academy+(+Nugegoda+)/@6.8578321,79.9086415,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae25bd8efe36a59:0xeddd58bee299181a!8m2!3d6.8578321!4d79.9086415!16s%2Fg%2F11kqvx4ctp",
-    embedSrc:
-      "https://www.google.com/maps?q=eBirth+Business+Academy+(+Nugegoda+)&output=embed",
-  },
-];
-
+    {
+      id: "kegalle",
+      title: "Kegalle Branch",
+      mapLink: "https://www.google.com/maps/place/eBirth+Business+Academy+-+Kegalle+Branch/@7.2535918,80.3455975,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae3175a5a86912d:0x6d864de0ec469045!8m2!3d7.2535918!4d80.3481724!16s%2Fg%2F11s7cjvvy7",
+      embedSrc: "https://www.google.com/maps?q=eBirth+Business+Academy+-+Kegalle+Branch&output=embed",
+    },
+    {
+      id: "nugegoda",
+      title: "Nugegoda Branch",
+      mapLink: "https://www.google.com/maps/place/eBirth+Business+Academy+(+Nugegoda+)/@6.8578321,79.9086415,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae25bd8efe36a59:0xeddd58bee299181a!8m2!3d6.8578321!4d79.9086415!16s%2Fg%2F11kqvx4ctp",
+      embedSrc: "https://www.google.com/maps?q=eBirth+Business+Academy+(+Nugegoda+)&output=embed",
+    },
+  ];
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
@@ -33,8 +30,8 @@ const ContactSection = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <Card className=" bg-transparentp-6 text-center">
-            <div className="w-16 h-16 ] rounded-full flex items-center justify-center mx-auto mb-4">
+          <Card className="bg-transparent p-6 text-center">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Clock className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-white font-bold text-xl mb-2">OUR HOURS</h3>
@@ -42,8 +39,8 @@ const ContactSection = () => {
             <p className="text-white/70">9:00 AM - 6:00 PM</p>
           </Card>
 
-          <Card className=" bg-transparent p-6 text-center">
-            <div className="w-16 h-16  rounded-full flex items-center justify-center mx-auto mb-4">
+          <Card className="bg-transparent p-6 text-center">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <MapPin className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-white font-bold text-xl mb-2">LOCATION</h3>
@@ -51,14 +48,14 @@ const ContactSection = () => {
             <p className="text-white/70">No 705 C, Wijerama Junction, Nugegoda Sri Lanka</p>
           </Card>
 
-          <Card className=" bg-transparent p-6 text-center">
-            <div className="w-16 h-16  rounded-full flex items-center justify-center mx-auto mb-4">
+          <Card className="bg-transparent p-6 text-center">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Phone className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-white font-bold text-xl mb-2">CONTACT US</h3>
             <div className="flex flex-col">
               <a className="text-white/70" href="tel:0357286586">0357 286 586</a>
-            <a className="text-white/70" href="tel:0114492444">0114 492 444</a>
+              <a className="text-white/70" href="tel:0114492444">0114 492 444</a>
             </div>
           </Card>
         </div>

@@ -94,7 +94,10 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/#contact" className="text-white/60 hover:text-white text-sm transition-colors">
+                <a
+                  href="/contact"
+                  className="text-white/60 hover:text-white text-sm transition-colors"
+                >
                   Contact
                 </a>
               </li>

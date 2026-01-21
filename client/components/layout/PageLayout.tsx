@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import WhatsAppButton from "@/components/home/WhatsAppButton";
 import { cn } from "@/lib/utils";
 
 type PageLayoutProps = {
@@ -22,6 +23,7 @@ const PageLayout = ({
       <Header />
       <main className={cn("flex-1", mainClassName)}>{children}</main>
       {showFooter ? <Footer /> : null}
+      <WhatsAppButton />
     </div>
   );
 };

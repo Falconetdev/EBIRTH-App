@@ -14,6 +14,7 @@ import MembershipDetails from "./pages/MembershipDetails";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
 import Community from "./pages/Community";
+import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundPolicy from "./pages/RefundPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -71,6 +72,7 @@ const App = () => (
                 />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/community" element={<Community />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/refund-policy" element={<RefundPolicy />} />
                 <Route path="/terms-of-service" element={<TermsOfService />} />

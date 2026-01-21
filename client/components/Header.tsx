@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, User, LogOut } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
@@ -65,6 +65,9 @@ function AuthButtons({ mobile = false }: { mobile?: boolean }) {
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
   
   /* DROPDOWN FUNCTIONALITY - COMMENTED OUT FOR NOW
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -104,7 +107,7 @@ export default function Header() {
     { name: "Community", href: "/community" },
     { name: "Blog", href: "/blog" },
     { name: "Resources", href: "/resources" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Contact", href: "/contact" },
   ];
 
   /* DROPDOWN TOGGLE AND CLOSE HANDLERS - COMMENTED OUT

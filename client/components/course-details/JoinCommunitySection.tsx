@@ -1,4 +1,5 @@
 import { TrendingUp, BarChart3, Users, Send } from "lucide-react";
+import { FaTelegram } from "react-icons/fa";
 
 const JoinCommunitySection = () => {
   return (
@@ -114,20 +115,8 @@ const JoinCommunitySection = () => {
               setTimeout(() => ripple.remove(), 600);
             }}
           >
-            {/* Paper Plane Icon */}
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="relative z-10"
-            >
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-            </svg>
+            {/* Official Telegram Icon */}
+            <FaTelegram className="relative z-10 w-5 h-5" />
             <span className="relative z-10 whitespace-nowrap">Join Telegram Channel</span>
           </a>
 
