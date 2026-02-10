@@ -8,14 +8,13 @@ import { getStorage } from 'firebase/storage'
 
 // Using provided config. Consider moving to Vite env variables for production.
 
-  const firebaseConfig = {
-  apiKey: "AIzaSyD10CQuuqrvoOBEeak4fejOSzu0C67_jhI",
-  authDomain: "ebirth-landingpage.firebaseapp.com",
-  projectId: "ebirth-landingpage",
-  storageBucket: "ebirth-landingpage.firebasestorage.app",
-  messagingSenderId: "551833814806",
-  appId: "1:551833814806:web:734003bf3541b0fc18b237",
-  measurementId: "G-59B7PLF0L9"
+const firebaseConfig = {
+  apiKey: "AIzaSyCvBARzonfwKRS6FKAIVMU_4yHAKREcVVY",
+  authDomain: "ebirthblog.firebaseapp.com",
+  projectId: "ebirthblog",
+  storageBucket: "ebirthblog.firebasestorage.app",
+  messagingSenderId: "398233080817",
+  appId: "1:398233080817:web:470edb3701f6bad0df2a50"
 };
 
 
