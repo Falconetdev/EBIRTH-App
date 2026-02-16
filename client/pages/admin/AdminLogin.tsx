@@ -74,13 +74,19 @@ const AdminLogin = () => {
             {isSubmitting ? "Signing in…" : "Sign In"}
           </button>
         </form>
-        <p className="mt-6 text-center text-xs text-white/60">
-          Need access? Contact the Inner Racers web team.
-          <br />
-          <Link to="/" className="font-semibold text-[#FFE500] hover:underline">
-            Back to site
-          </Link>
-        </p>
+        <div className="mt-6 text-center text-xs text-white/60 space-y-2">
+          <p>
+            Don't have an account?{" "}
+            <Link to="/admin/register" className="font-semibold text-[#FFE500] hover:underline">
+              Register here
+            </Link>
+          </p>
+          <p>
+            <Link to="/" className="font-semibold text-[#FFE500] hover:underline">
+              Back to site
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

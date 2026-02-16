@@ -34,6 +34,7 @@ import PaymentCancel from "./pages/PaymentCancel";
 import PaymentPending from "./pages/PaymentPending";
 import LeverageCalculator from "./pages/LeverageCalculator";
 import AdminLogin from "./pages/admin/AdminLogin";
+import AdminRegister from "./pages/admin/AdminRegister";
 import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import BlogAdmin from "./pages/admin/BlogAdmin";
@@ -102,6 +103,7 @@ const App = () => (
                   element={<LeverageCalculator />}
                 />
                 <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/register" element={<AdminRegister />} />
                 <Route element={<ProtectedRoute />}>
                   <Route element={<AdminLayout />}>
                     <Route path="/admin" element={<Dashboard />} />

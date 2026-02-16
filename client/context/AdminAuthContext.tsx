@@ -1,12 +1,16 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signOut, type User } from "firebase/auth";
 
 import { app } from "@/lib/firebase";
+
+// Admin passphrase - store securely in production (environment variable)
+const ADMIN_PASSPHRASE = import.meta.env.VITE_ADMIN_PASSPHRASE || "SecurePass2026";
 
 export type AdminAuthContextValue = {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string, passphrase: string) => Promise<void>;
   logout: () => Promise<void>;
 };
 
@@ -30,6 +34,21 @@ export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
     await signInWithEmailAndPassword(auth, email, password);
   };
 
+  const register = async (name: string, email: string, password: string, passphrase: string) => {
+    // Verify admin passphrase
+    if (passphrase !== ADMIN_PASSPHRASE) {
+      throw new Error("Invalid admin passphrase. Contact the web team for access.");
+    }
+
+    // Create the user account
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    
+    // Update the user's profile with their name
+    await updateProfile(userCredential.user, {
+      displayName: name
+    });
+  };
+
   const logout = async () => {
     await signOut(auth);
   };
@@ -39,6 +58,7 @@ export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
       user,
       loading,
       login,
+      register,
       logout,
     }),
     [user, loading],
