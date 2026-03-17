@@ -29,6 +29,7 @@
     "express": "^5.1.0",
     "firebase": "^12.6.0",
     "gsap": "^3.14.1",
+    "jspdf": "^4.2.0",
     "ogl": "^1.0.11",
     "react-countup": "^6.5.3",
     "react-icons": "^5.5.0",
