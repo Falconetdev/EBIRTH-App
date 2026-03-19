@@ -1,6 +1,51 @@
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import {
+  ClassicEditor,
+  Alignment,
+  AutoLink,
+  Autosave,
+  BlockQuote,
+  Bold,
+  Code,
+  CodeBlock,
+  Essentials,
+  FindAndReplace,
+  FontBackgroundColor,
+  FontColor,
+  FontFamily,
+  FontSize,
+  Heading,
+  HorizontalLine,
+  HtmlEmbed,
+  Indent,
+  IndentBlock,
+  Italic,
+  Link,
+  List,
+  ListProperties,
+  MediaEmbed,
+  Paragraph,
+  RemoveFormat,
+  SpecialCharacters,
+  SpecialCharactersArrows,
+  SpecialCharactersCurrency,
+  SpecialCharactersEssentials,
+  SpecialCharactersMathematical,
+  Strikethrough,
+  Subscript,
+  Superscript,
+  Table,
+  TableCaption,
+  TableCellProperties,
+  TableColumnResize,
+  TableProperties,
+  TableToolbar,
+  TodoList,
+  Underline,
+  WordCount,
+} from "ckeditor5";
+import "ckeditor5/ckeditor5.css";
 
 import type { BlogPost } from "@/types/blog";
 
@@ -162,7 +207,7 @@ const BlogForm = ({
 
       <div className="space-y-2">
         <label className="text-sm font-medium text-white/85">Content</label>
-        <div className="overflow-hidden rounded-2xl border border-white/15 bg-transparent text-black">
+        <div className="ck-editor-wrapper overflow-hidden rounded-2xl border border-white/15">
           <CKEditor
             editor={ClassicEditor}
             data={values.content}
@@ -174,7 +219,130 @@ const BlogForm = ({
               }));
             }}
             config={{
-              placeholder: "Write or paste the full article body",
+              licenseKey: "GPL",
+              plugins: [
+                Alignment,
+                AutoLink,
+                Autosave,
+                BlockQuote,
+                Bold,
+                Code,
+                CodeBlock,
+                Essentials,
+                FindAndReplace,
+                FontBackgroundColor,
+                FontColor,
+                FontFamily,
+                FontSize,
+                Heading,
+                HorizontalLine,
+                HtmlEmbed,
+                Indent,
+                IndentBlock,
+                Italic,
+                Link,
+                List,
+                ListProperties,
+                MediaEmbed,
+                Paragraph,
+                RemoveFormat,
+                SpecialCharacters,
+                SpecialCharactersArrows,
+                SpecialCharactersCurrency,
+                SpecialCharactersEssentials,
+                SpecialCharactersMathematical,
+                Strikethrough,
+                Subscript,
+                Superscript,
+                Table,
+                TableCaption,
+                TableCellProperties,
+                TableColumnResize,
+                TableProperties,
+                TableToolbar,
+                TodoList,
+                Underline,
+                WordCount,
+              ],
+              toolbar: {
+                items: [
+                  "heading",
+                  "|",
+                  "bold",
+                  "italic",
+                  "underline",
+                  "strikethrough",
+                  "subscript",
+                  "superscript",
+                  "removeFormat",
+                  "|",
+                  "fontFamily",
+                  "fontSize",
+                  "fontColor",
+                  "fontBackgroundColor",
+                  "|",
+                  "alignment",
+                  "|",
+                  "bulletedList",
+                  "numberedList",
+                  "todoList",
+                  "indent",
+                  "outdent",
+                  "|",
+                  "link",
+                  "blockQuote",
+                  "insertTable",
+                  "mediaEmbed",
+                  "horizontalLine",
+                  "|",
+                  "code",
+                  "codeBlock",
+                  "htmlEmbed",
+                  "specialCharacters",
+                  "|",
+                  "findAndReplace",
+                  "undo",
+                  "redo",
+                ],
+                shouldNotGroupWhenFull: true,
+              },
+              heading: {
+                options: [
+                  { model: "paragraph" as const, title: "Paragraph", class: "ck-heading_paragraph" },
+                  { model: "heading1" as const, view: "h1", title: "Heading 1", class: "ck-heading_heading1" },
+                  { model: "heading2" as const, view: "h2", title: "Heading 2", class: "ck-heading_heading2" },
+                  { model: "heading3" as const, view: "h3", title: "Heading 3", class: "ck-heading_heading3" },
+                  { model: "heading4" as const, view: "h4", title: "Heading 4", class: "ck-heading_heading4" },
+                ],
+              },
+              fontFamily: {
+                supportAllValues: true,
+              },
+              fontSize: {
+                options: [10, 12, 14, "default", 18, 20, 24, 28, 32, 36],
+                supportAllValues: true,
+              },
+              table: {
+                contentToolbar: [
+                  "tableColumn",
+                  "tableRow",
+                  "mergeTableCells",
+                  "tableProperties",
+                  "tableCellProperties",
+                ],
+              },
+              list: {
+                properties: {
+                  styles: true,
+                  startIndex: true,
+                  reversed: true,
+                },
+              },
+              link: {
+                defaultProtocol: "https://",
+                addTargetToExternalLinks: true,
+              },
+              placeholder: "Write or paste the full article body…",
             }}
           />
         </div>
