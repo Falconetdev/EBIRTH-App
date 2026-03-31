@@ -1,39 +1,24 @@
-import { Quote, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { FaFacebook } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import reviews from "@/lib/review.json";
-
-type Testimonial = {
-  id: string;
-  name: string;
-  image: string;
-  review: string;
-};
-
-const toDirectImageUrl = (url: string) => {
-  const match = url.match(/\/file\/d\/([^/]+)/);
-  if (match) {
-    const fileId = match[1];
-    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
-  }
-  return url;
-};
-
-const testimonials: Testimonial[] = reviews.map((review, index) => ({
-  id: `review-${index}`,
-  name: review.reviewer_name,
-  review: review.review,
-  image: toDirectImageUrl(review.image_url),
-}));
+import { useEffect, useRef } from "react";
 
 const FeedbackSection = () => {
+  const trustindexRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = trustindexRef.current;
+    if (!container) return;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://cdn.trustindex.io/loader.js?ae8da7b68fb7161db746666e8b2';
+    container.appendChild(script);
+    return () => {
+      if (container.contains(script)) {
+        container.removeChild(script);
+      }
+    };
+  }, []);
+
   return (
     <section
       id="feedback"
@@ -80,136 +65,11 @@ const FeedbackSection = () => {
           </div>
         </div>
 
-        <FeedbackCarousel />
+        {/* Trustindex Reviews Widget */}
+        <div ref={trustindexRef} className="w-full"></div>
       </div>
     </section>
   );
 };
 
 export default FeedbackSection;
-
-// ======================
-// CARD COMPONENT
-// ======================
-
-const FeedbackCard = ({ testimonial }: { testimonial: Testimonial }) => {
-  return (
-    <div className="group flex h-full flex-col overflow-hidden rounded-3xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-2xl hover:shadow-[#FFD700]/20 transition-all duration-300 hover:-translate-y-2 hover:border-[#FFD700]/30">
-      <div className="flex flex-col flex-1">
-        {/* Quote Section with Gradient */}
-        <div className="relative flex flex-1 flex-col rounded-t-3xl bg-gradient-to-br from-purple-900/80 to-purple-800/60 backdrop-blur-sm px-6 sm:px-8 pt-8 sm:pt-10 pb-10 sm:pb-12 text-left">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FFD700]/20 border border-[#FFD700]/30 group-hover:bg-[#FFD700]/30 transition-colors">
-            <Quote className="h-6 w-6 text-[#FFD700]" />
-          </div>
-
-          <p className="mt-6 text-sm sm:text-base leading-relaxed font-medium text-white/90 line-clamp-6">
-            "{testimonial.review}"
-          </p>
-
-          {/* Decorative gradient at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-        </div>
-
-        {/* Profile Section with Glass Effect */}
-        <div className="relative flex items-center gap-4 rounded-b-3xl bg-gradient-to-br from-slate-900/90 to-black/90 backdrop-blur-sm px-6 sm:px-8 py-6">
-          <div className="relative h-14 w-14 sm:h-16 sm:w-16 flex-shrink-0">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#FFD700] to-[#FFA500] p-0.5">
-              <div className="h-full w-full rounded-full overflow-hidden bg-slate-900">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="h-full w-full object-cover"
-                  onError={(e) => {
-                    if (e.currentTarget.src.includes("placeholder.svg")) return;
-                    e.currentTarget.src = "/placeholder.svg";
-                  }}
-                />
-              </div>
-            </div>
-            {/* Glow effect */}
-            <div className="absolute inset-0 rounded-full bg-[#FFD700]/20 blur-xl group-hover:bg-[#FFD700]/30 transition-all"></div>
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <p className="text-base sm:text-lg font-bold text-white truncate">
-              {testimonial.name}
-            </p>
-            <p className="text-xs sm:text-sm text-[#FFD700]/80 font-medium">
-              Success Story
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ======================
-// CAROUSEL
-// ======================
-
-const FeedbackCarousel = () => {
-  const [api, setApi] = useState<any>(null);
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    if (!api) return;
-    const onSelect = () => setCurrent(api.selectedScrollSnap());
-    onSelect();
-    api.on("select", onSelect);
-    return () => api.off("select", onSelect);
-  }, [api]);
-
-  // Autoplay
-  useEffect(() => {
-    if (!api) return;
-    const interval = setInterval(() => api.scrollNext(), 5000);
-    return () => clearInterval(interval);
-  }, [api]);
-
-  return (
-    <div className="relative mt-14">
-      <Carousel setApi={setApi} opts={{ align: "start", loop: true }}>
-        <CarouselContent className="items-stretch">
-          {testimonials.map((t) => (
-            <CarouselItem
-              key={t.id}
-              className="md:basis-1/2 xl:basis-1/3 flex"
-            >
-              <FeedbackCard testimonial={t} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-
-        <CarouselPrevious className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-[#FFD700] hover:text-black hover:border-[#FFD700] transition-all duration-300" />
-        <CarouselNext className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-[#FFD700] hover:text-black hover:border-[#FFD700] transition-all duration-300" />
-      </Carousel>
-
-      <CarouselDots current={current} api={api} />
-    </div>
-  );
-};
-
-// ======================
-// DOTS (you already have it)
-// ======================
-
-const CarouselDots = ({ current, api }) => {
-  if (!api) return null;
-
-  return (
-    <div className="flex justify-center mt-6 space-x-2">
-      {api.scrollSnapList().map((_, idx) => (
-        <button
-          key={idx}
-          onClick={() => api.scrollTo(idx)}
-          className={`h-3 w-3 rounded-full transition-all duration-300 ${
-            current === idx
-              ? "bg-[#FFD700] w-8 shadow-lg shadow-[#FFD700]/50"
-              : "bg-white/30 hover:bg-white/50"
-          }`}
-        />
-      ))}
-    </div>
-  );
-};
