@@ -63,14 +63,24 @@ export default function CompactCountdown({ startDate, className = '' }: CompactC
     return null;
   }
 
+  const formattedDate = new Date(startDate).toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
-    <div className={`bg-white/5 border border-white/10 rounded-lg p-3 ${className}`}>
-      <div className="flex items-center gap-2 mb-3">
-        <Calendar className="h-4 w-4 text-[#FFD700] flex-shrink-0" />
-        <p className="text-xs font-medium text-white/80 uppercase tracking-wide">Course Starts In</p>
+    <div className={`bg-white/5 border border-white/10 rounded-lg p-4 ${className}`}>
+      <div className="flex flex-col items-center text-center mb-3">
+        <div className="flex items-center gap-1.5 mb-1">
+          <Calendar className="h-3.5 w-3.5 text-[#FFD700]/70 flex-shrink-0" />
+          <p className="text-[10px] font-semibold text-white/50 uppercase tracking-widest">Course Starts In</p>
+        </div>
+        <p className="text-sm font-semibold text-[#FFD700]">{formattedDate}</p>
       </div>
 
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex items-start justify-center gap-1">
         <TimeUnit value={timeLeft.days} label="Days" />
         <span className="text-white/30 text-2xl font-bold leading-none pt-0.5">:</span>
         <TimeUnit value={timeLeft.hours} label="Hours" />

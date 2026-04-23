@@ -84,7 +84,7 @@ export default function MembershipDetailsEnrollment() {
     checkExistingEnrollment();
   }, [isAuthenticated, courseId]);
 
-  const handleEnrollClick = () => {
+  const handleEnrollClick = async () => {
     if (!isAuthenticated) {
       window.scrollTo({ top: 0, behavior: "instant" });
       navigate("/login", { state: { from: `/membership/${courseId}` } });
@@ -99,11 +99,39 @@ export default function MembershipDetailsEnrollment() {
         description: "You are already enrolled in this course. Access it from your dashboard.",
         variant: "default",
       });
-      
       const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
       setTimeout(() => {
         window.location.href = `${mainAppUrl}/student/courses`;
       }, 2000);
+      return;
+    }
+
+    // Free course — direct enrollment, no payment
+    if (course.is_free) {
+      setEnrolling(true);
+      try {
+        const token = localStorage.getItem('token');
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+        const response = await fetch(`${API_BASE_URL}/api/public-enrollment/free-enroll`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ course_id: course.id }),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || 'Enrollment failed');
+        toast({ title: "Enrolled!", description: "You've been enrolled. Redirecting to dashboard..." });
+        const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
+        setTimeout(() => {
+          window.location.href = `${mainAppUrl}/student/courses`;
+        }, 1500);
+      } catch (err: any) {
+        toast({ title: "Enrollment Failed", description: err.message, variant: "destructive" });
+      } finally {
+        setEnrolling(false);
+      }
       return;
     }
 
@@ -693,7 +721,23 @@ export default function MembershipDetailsEnrollment() {
                     {/* Price Card */}
                     <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-2 border-[#FFD700]/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
                       <div className="text-center mb-6">
-                        {course.original_price && Number(course.original_price) > Number(course.price) ? (
+                        {course.is_free ? (
+                          <>
+                            {course.original_price && Number(course.original_price) > 0 && (
+                              <>
+                                <div className="text-white/60 text-sm uppercase tracking-wide mb-2">Original Price</div>
+                                <div className="text-2xl sm:text-3xl font-bold text-red-400/90 line-through mb-3">
+                                  {course.currency} {Number(course.original_price).toLocaleString()}
+                                </div>
+                              </>
+                            )}
+                            <div className="text-white/60 text-xs sm:text-sm uppercase tracking-wide mb-2">Course Price</div>
+                            <div className="text-4xl sm:text-5xl lg:text-6xl font-black text-green-400 mb-2 drop-shadow-[0_4px_12px_rgba(74,222,128,0.5)]">
+                              FREE
+                            </div>
+                            <div className="text-green-400/80 text-sm">No payment required</div>
+                          </>
+                        ) : course.original_price && Number(course.original_price) > Number(course.price) ? (
                           <>
                             <div className="text-white/60 text-sm uppercase tracking-wide mb-3">Original Price</div>
                             <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-400/90 line-through mb-4 relative">
@@ -706,6 +750,7 @@ export default function MembershipDetailsEnrollment() {
                             <div className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#FFD700] mb-2 drop-shadow-[0_4px_12px_rgba(255,215,0,0.6)]">
                               {course.currency} {course.price.toLocaleString()}
                             </div>
+                            <div className="text-white/60 text-sm">One-time payment</div>
                           </>
                         ) : (
                           <>
@@ -713,9 +758,9 @@ export default function MembershipDetailsEnrollment() {
                             <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#FFD700] mb-2">
                               {course.currency} {course.price.toLocaleString()}
                             </div>
+                            <div className="text-white/60 text-sm">One-time payment</div>
                           </>
                         )}
-                        <div className="text-white/60 text-sm">One-time payment</div>
                       </div>
 
                       {/* Countdown Timer - Only show if start_date exists and is in the future */}
@@ -774,8 +819,8 @@ export default function MembershipDetailsEnrollment() {
                             </>
                           ) : isAuthenticated ? (
                             <>
-                              <CreditCard className="mr-2 h-5 w-5" />
-                              Enroll Now
+                              <CheckCircle2 className="mr-2 h-5 w-5" />
+                              {course.is_free ? "Enroll for Free" : "Enroll Now"}
                             </>
                           ) : (
                             "Login to Enroll"

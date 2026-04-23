@@ -64,9 +64,8 @@ export default function CourseDetails() {
     checkExistingEnrollment();
   }, [isAuthenticated, courseId]);
 
-  const handleEnrollClick = () => {
+  const handleEnrollClick = async () => {
     if (!isAuthenticated) {
-      // User not logged in, redirect to login
       navigate("/login", { state: { from: `/course/${courseId}` } });
       return;
     }
@@ -80,8 +79,6 @@ export default function CourseDetails() {
         description: "You are already enrolled in this course. Access it from your dashboard.",
         variant: "default",
       });
-      
-      // Redirect to main app
       const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
       setTimeout(() => {
         window.location.href = `${mainAppUrl}/student/courses`;
@@ -89,7 +86,36 @@ export default function CourseDetails() {
       return;
     }
 
-    // Show payment options
+    // Free course — enroll directly without payment
+    if (course.is_free) {
+      setEnrolling(true);
+      try {
+        const token = localStorage.getItem('token');
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+        const response = await fetch(`${API_BASE_URL}/api/public-enrollment/free-enroll`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ course_id: course.id }),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || 'Enrollment failed');
+        toast({ title: "Enrolled!", description: "You've been enrolled. Redirecting to dashboard..." });
+        const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
+        setTimeout(() => {
+          window.location.href = `${mainAppUrl}/student/courses`;
+        }, 1500);
+      } catch (err: any) {
+        toast({ title: "Enrollment Failed", description: err.message, variant: "destructive" });
+      } finally {
+        setEnrolling(false);
+      }
+      return;
+    }
+
+    // Paid course — show payment options
     setShowPaymentOptions(true);
   };
 
@@ -326,9 +352,20 @@ export default function CourseDetails() {
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <div className="text-white/60 text-sm mb-1">Course Price</div>
-                    <div className="text-3xl font-bold text-[#FFD700]">
-                      {course.currency} {course.price.toLocaleString()}
-                    </div>
+                    {course.is_free ? (
+                      <>
+                        {course.original_price && Number(course.original_price) > 0 && (
+                          <div className="text-lg font-semibold text-red-400/90 line-through mb-1">
+                            {course.currency} {Number(course.original_price).toLocaleString()}
+                          </div>
+                        )}
+                        <div className="text-3xl font-bold text-green-400">FREE</div>
+                      </>
+                    ) : (
+                      <div className="text-3xl font-bold text-[#FFD700]">
+                        {course.currency} {course.price.toLocaleString()}
+                      </div>
+                    )}
                   </div>
                   {!existingEnrollment && (
                     <Button
@@ -343,8 +380,8 @@ export default function CourseDetails() {
                         </>
                       ) : isAuthenticated ? (
                         <>
-                          <CreditCard className="mr-2 h-5 w-5" />
-                          Enroll Now
+                          <CheckCircle2 className="mr-2 h-5 w-5" />
+                          {course.is_free ? "Enroll for Free" : "Enroll Now"}
                         </>
                       ) : (
                         "Login to Enroll"
@@ -458,7 +495,12 @@ export default function CourseDetails() {
                     {enrolling ? (
                       <>
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                        Processing Payment...
+                        Processing...
+                      </>
+                    ) : course.is_free ? (
+                      <>
+                        <CheckCircle2 className="mr-2 h-5 w-5" />
+                        Enroll for Free
                       </>
                     ) : (
                       <>

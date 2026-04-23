@@ -53,6 +53,7 @@ export interface PublicCourse {
   created_at: string; // ISO timestamp
   category: string | null; // Course category (e.g., "Programming", "Design")
   is_combo_course: boolean; // Whether this is a combo/bundle course
+  is_free: boolean; // Whether this course is free (no payment required)
   start_date: string | null; // Course start date (YYYY-MM-DD format)
   students_count: number;
   lecturers: PublicCourseLecturer[];
