@@ -104,21 +104,6 @@ const WhoWeAreSection = () => {
               </div>
             </div>
 
-            {/* Milestone 4: Trusted Partnerships */}
-            <div className="relative pl-20 md:pl-24 opacity-0 animate-[fadeInUp_0.6s_ease-out_0.8s_forwards]">
-              <div className="absolute left-0 top-0 h-14 w-14 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center shadow-lg shadow-purple-500/50 border-4 border-[#0c051a]">
-                <svg className="w-6 h-6 text-[#FFD700]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all">
-                <h4 className="text-xl sm:text-2xl font-bold text-[#FFD700] mb-3">Trusted Partnerships</h4>
-                <p className="text-sm sm:text-base leading-relaxed text-white/80">
-                  Quality is our priority. We have partnered with the <strong className="text-white">University of Sri Jayewardenepura</strong> and the <strong className="text-white">Entre' Club</strong> to bring you university-level knowledge. Our lecturers are experienced professionals who are qualified to guide you on your path to success.
-                </p>
-              </div>
-            </div>
-
           </div>
         </div>
 
