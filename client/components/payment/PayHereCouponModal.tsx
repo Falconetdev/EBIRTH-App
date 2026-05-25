@@ -86,14 +86,14 @@ export default function PayHereCouponModal({
         <div className="mb-6">
           <label className="block text-sm font-medium text-white/80 mb-2 flex items-center gap-2">
             <Tag className="w-4 h-4 text-[#FFD700]" />
-            Have an Affiliate Code? (Optional)
+            Have a Discount Code? (Optional)
           </label>
           <div className="flex gap-2">
             <input
               type="text"
               value={couponCode}
               onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-              placeholder="Enter affiliate code (e.g., STAFF2024)"
+              placeholder="Enter discount code (e.g., SAVE2024)"
               className="flex-1 px-4 py-3 bg-white/5 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FFD700] text-white placeholder-white/40 font-mono"
             />
             <button
@@ -119,7 +119,7 @@ export default function PayHereCouponModal({
               <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-green-400 text-sm font-medium">
-                  Affiliate Code Applied Successfully!
+                  Discount Code Applied Successfully!
                 </p>
                 <p className="text-green-300/80 text-xs mt-1">
                   {couponDiscount.message}
