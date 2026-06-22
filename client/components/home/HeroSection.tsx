@@ -117,12 +117,12 @@ const HeroSection = ({ images }: HeroSectionProps) => {
           </div>
 
           <div className="relative flex justify-center lg:justify-end">
-            <div className="relative h-[360px] w-full max-w-sm sm:h-[420px] sm:max-w-md lg:h-[600px] lg:max-w-none">
-              <div className="absolute inset-0 rounded-3xl w-full h-full ">
+            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-md">
+              <div className="relative rounded-3xl w-full overflow-hidden">
                 <img
                   src="/hero-new.png"
                   alt="eBirth Business Academy - Hero Image"
-                  className="h-full w-full object-cover"
+                  className="h-auto w-full object-contain"
                   onError={(e) => {
                     if (e.currentTarget.src.includes("placeholder.svg")) return;
                     e.currentTarget.src = "/placeholder.svg";
