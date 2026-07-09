@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => ({
     strictPort: false,
     allowedHosts: [
       '.ebirth.net',
-      '.ondigitalocean.app' // This allows all Digital Ocean app URLs
+      '.pages.dev' // Cloudflare Pages preview URLs
     ]
   },
   build: {
