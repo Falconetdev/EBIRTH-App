@@ -10,6 +10,7 @@ interface PayHereCouponModalProps {
   coursePrice: number;
   currency?: string;
   onProceedToPayment: (couponData: any) => void;
+  onEnrollFree?: (couponCode: string) => void;
 }
 
 export default function PayHereCouponModal({
@@ -19,7 +20,8 @@ export default function PayHereCouponModal({
   courseTitle,
   coursePrice,
   currency = 'LKR',
-  onProceedToPayment
+  onProceedToPayment,
+  onEnrollFree
 }: PayHereCouponModalProps) {
   const [couponCode, setCouponCode] = useState('');
   const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
@@ -28,9 +30,12 @@ export default function PayHereCouponModal({
 
   if (!isOpen) return null;
 
-  const finalAmount = couponDiscount 
-    ? couponDiscount.discount.discounted_amount 
+  const finalAmount = couponDiscount
+    ? couponDiscount.discount.discounted_amount
     : coursePrice;
+
+  // Coupon covers the whole price — no payment gateway, enroll directly
+  const isFullyDiscounted = couponDiscount != null && Number(finalAmount) === 0;
 
   const handleValidateCoupon = async () => {
     if (!couponCode.trim()) return;
@@ -174,24 +179,42 @@ export default function PayHereCouponModal({
             <CreditCard className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
             <div className="text-xs text-blue-300">
               <p className="font-medium mb-1">What happens next:</p>
-              <ul className="space-y-1 text-blue-300/80">
-                <li>• You'll be redirected to PayHere gateway</li>
-                <li>• Complete payment securely</li>
-                <li>• Get instant course access</li>
-              </ul>
+              {isFullyDiscounted ? (
+                <ul className="space-y-1 text-blue-300/80">
+                  <li>• Your discount covers the full course fee</li>
+                  <li>• No payment required</li>
+                  <li>• Get instant course access</li>
+                </ul>
+              ) : (
+                <ul className="space-y-1 text-blue-300/80">
+                  <li>• You'll be redirected to PayHere gateway</li>
+                  <li>• Complete payment securely</li>
+                  <li>• Get instant course access</li>
+                </ul>
+              )}
             </div>
           </div>
         </div>
 
         {/* Action Buttons */}
         <div className="space-y-3">
-          <button
-            onClick={handleProceed}
-            className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-4 rounded-2xl transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-[#FFD700]/50 flex items-center justify-center gap-2"
-          >
-            <CreditCard className="w-5 h-5" />
-            Proceed to Payment Gateway
-          </button>
+          {isFullyDiscounted ? (
+            <button
+              onClick={() => onEnrollFree?.(couponCode)}
+              className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-4 rounded-2xl transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-[#FFD700]/50 flex items-center justify-center gap-2"
+            >
+              <CheckCircle2 className="w-5 h-5" />
+              Enroll Now — No Payment Needed
+            </button>
+          ) : (
+            <button
+              onClick={handleProceed}
+              className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] hover:from-[#FFC700] hover:to-[#FF9500] text-black font-bold py-4 rounded-2xl transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-[#FFD700]/50 flex items-center justify-center gap-2"
+            >
+              <CreditCard className="w-5 h-5" />
+              Proceed to Payment Gateway
+            </button>
+          )}
           
           <button
             onClick={onClose}

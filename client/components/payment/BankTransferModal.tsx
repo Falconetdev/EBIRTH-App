@@ -9,6 +9,7 @@ interface BankTransferModalProps {
   coursePrice: number;
   currency?: string;
   onSuccess: () => void;
+  onEnrollFree?: (couponCode: string) => void;
 }
 
 export default function BankTransferModal({
@@ -18,7 +19,8 @@ export default function BankTransferModal({
   courseTitle,
   coursePrice,
   currency = 'LKR',
-  onSuccess
+  onSuccess,
+  onEnrollFree
 }: BankTransferModalProps) {
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [receiptPreview, setReceiptPreview] = useState<string>('');
@@ -32,9 +34,12 @@ export default function BankTransferModal({
 
   if (!isOpen) return null;
 
-  const finalAmount = couponDiscount 
-    ? couponDiscount.discount.discounted_amount 
+  const finalAmount = couponDiscount
+    ? couponDiscount.discount.discounted_amount
     : coursePrice;
+
+  // Coupon covers the whole price — no receipt, no bank reference, no approval
+  const isFullyDiscounted = couponDiscount != null && Number(finalAmount) === 0;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -234,7 +239,7 @@ export default function BankTransferModal({
           </div>
 
           {/* Bank Reference */}
-          <div>
+          <div className={isFullyDiscounted ? 'hidden' : undefined}>
             <label className="block text-sm font-medium text-white/80 mb-2">
               Bank Reference Number (Optional)
             </label>
@@ -251,7 +256,7 @@ export default function BankTransferModal({
           </div>
 
           {/* Receipt Upload */}
-          <div>
+          <div className={isFullyDiscounted ? 'hidden' : undefined}>
             <label className="block text-sm font-medium text-white/80 mb-2">
               Upload Bank Receipt <span className="text-red-400">*</span>
             </label>
@@ -320,12 +325,20 @@ export default function BankTransferModal({
           {/* Info Box */}
           <div className="bg-blue-600/10 border border-blue-500/30 rounded-lg p-4 backdrop-blur-sm">
             <h4 className="font-medium text-[#FFD700] mb-2">Important Information</h4>
-            <ul className="text-sm text-white/70 space-y-1 list-disc list-inside">
-              <li>Transfer the exact amount shown above</li>
-              <li>Upload a clear photo of your bank receipt</li>
-              <li>Your payment will be reviewed within 24 hours</li>
-              <li>You'll receive an email once approved and enrolled</li>
-            </ul>
+            {isFullyDiscounted ? (
+              <ul className="text-sm text-white/70 space-y-1 list-disc list-inside">
+                <li>Your discount covers the full course fee</li>
+                <li>No bank transfer or receipt is needed</li>
+                <li>You'll be enrolled immediately — no waiting for approval</li>
+              </ul>
+            ) : (
+              <ul className="text-sm text-white/70 space-y-1 list-disc list-inside">
+                <li>Transfer the exact amount shown above</li>
+                <li>Upload a clear photo of your bank receipt</li>
+                <li>Your payment will be reviewed within 24 hours</li>
+                <li>You'll receive an email once approved and enrolled</li>
+              </ul>
+            )}
           </div>
 
           {/* Buttons */}
@@ -337,13 +350,24 @@ export default function BankTransferModal({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              disabled={!receiptFile || isSubmitting}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-[#FFD700] to-[#FFC700] text-black rounded-lg hover:from-[#FFC700] hover:to-[#FFB700] disabled:from-purple-900/50 disabled:to-purple-800/50 disabled:cursor-not-allowed disabled:text-white/40 font-bold transition-all"
-            >
-              {isSubmitting ? 'Submitting...' : 'Submit Payment'}
-            </button>
+            {isFullyDiscounted ? (
+              <button
+                type="button"
+                onClick={() => onEnrollFree?.(couponCode)}
+                disabled={isSubmitting}
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-[#FFD700] to-[#FFC700] text-black rounded-lg hover:from-[#FFC700] hover:to-[#FFB700] disabled:from-purple-900/50 disabled:to-purple-800/50 disabled:cursor-not-allowed disabled:text-white/40 font-bold transition-all"
+              >
+                Enroll Now — No Payment Needed
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={!receiptFile || isSubmitting}
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-[#FFD700] to-[#FFC700] text-black rounded-lg hover:from-[#FFC700] hover:to-[#FFB700] disabled:from-purple-900/50 disabled:to-purple-800/50 disabled:cursor-not-allowed disabled:text-white/40 font-bold transition-all"
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Payment'}
+              </button>
+            )}
           </div>
         </form>
       </div>

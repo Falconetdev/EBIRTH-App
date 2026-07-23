@@ -197,6 +197,40 @@ export default function MembershipDetailsEnrollment() {
     }
   };
 
+  // Coupon covers the full course price — enroll directly, no payment or approval
+  const handleEnrollFree = async (couponCode: string) => {
+    if (!course) return;
+
+    setEnrolling(true);
+    setShowPayHereCouponModal(false);
+    setShowBankTransferModal(false);
+
+    try {
+      const token = localStorage.getItem('token');
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+      const response = await fetch(`${API_BASE_URL}/api/public-enrollment/coupon-full-discount`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ course_id: course.id, coupon_code: couponCode }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || 'Enrollment failed');
+
+      toast({ title: "Enrolled!", description: "Your discount covered the full fee. Redirecting to dashboard..." });
+      const mainAppUrl = import.meta.env.VITE_MAIN_APP_URL || 'http://localhost:5174';
+      setTimeout(() => {
+        window.location.href = `${mainAppUrl}/student/courses`;
+      }, 1500);
+    } catch (err: any) {
+      toast({ title: "Enrollment Failed", description: err.message, variant: "destructive" });
+    } finally {
+      setEnrolling(false);
+    }
+  };
+
   const handleBankTransferSuccess = () => {
     toast({
       title: "Payment Submitted!",
@@ -244,12 +278,14 @@ export default function MembershipDetailsEnrollment() {
         coursePrice={course.price}
         currency={course.currency}
         onProceedToPayment={handleProceedToPayHere}
+        onEnrollFree={handleEnrollFree}
       />
 
       {/* Bank Transfer Modal */}
       <BankTransferModal
         isOpen={showBankTransferModal}
         onClose={() => setShowBankTransferModal(false)}
+        onEnrollFree={handleEnrollFree}
         courseId={course.id}
         courseTitle={course.title}
         coursePrice={course.price}

@@ -51,8 +51,15 @@ class DirectPaymentService {
       // Generate order ID
       const orderId = payHereService.generateOrderId(paymentData.courseId, studentId);
 
-      // Use coupon amount if available, otherwise use original price
-      const paymentAmount = couponData?.amount || paymentData.coursePrice;
+      // Use coupon amount if available, otherwise use original price.
+      // `??` not `||` — a fully-discounted total of 0 must not fall through to full price.
+      const paymentAmount = couponData?.amount ?? paymentData.coursePrice;
+
+      // A zero total should never reach the gateway — it enrolls via
+      // /api/public-enrollment/coupon-full-discount instead.
+      if (Number(paymentAmount) === 0) {
+        throw new Error('This order total is zero — use free enrollment instead of the payment gateway.');
+      }
 
       // Create payment record in backend FIRST (like CLIENT dashboard)
       const paymentPayload = {
