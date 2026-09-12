@@ -1,6 +1,17 @@
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const WEBHOOK_PATH = '/api/payments/payhere/webhook';
+
+// Where PayHere should POST its server-to-server payment notification.
+// Accepts either a bare origin or the full webhook URL in VITE_WEBHOOK_BASE_URL
+// (a misconfigured full URL can never produce a doubled path) and falls back to
+// the API origin.
+const resolveNotifyUrl = (): string => {
+  const raw = import.meta.env.VITE_WEBHOOK_BASE_URL || API_BASE_URL;
+  const base = String(raw).trim().replace(/\/api\/payments\/payhere\/webhook\/?$/i, '').replace(/\/+$/, '');
+  return `${base}${WEBHOOK_PATH}`;
+};
 
 // PayHere Integration Service for eBirth Landing Page
 class PayHereService {
@@ -83,7 +94,7 @@ class PayHereService {
           // URLs for hybrid approach
           return_url: `${window.location.origin}/payment-success`,
           cancel_url: `${window.location.origin}/payment-cancel`,
-          notify_url: `${import.meta.env.VITE_WEBHOOK_BASE_URL || API_BASE_URL}/api/payments/payhere/webhook`,
+          notify_url: resolveNotifyUrl(),
           
           // Order Details
           order_id: paymentData.orderId,
